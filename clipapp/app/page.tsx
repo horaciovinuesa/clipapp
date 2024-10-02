@@ -108,26 +108,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-
-      {/* Hamburger Menu Fix */}
-      <nav className="bg-green-600 p-4 md:hidden">
-        <button
-          className="text-white focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-        {isMenuOpen && (
-          <div className="mt-2 space-y-2">
-            <a href="/" className="block text-white hover:text-gray-300">Inicio</a>
-            <a href="/quienes-somos" className="block text-white hover:text-gray-300">Quienes Somos</a>
-            <a href="/nuestra-app" className="block text-white hover:text-gray-300">Nuestra App</a>
-            <a href="/ayuda" className="block text-white hover:text-gray-300">Ayuda</a>
-          </div>
-        )}
-      </nav>
     </Layout>
   );
 }
