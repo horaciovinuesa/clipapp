@@ -24,7 +24,7 @@ export default function TerminosYCondiciones() {
 
             <h2 className="text-2xl font-bold text-green-700 mt-8 mb-4">Limitación de Responsabilidad</h2>
             <p className="text-gray-700 mb-4">
-              ClipApp no se hace responsable de ningún daño o perjuicio que resulte del uso de nuestra aplicación. La información proporcionada se ofrece "tal cual" y no garantizamos su precisión o actualidad.
+              ClipApp no se hace responsable de ningún daño o perjuicio que resulte del uso de nuestra aplicación. La información proporcionada se ofrece &quot;tal cual&quot; y no garantizamos su precisión o actualidad.
             </p>
 
             <h2 className="text-2xl font-bold text-green-700 mt-8 mb-4">Modificaciones a los Términos</h2>
