@@ -45,8 +45,8 @@ export default function Navbar() {
         <div className="md:hidden flex flex-col items-center space-y-2 bg-green-600 p-4">
           <Link href="/" className="text-white hover:text-gray-300">Inicio</Link>
           <Link href="/quienes-somos" className="text-white hover:text-gray-300">Quienes Somos</Link>
-          <Link href="/nuestra-app" className="text-white hover:text-gray-300">Nuestra App</Link>
-          <Link href="/app" className="text-white hover:text-gray-300">App de Escalada</Link> {/* New Link */}
+          <Link href="/nuestra-app" className="text-white hover:text-gray-300">Que hace nuestra App?</Link>
+          <Link href="https://escalando-cordoba-web.vercel.app/" className="text-white hover:text-gray-300">Topos (version Web)</Link> {/* New Link */}
           <Link href="/ayuda" className="text-white hover:text-gray-300">Ayuda</Link>
         </div>
       )}
