@@ -52,7 +52,7 @@ export default function NuestraApp() {
         <h2 className="text-3xl font-bold mb-4">Descarga ClipApp Hoy</h2>
         <p className="text-lg mb-8">Disponible en iOS y Android para uso offline.</p>
         <div className="flex justify-center space-x-8">
-          <a href="https://play.google.com/store/apps/details?id=com.example" target="_blank" rel="noopener noreferrer">
+          <a href="https://play.google.com/store/apps/dev?id=9035844281138611591" target="_blank" rel="noopener noreferrer">
             <Image
               src="/images/androidstore.png"
               alt="Android Store"
@@ -61,7 +61,7 @@ export default function NuestraApp() {
               className="hover:scale-105 transition-transform duration-300"
             />
           </a>
-          <a href="https://apps.apple.com/us/app/example/id123456789" target="_blank" rel="noopener noreferrer">
+          <a href="https://apps.apple.com/ar/app/clip-app/id6736478682" target="_blank" rel="noopener noreferrer">
             <Image
               src="/images/appstore.png"
               alt="App Store"
