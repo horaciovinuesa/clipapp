@@ -1,12 +1,17 @@
 'use client'; // Add this at the top of the file
 
 import Image from 'next/image';
+import Head from 'next/head';
 import Layout from './components/Layout';
 
 export default function Home() {
 
   return (
     <Layout>
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <title>ClipApp - La Mejor Guía de Escalada</title>
+      </Head>
       {/* Hero Section - Smaller Height */}
       <div className="relative bg-cover bg-center h-80">
         <div className="absolute inset-0">
