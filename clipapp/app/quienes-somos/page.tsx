@@ -95,7 +95,7 @@ export default function QuienesSomos() {
             
           </div>
           <p className="mt-12 text-lg text-gray-700">
-          <br /><br /><br /><br /><br />ClipApp nació de nuestra pasión por la escalada y el deseo de brindar información precisa a la comunidad. <br />
+          <br /><br /><br />ClipApp nació de nuestra pasión por la escalada y el deseo de brindar información precisa a la comunidad. <br />
             ¡Seguimos trabajando para mejorar y expandir esta herramienta esencial para escaladores!
           </p>
         </div>
