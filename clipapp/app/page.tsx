@@ -26,7 +26,7 @@ export default function Home() {
 
         {/* Text Overlay */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-white backdrop-blur-md bg-green-800/30">
-          <h1 className="text-4xl font-bold">Bienvenid@s a ClipApp</h1>
+          <h1 className="text-4xl font-bold text-center">Bienvenid@s a ClipApp</h1>
           <p className="text-lg mt-4 max-w-xl text-center">
             La guía definitiva para escalar en Córdoba. Encontrá sectores, mapas y toda la info que necesitás para tu próxima aventura.
           </p>
