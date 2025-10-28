@@ -31,8 +31,35 @@ export default function SubiTusVias() {
   });
 
   const [vias, setVias] = useState<Via[]>([]);
+  const [images, setImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState('');
+  const [isChecking, setIsChecking] = useState(false);
+  const [checkStatus, setCheckStatus] = useState<string>('');
+
+  const checkServiceStatus = async () => {
+    setIsChecking(true);
+    setCheckStatus('');
+
+    try {
+      await emailjs.send(
+        'service_4ntwhir',
+        'template_c9tnvzs',
+        {
+          from_name: 'Check de estado desde la página',
+          from_email: 'check@clipapp.com',
+          message: 'Verificación automática del servicio de email. Servicio funcionando correctamente.',
+        },
+        'AVv3AFbI37spndVgE'
+      );
+      setCheckStatus('success');
+    } catch (error) {
+      console.error('Service check failed:', error);
+      setCheckStatus('error');
+    } finally {
+      setIsChecking(false);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -66,6 +93,17 @@ export default function SubiTusVias() {
     setVias(vias.filter((_, i) => i !== index));
   };
 
+  const addImage = () => {
+    if (formData.imageUrl) {
+      setImages([...images, formData.imageUrl]);
+      setFormData({ ...formData, imageUrl: '' });
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
+
   const sendSectorInfo = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -75,6 +113,11 @@ export default function SubiTusVias() {
     const viasText = vias.map((via, index) => 
       `${index + 1}. ${via.name} - ${via.grade} | ${via.bolts} chapas | ${via.altitude}m | ${via.climbType}${via.aperturista ? ` | Aperturista: ${via.aperturista}` : ''}`
     ).join('\n');
+
+    // Format images data for email
+    const imagesText = images.length > 0 
+      ? `URLs de imágenes:\n${images.map((url, index) => `${index + 1}. ${url}`).join('\n')}`
+      : 'Sin imágenes adjuntas';
 
     const emailData = {
       from_name: formData.contribuidorName || 'Usuario ClipApp',
@@ -92,7 +135,7 @@ Horas de Sombra: ${formData.shadeHours || 'No especificado'}
 VIAS (${vias.length} vías):
 ${viasText}
 
-${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunta'}
+${imagesText}
       `,
     };
 
@@ -122,6 +165,7 @@ ${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunt
         imageUrl: '',
       });
       setVias([]);
+      setImages([]);
     }).catch((error) => {
       console.error('Error sending sector info:', error);
       console.error('Error details:', error.text || error);
@@ -132,7 +176,7 @@ ${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunt
 
   return (
     <Layout>
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-gray-100 text-center">
         <div className="container mx-auto px-4 max-w-3xl">
           <h1 className="text-4xl font-bold text-green-700 mb-4 text-center">
             📍 Subí tus Vías
@@ -140,9 +184,33 @@ ${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunt
           <p className="text-lg text-gray-700 mb-4 text-center">
             ¿Conocés un sector de escalada que no está en ClipApp? Compartí la información y ayudá a que la comunidad crezca.
           </p>
-          <p className="text-md text-green-700 mb-8 text-center font-bold">
+          <p className="text-md text-green-700 mb-4 text-center font-bold">
             💡 Vamos a poner tu nombre como contribuyente en la página de la app
           </p>
+
+          {/* Service Status Check */}
+          <div className="mb-8 flex flex-col items-center gap-3">
+            {!checkStatus && (
+              <button
+                type="button"
+                onClick={checkServiceStatus}
+                disabled={isChecking}
+                className="text-sm text-green-600 hover:text-green-700 px-4 py-2 border border-green-300 rounded-lg font-medium hover:bg-green-50 transition-colors disabled:text-green-400 disabled:cursor-not-allowed disabled:border-green-200"
+              >
+                {isChecking ? '⏳ Verificando...' : '🔍 Checkea el estado del servicio'}
+              </button>
+            )}
+            {checkStatus === 'success' && (
+              <p className="text-green-600 font-semibold text-base">
+                ✅ Servicio activo!
+              </p>
+            )}
+            {checkStatus === 'error' && (
+              <p className="text-red-600 font-semibold text-base">
+                ❌ Servicio inactivo, contacta al admin
+              </p>
+            )}
+          </div>
 
           <form onSubmit={sendSectorInfo} className="bg-white shadow-lg rounded-lg p-8">
             {/* Sector Information */}
@@ -243,7 +311,8 @@ ${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunt
                 </div>
               </div>
 
-              <div className="mb-4">
+              {/* Images Section */}
+              <div className="bg-gray-50 p-4 rounded-lg">
                 <label htmlFor="imageUrl" className="block text-left font-bold text-gray-700 mb-2">
                   URL de Imagen (opcional)
                 </label>
@@ -253,13 +322,21 @@ ${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunt
                   id="imageUrl"
                   value={formData.imageUrl}
                   onChange={handleInputChange}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 text-gray-900 placeholder-gray-400"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 text-gray-900 placeholder-gray-400 mb-3"
                   placeholder="URL pública de la imagen del sector"
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <button
+                  type="button"
+                  onClick={addImage}
+                  disabled={!formData.imageUrl}
+                  className="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition-colors disabled:bg-green-400 disabled:cursor-not-allowed mb-3"
+                >
+                  ➕ Agregar otra imagen
+                </button>
+                <p className="text-xs text-gray-500 mb-2">
                   Por ahora solo aceptamos URLs de imágenes públicas. Pronto agregaremos carga directa de archivos.
                 </p>
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-xs text-gray-600">
                   ¿No tenés donde subir la imagen?{' '}
                   <a 
                     href="https://imgur.com/upload" 
@@ -270,6 +347,27 @@ ${formData.imageUrl ? `URL de imagen: ${formData.imageUrl}` : 'Sin imagen adjunt
                     Podes subirla gratis acá 📸
                   </a>
                 </p>
+
+                {/* List of Added Images */}
+                {images.length > 0 && (
+                  <div className="mt-4">
+                    <h3 className="text-lg font-bold text-gray-700 mb-2">
+                      Imágenes agregadas ({images.length}):
+                    </h3>
+                    {images.map((imageUrl, index) => (
+                      <div key={index} className="bg-blue-50 p-3 rounded-lg mb-2 flex justify-between items-center">
+                        <span className="text-sm text-blue-800 break-all">{imageUrl}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm ml-2 flex-shrink-0"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 

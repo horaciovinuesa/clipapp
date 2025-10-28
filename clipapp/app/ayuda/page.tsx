@@ -45,7 +45,7 @@ export default function Ayuda() {
     <Layout>
       {/* Page Title */}
       <section className="py-16 bg-gray-100 text-center">
-        <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold text-green-700 mb-4">Ayuda y Soporte</h1>
           <p className="text-lg text-gray-700 mb-8">
             ¿Tienes alguna duda o necesitas ayuda con ClipApp? Estamos aquí para asistirte.
