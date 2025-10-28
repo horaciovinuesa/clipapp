@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 import Layout from '../components/Layout';
 
 export default function Ayuda() {
@@ -12,21 +12,25 @@ export default function Ayuda() {
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setFormStatus('');
 
     emailjs.send(
-      'service_4ntwhir', // Replace with your EmailJS service ID
-      'template_o7bg99q', // Replace with your EmailJS template ID
+      'service_4ntwhir', // EmailJS service ID
+      'template_c9tnvzs', // EmailJS template ID - Contact Us
       {
-        from_name: formData.name,
-        from_email: formData.email,
+        user_name: formData.name,
+        user_email: formData.email,
         message: formData.message,
       },
-      'AVv3AFbI37spndVgE' // Replace with your EmailJS public API key
-    ).then(() => {
-      setFormStatus('¡Mensaje enviado exitosamente!. Te estaremos respondiendo pronto.');
+      'AVv3AFbI37spndVgE' // EmailJS public API key
+    ).then((response) => {
+      console.log('Email sent successfully:', response);
+      setFormStatus('¡Mensaje enviado exitosamente! Te responderemos pronto.');
       setIsSubmitting(false);
       setFormData({ name: '', email: '', message: '' });
-    }).catch(() => {
+    }).catch((error) => {
+      console.error('Error sending email:', error);
+      console.error('Error details:', error.text || error);
       setFormStatus('Hubo un error al enviar el mensaje. Inténtalo de nuevo.');
       setIsSubmitting(false);
     });
