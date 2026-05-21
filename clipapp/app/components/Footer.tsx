@@ -1,14 +1,16 @@
 // Footer Component (components/Footer.tsx)
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
     <footer className="bg-green-700 text-white py-4 text-center">
       <div className="container mx-auto flex flex-col items-center">
         <p className="text-sm mb-2">
-          <a href="/politica-de-privacidad" className="hover:text-gray-300">Política de Privacidad</a> | 
-          <a href="/terminos-y-condiciones" className="hover:text-gray-300 ml-2">Términos y Condiciones</a>
+          <Link href="/politica-de-privacidad" className="hover:text-gray-300">Política de Privacidad</Link> | 
+          <Link href="/terminos-y-condiciones" className="hover:text-gray-300 mx-2">Términos y Condiciones</Link> | 
+          <Link href="/admin" className="hover:text-gray-300 ml-2">Panel de admin</Link>
         </p>
         <Image
           src="/images/main_icon.png"

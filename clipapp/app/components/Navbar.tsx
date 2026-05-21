@@ -25,7 +25,7 @@ export default function Navbar() {
           <Link href="/" className="text-white hover:text-gray-300">Inicio</Link>
           <Link href="/quienes-somos" className="text-white hover:text-gray-300">Quienes Somos</Link>
           <Link href="/nuestra-app" className="text-white hover:text-gray-300">Que hace nuestra App?</Link>
-          <Link href="https://escalando-cordoba-web.vercel.app/" className="text-white hover:text-gray-300">Topos (version Web)</Link> {/* New Link */}
+          <Link href="/subi-tus-vias" className="text-white hover:text-gray-300">Subí tus Vías</Link>
           <Link href="/ayuda" className="text-white hover:text-gray-300">Ayuda</Link>
         </div>
 
@@ -46,7 +46,7 @@ export default function Navbar() {
           <Link href="/" className="text-white hover:text-gray-300">Inicio</Link>
           <Link href="/quienes-somos" className="text-white hover:text-gray-300">Quienes Somos</Link>
           <Link href="/nuestra-app" className="text-white hover:text-gray-300">Que hace nuestra App?</Link>
-          <Link href="https://escalando-cordoba-web.vercel.app/" className="text-white hover:text-gray-300">Topos (version Web)</Link> {/* New Link */}
+          <Link href="/subi-tus-vias" className="text-white hover:text-gray-300">Subí tus Vías</Link>
           <Link href="/ayuda" className="text-white hover:text-gray-300">Ayuda</Link>
         </div>
       )}

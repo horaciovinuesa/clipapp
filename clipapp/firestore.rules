@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the user is the admin (by email or phone number)
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'horaciovinuesa@gmail.com' ||
+        request.auth.token.phone_number == '+543513764838'
+      );
+    }
+
+    // Rules for provincias, areas, and sectores (climbing info)
+    match /provincias/{provincia} {
+      // Cualquier persona (incluso sin login) puede ver la información de escalada
+      allow read: if true;
+      // Solo el Administrador puede crear, actualizar o eliminar datos de escalada
+      allow write: if isAdmin();
+      
+      match /areas/{area} {
+        allow read: if true;
+        allow write: if isAdmin();
+        
+        match /sectores/{sector} {
+          allow read: if true;
+          allow write: if isAdmin();
+        }
+      }
+    }
+
+    // Reglas para los perfiles de los escaladores
+    match /profiles/{userId} {
+      // Permitimos que cualquier usuario autenticado lea los perfiles (para ver el avatar, instagram, etc. de otros escaladores)
+      allow read: if request.auth != null;
+      
+      // Solo el propio dueño del perfil o el Administrador puede crear o modificar su perfil
+      allow create, update: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      
+      // Solo el dueño del perfil o el Administrador puede eliminar la cuenta
+      allow delete: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Reglas específicas para la colección de cordadas
+    match /cordadas/{cordadaId} {
+      // Cualquier persona (incluso sin login) puede ver las propuestas
+      allow read: if true;
+      
+      // Solo usuarios autenticados vía SMS (Firebase Auth) pueden publicar
+      allow create: if request.auth != null;
+      
+      // Solo el dueño real del post O el Administrador (por teléfono o email) pueden borrar o actualizar publicaciones
+      allow update, delete: if request.auth != null && (
+        resource.data.userId == request.auth.uid ||
+        isAdmin()
+      );
+    }
+
+    // Reglas exclusivas para los reportes de moderación
+    match /cordada_reports/{reportId} {
+      // Permitimos que cualquier usuario cree un reporte
+      allow create: if true;
+      
+      // Solo el Administrador puede leer o actualizar reportes por privacidad (bloqueado para la app móvil)
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

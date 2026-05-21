@@ -90,6 +90,9 @@ export default function QuienesSomos() {
               <p className="text-gray-700 text-md">
               Fotógrafa dedicada, capturando cada detalle de las zonas de escalada para la comunidad.
               </p>
+              <p className="text-sm text-gray-500 italic mt-3">
+                Siempre en nuestros corazones, te recordamos con amor. Tu pasión por la escalada y la musica sigue inspirandonos.
+              </p>
             </div>
 
             
