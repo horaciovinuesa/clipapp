@@ -105,7 +105,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || '')
+          .split(',')
+          .map(e => e.trim().toLowerCase())
+          .filter(Boolean);
+        
+        if (currentUser.email && adminEmails.includes(currentUser.email.toLowerCase())) {
+          setUser(currentUser);
+        } else {
+          setUser(null);
+          signOut(auth);
+          setLoginError('No tienes permisos de administrador.');
+        }
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
@@ -142,7 +157,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     setLoginLoading(true);
     const startTime = Date.now();
     try {
-      await signInWithEmailAndPassword(auth, sanitizedEmail, password);
+      const userCredential = await signInWithEmailAndPassword(auth, sanitizedEmail, password);
+      const loggedUser = userCredential.user;
+      
+      const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || '')
+        .split(',')
+        .map(e => e.trim().toLowerCase())
+        .filter(Boolean);
+
+      if (!loggedUser.email || !adminEmails.includes(loggedUser.email.toLowerCase())) {
+        await signOut(auth);
+        throw new Error('NOT_ADMIN');
+      }
+
       setIsDemoMode(false);
       setFailedAttempts(0);
       setLockoutUntil(null);
@@ -176,7 +203,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         setLoginError('Demasiados intentos fallidos. Acceso bloqueado temporalmente por 60 segundos.');
       } else {
         let errMsg = 'Credenciales inválidas.';
-        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+        if (error.message === 'NOT_ADMIN') {
+          errMsg = 'No tienes permisos de administrador.';
+        } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
           errMsg = 'Correo o contraseña incorrectos.';
         }
         setLoginError(`${errMsg} Intentos restantes: ${5 - nextAttempts}`);
