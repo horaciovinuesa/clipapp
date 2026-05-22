@@ -58,7 +58,17 @@ export default function Dashboard() {
         
         for (const area of province.areas) {
           const areaRef = doc(db, `provincias/${province.id}/areas`, area.id);
-          await setDoc(areaRef, { nombre: area.nombre });
+          await setDoc(areaRef, {
+            nombre: area.nombre,
+            descripcion: area.descripcion || '',
+            tiempoCaminata: area.tiempoCaminata || '',
+            googleMapsLink: area.googleMapsLink || '',
+            hospitalLink: area.hospitalLink || '',
+            windguruLink: area.windguruLink || '',
+            imageUrl: area.imageUrl || '',
+            howToGetImageUrl: area.howToGetImageUrl || '',
+            overviewImageUrl: area.overviewImageUrl || ''
+          });
           
           for (const sector of area.sectores) {
             const sectorRef = doc(db, `provincias/${province.id}/areas/${area.id}/sectores`, sector.id);
@@ -66,6 +76,12 @@ export default function Dashboard() {
               nombre: sector.nombre,
               descripcion: sector.descripcion || '',
               imageUrl: sector.imageUrl || '',
+              overviewImageUrl: sector.overviewImageUrl || '',
+              comoLlegarImageUrl: sector.comoLlegarImageUrl || '',
+              generalImageUrl: sector.generalImageUrl || '',
+              izquierdaImageUrl: sector.izquierdaImageUrl || '',
+              centroImageUrl: sector.centroImageUrl || '',
+              derechaImageUrl: sector.derechaImageUrl || '',
               vias: sector.vias
             });
           }

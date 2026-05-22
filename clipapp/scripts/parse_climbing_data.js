@@ -272,8 +272,77 @@ function parseSectorFile(sectorFilePath, sectorClassName, sectorSlug) {
   return finalRoutes;
 }
 
+function extractAreaImages(assets) {
+  if (!assets || assets.length === 0) {
+    return { imageUrl: '', howToGetImageUrl: '', overviewImageUrl: '' };
+  }
+  
+  let cover = assets.find(a => a.includes('bg') || a.includes('cover') || a.includes('main'));
+  let howToGet = assets.find(a => a.includes('how_to_get') || a.includes('como_llegar') || a.includes('como-llegar') || a.includes('acceso'));
+  let overview = assets.find(a => a.includes('overview') || a.includes('map') || a.includes('croquis') || a.includes('general'));
+
+  // Fallbacks if not found by keywords
+  if (!cover) cover = assets[0];
+  if (!howToGet) howToGet = assets[1] || assets[0];
+  if (!overview) overview = assets[2] || assets[1] || assets[0];
+
+  return {
+    imageUrl: getStorageUrl(cover),
+    howToGetImageUrl: getStorageUrl(howToGet),
+    overviewImageUrl: getStorageUrl(overview)
+  };
+}
+
 function processAreaFile(areaFilePath, areaSlug) {
   const content = fs.readFileSync(areaFilePath, 'utf8');
+
+  // 1. Extract walkingTime
+  const walkingTimeMatch = content.match(/\bwalkingTime\s*=\s*(?:['"]([^'"]*)['"]|(\d+))/);
+  const walkingTimeVal = walkingTimeMatch ? (walkingTimeMatch[1] || walkingTimeMatch[2]) : '';
+  let tiempoCaminata = '';
+  if (walkingTimeVal) {
+    if (/^\d+$/.test(walkingTimeVal.trim())) {
+      tiempoCaminata = `${walkingTimeVal.trim()} min`;
+    } else {
+      tiempoCaminata = walkingTimeVal.trim();
+    }
+  }
+
+  // 2. Extract links
+  const googleMapsMatch = content.match(/\bgoogleMapsLink\s*=\s*['"]([^'"]*)['"]/);
+  const googleMapsLink = googleMapsMatch ? googleMapsMatch[1] : '';
+
+  const hospitalMatch = content.match(/\b(?:hospMapLink|hospitalLink)\s*=\s*['"]([^'"]*)['"]/);
+  const hospitalLink = hospitalMatch ? hospitalMatch[1] : '';
+
+  const windguruMatch = content.match(/\bwindguruLink\s*=\s*['"]([^'"]*)['"]/);
+  const windguruLink = windguruMatch ? windguruMatch[1] : '';
+
+  // 3. Extract howToGetText (description)
+  let howToGetText = '';
+  const howToGetMatch = content.match(/\bhowToGetText\s*=\s*(?:'''([\s\S]*?)'''|"""([\s\S]*?)"""|'([\s\S]*?)'|"([\s\S]*?)")/);
+  if (howToGetMatch) {
+    howToGetText = (howToGetMatch[1] || howToGetMatch[2] || howToGetMatch[3] || howToGetMatch[4] || '').trim();
+  } else {
+    // fallback for villa_del_carmen (howToGetText1 + howToGetText2)
+    const h1Match = content.match(/\bhowToGetText1\s*=\s*(?:'''([\s\S]*?)'''|"""([\s\S]*?)"""|'([\s\S]*?)'|"([\s\S]*?)")/);
+    const h2Match = content.match(/\bhowToGetText2\s*=\s*(?:'''([\s\S]*?)'''|"""([\s\S]*?)"""|'([\s\S]*?)'|"([\s\S]*?)")/);
+    const h1 = h1Match ? (h1Match[1] || h1Match[2] || h1Match[3] || h1Match[4] || '').trim() : '';
+    const h2 = h2Match ? (h2Match[1] || h2Match[2] || h2Match[3] || h2Match[4] || '').trim() : '';
+    howToGetText = [h1, h2].filter(Boolean).join('\n\n');
+  }
+
+  // 4. Extract storageAssets
+  const storageAssetsMatch = content.match(/storageAssets\s*=\s*\[([\s\S]*?)\]/);
+  const assets = [];
+  if (storageAssetsMatch) {
+    const assetRegex = /['"]([^'"]+)['"]/g;
+    let assetMatch;
+    while ((assetMatch = assetRegex.exec(storageAssetsMatch[1])) !== null) {
+      assets.push(assetMatch[1]);
+    }
+  }
+  const images = extractAreaImages(assets);
 
   // Parse imports in this area page to map sector page classes to files
   const importRegex = /import\s+['"]([^'"]+)['"]/g;
@@ -345,7 +414,15 @@ function processAreaFile(areaFilePath, areaSlug) {
     }
   }
 
-  return sectores;
+  return {
+    descripcion: howToGetText,
+    tiempoCaminata,
+    googleMapsLink,
+    hospitalLink,
+    windguruLink,
+    ...images,
+    sectores
+  };
 }
 
 function run() {
@@ -362,10 +439,12 @@ function run() {
       console.log(`Processing Area: ${area.name} (${areaSlug})`);
 
       let sectores = [];
+      let areaMetadata = {};
       if (area.path) {
         const areaFilePath = path.join(MOBILE_LIB_PATH, area.path);
         if (fs.existsSync(areaFilePath)) {
-          sectores = processAreaFile(areaFilePath, areaSlug);
+          areaMetadata = processAreaFile(areaFilePath, areaSlug);
+          sectores = areaMetadata.sectores;
         } else {
           console.warn(`  Warning: Area file does not exist: ${areaFilePath}`);
         }
@@ -376,6 +455,14 @@ function run() {
       areasList.push({
         id: areaSlug,
         nombre: area.name,
+        descripcion: areaMetadata.descripcion || '',
+        tiempoCaminata: areaMetadata.tiempoCaminata || '',
+        googleMapsLink: areaMetadata.googleMapsLink || '',
+        hospitalLink: areaMetadata.hospitalLink || '',
+        windguruLink: areaMetadata.windguruLink || '',
+        imageUrl: areaMetadata.imageUrl || '',
+        howToGetImageUrl: areaMetadata.howToGetImageUrl || '',
+        overviewImageUrl: areaMetadata.overviewImageUrl || '',
         sectores: sectores
       });
     }
