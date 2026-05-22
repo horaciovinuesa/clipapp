@@ -20,6 +20,12 @@
             "nombre": "Pared principal",
             "descripcion": "Sector Pared principal. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fpared_principal.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fpared_principal.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-cantera-pared-principal-1",
@@ -204,6 +210,12 @@
             "nombre": "Sector la cueva",
             "descripcion": "Sector Sector la cueva. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fcueva_derecha.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fcueva_derecha.jpg?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fla_cueva_2.jpg?alt=media",
             "vias": [
               {
                 "id": "la-cantera-sector-la-cueva-1",
@@ -260,6 +272,12 @@
             "nombre": "Escuela",
             "descripcion": "Sector Escuela. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_escuela.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_escuela.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-cantera-escuela-1",
@@ -300,6 +318,12 @@
             "nombre": "Poliamor",
             "descripcion": "Sector Poliamor. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_poliamor.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_poliamor.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-cantera-poliamor-1",
@@ -458,6 +482,12 @@
             "nombre": "Pared Principal",
             "descripcion": "Sector Pared Principal. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Fprincipal_der.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Fprincipal_der.jpg?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Fprincipal_izq.jpg?alt=media",
             "vias": [
               {
                 "id": "el-colibri-pared-principal-1",
@@ -610,6 +640,12 @@
             "nombre": "Rocapipa",
             "descripcion": "Sector Rocapipa. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Frocapipa.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Frocapipa.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-colibri-rocapipa-1",
@@ -704,6 +740,12 @@
             "nombre": "Pared A - F",
             "descripcion": "Sector Pared A - F. Orientación: Sur/Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_a.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_a.jpg?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_b.jpg?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_c.jpg?alt=media",
             "vias": [
               {
                 "id": "cueva-de-las-brujas-pared-a-f-1",
@@ -888,6 +930,12 @@
             "nombre": "Pared G - H",
             "descripcion": "Sector Pared G - H. Orientación: Sur/Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_g.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_g.jpg?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_g2.jpg?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fsector_pared_h.jpg?alt=media",
             "vias": [
               {
                 "id": "cueva-de-las-brujas-pared-g-h-1",
@@ -958,6 +1006,12 @@
             "nombre": "Clásica o Carape",
             "descripcion": "Sector Clásica o Carape. Orientación: Suroeste",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Fclasica_main.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Fclasica_main.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "ascochinga-clasica-o-carape-1",
@@ -1014,6 +1068,12 @@
             "nombre": "Perroncho",
             "descripcion": "Sector Perroncho. Orientación: Noroeste",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Fperroncho.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Fperroncho.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "ascochinga-perroncho-1",
@@ -1100,6 +1160,12 @@
             "nombre": "Pared Principal",
             "descripcion": "Sector Pared Principal. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_1.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_1.jpg?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_2-9.jpg?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_10-11.jpg?alt=media",
             "vias": [
               {
                 "id": "bialet-masse-pared-principal-1",
@@ -1226,6 +1292,12 @@
             "nombre": "Pared Principal",
             "descripcion": "Sector Pared Principal. Orientación: Noroeste",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_horno%2Foverview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_horno%2Foverview.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-calera-el-horno-pared-principal-1",
@@ -1384,6 +1456,12 @@
             "nombre": "Pared Principal",
             "descripcion": "Sector Pared Principal. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/valle_hermoso%2Foverview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/valle_hermoso%2Foverview.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "valle-hermoso-pared-principal-1",
@@ -1462,6 +1540,12 @@
             "nombre": "El Tótem",
             "descripcion": "Sector El Tótem. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fel_totem.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fel_totem.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "mina-clavero-el-totem-1",
@@ -1494,6 +1578,12 @@
             "nombre": "El Acuario",
             "descripcion": "Sector El Acuario. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fel_acuario.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fel_acuario.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "mina-clavero-el-acuario-1",
@@ -1582,6 +1672,12 @@
             "nombre": "Mate Grosso",
             "descripcion": "Sector Mate Grosso. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fmate_groso.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fmate_groso.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "mina-clavero-mate-grosso-1",
@@ -1646,6 +1742,12 @@
             "nombre": "La Proa",
             "descripcion": "Sector La Proa. Orientación: Sur/Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fla_proa.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fla_proa.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "mina-clavero-la-proa-1",
@@ -1678,6 +1780,12 @@
             "nombre": "La Posa",
             "descripcion": "Sector La Posa. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fla_posa.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fla_posa.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "mina-clavero-la-posa-1",
@@ -1718,6 +1826,12 @@
             "nombre": "Milac Navira",
             "descripcion": "Sector Milac Navira. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fmilac_navira.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fmilac_navira.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "mina-clavero-milac-navira-1",
@@ -1772,6 +1886,12 @@
             "nombre": "Pared Principal",
             "descripcion": "Sector Pared Principal. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_pajaritos%2Foverview_vias.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_pajaritos%2Foverview_vias.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-cueva-de-los-pajaritos-pared-principal-1",
@@ -1850,6 +1970,12 @@
             "nombre": "Vía Solitaria",
             "descripcion": "Sector Vía Solitaria. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fvia_solitaria.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fvia_solitaria.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-secretillo-via-solitaria-1",
@@ -1866,6 +1992,12 @@
             "nombre": "Pared Principal",
             "descripcion": "Sector Pared Principal. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fpared_principal_1.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fpared_principal_1.jpg?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fpared_principal_2.jpg?alt=media",
             "vias": [
               {
                 "id": "el-secretillo-pared-principal-1",
@@ -2010,6 +2142,12 @@
             "nombre": "La Ollita",
             "descripcion": "Sector La Ollita. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fla_ollita.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fla_ollita.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-secretillo-la-ollita-1",
@@ -2066,6 +2204,12 @@
             "nombre": "Pared Roja",
             "descripcion": "Sector Pared Roja. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fpared_roja_1.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fpared_roja_1.jpg?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fpared_roja_2.jpg?alt=media",
             "vias": [
               {
                 "id": "el-secretillo-pared-roja-1",
@@ -2114,6 +2258,12 @@
             "nombre": "Desplome Sangriento",
             "descripcion": "Sector Desplome Sangriento. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fdesplome_sangriento.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fdesplome_sangriento.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-secretillo-desplome-sangriento-1",
@@ -2168,6 +2318,12 @@
             "nombre": "Escenario",
             "descripcion": "Sector Escenario. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fescenario_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fescenario_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fescenario_izquierda.jpg?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fescenario_derecha.jpg?alt=media",
             "vias": [
               {
                 "id": "teatro-corral-escenario-1",
@@ -2320,6 +2476,12 @@
             "nombre": "Placa De Las Parejas",
             "descripcion": "Sector Placa De Las Parejas. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fplaca_de_las_parejas.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fplaca_de_las_parejas.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-placa-de-las-parejas-1",
@@ -2384,6 +2546,12 @@
             "nombre": "Rubuk",
             "descripcion": "Sector Rubuk. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Frubuk.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Frubuk.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-rubuk-1",
@@ -2424,6 +2592,12 @@
             "nombre": "Paraiso",
             "descripcion": "Sector Paraiso. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fparaiso_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fparaiso_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-paraiso-1",
@@ -2480,6 +2654,12 @@
             "nombre": "El Corral",
             "descripcion": "Sector El Corral. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fcorral_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fcorral_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-el-corral-1",
@@ -2560,6 +2740,12 @@
             "nombre": "Corral Anexo",
             "descripcion": "Sector Corral Anexo. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2FcorralAnexo_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2FcorralAnexo_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-corral-anexo-1",
@@ -2632,6 +2818,12 @@
             "nombre": "El Centurion",
             "descripcion": "Sector El Centurion. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fcenturion_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fcenturion_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-el-centurion-1",
@@ -2672,6 +2864,12 @@
             "nombre": "El Ciclope",
             "descripcion": "Sector El Ciclope. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fciclope_overview.jpeg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fciclope_overview.jpeg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-el-ciclope-1",
@@ -2728,6 +2926,12 @@
             "nombre": "Lanzelot",
             "descripcion": "Sector Lanzelot. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Flanzelot_overview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Flanzelot_overview.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-lanzelot-1",
@@ -2808,6 +3012,12 @@
             "nombre": "El Portal",
             "descripcion": "Sector El Portal. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fel_portal_overview.jpeg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fel_portal_overview.jpeg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "teatro-corral-el-portal-1",
@@ -2910,6 +3120,12 @@
             "nombre": "Parte Baja",
             "descripcion": "Sector Parte Baja. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fsector_abajo.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fsector_abajo.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-parte-baja-1",
@@ -2982,6 +3198,12 @@
             "nombre": "Parte Alta",
             "descripcion": "Sector Parte Alta. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fsector_arriba.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fsector_arriba.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-parte-alta-1",
@@ -3182,6 +3404,12 @@
             "nombre": "Mogote De Las Estrellas",
             "descripcion": "Sector Mogote De Las Estrellas. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fmogote_abajo.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fmogote_abajo.jpg?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fmogote_arriba.jpg?alt=media",
             "vias": [
               {
                 "id": "la-ola-mogote-de-las-estrellas-1",
@@ -3286,6 +3514,12 @@
             "nombre": "Último Sol de Marzo",
             "descripcion": "Sector Último Sol de Marzo. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2FultimoSol_overview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2FultimoSol_overview.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-ultimo-sol-de-marzo-1",
@@ -3438,6 +3672,12 @@
             "nombre": "La Olita",
             "descripcion": "Sector La Olita. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Folita_overview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Folita_overview.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-la-olita-1",
@@ -3566,6 +3806,12 @@
             "nombre": "Lengua de Suegra",
             "descripcion": "Sector Lengua de Suegra. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Flengua_overview_1.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Flengua_overview_4.jpg?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-lengua-de-suegra-1",
@@ -3678,6 +3924,12 @@
             "nombre": "PreEscolar-Tomi",
             "descripcion": "Sector PreEscolar-Tomi. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fpreescolar1.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fpreescolar1.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-preescolar-tomi-1",
@@ -3790,6 +4042,12 @@
             "nombre": "Los Toboganes",
             "descripcion": "Sector Los Toboganes. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Ftoboganes_overview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Ftoboganes_overview.jpg?alt=media",
+            "comoLlegarImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Ftoboganes_como_llegar.jpg?alt=media",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-los-toboganes-1",
@@ -3886,6 +4144,12 @@
             "nombre": "El Vuelo del Condor",
             "descripcion": "Sector El Vuelo del Condor. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fvuelo_condor_overview.jpg?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fvuelo_condor_overview.jpg?alt=media",
+            "comoLlegarImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Fvuelo_condor_como_llegar.jpg?alt=media",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "la-ola-el-vuelo-del-condor-1",
@@ -3972,6 +4236,12 @@
             "nombre": "Torres Gemelas",
             "descripcion": "Sector Torres Gemelas. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Ftorres_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Ftorres_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-torres-gemelas-la-ballena-torres-gemelas-1",
@@ -4084,6 +4354,12 @@
             "nombre": "El Barrilete",
             "descripcion": "Sector El Barrilete. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Fbarrilete_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Fbarrilete_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-torres-gemelas-la-ballena-el-barrilete-1",
@@ -4116,6 +4392,12 @@
             "nombre": "El Barco",
             "descripcion": "Sector El Barco. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Fbarco_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Fbarco_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-torres-gemelas-la-ballena-el-barco-1",
@@ -4156,6 +4438,12 @@
             "nombre": "La Ballena",
             "descripcion": "Sector La Ballena. Orientación: Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Fballena_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Fballena_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-torres-gemelas-la-ballena-la-ballena-1",
@@ -4274,6 +4562,12 @@
             "nombre": "El Pantano",
             "descripcion": "Sector El Pantano. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fpantano_general.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fpantano_general.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fpantano_izquierda.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fpantano_derecha.png?alt=media",
             "vias": [
               {
                 "id": "los-paredones-el-pantano-1",
@@ -4386,6 +4680,12 @@
             "nombre": "El Bosquecito",
             "descripcion": "Sector El Bosquecito. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fbosquecito.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fbosquecito.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "los-paredones-el-bosquecito-1",
@@ -4434,6 +4734,12 @@
             "nombre": "Dos Mas Dos",
             "descripcion": "Sector Dos Mas Dos. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdosmasdos_izquierda.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdosmasdos_izquierda.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdosmasdos_derecha.png?alt=media",
             "vias": [
               {
                 "id": "los-paredones-dos-mas-dos-1",
@@ -4474,6 +4780,12 @@
             "nombre": "El Diamante",
             "descripcion": "Sector El Diamante. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdiamante.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdiamante.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "los-paredones-el-diamante-1",
@@ -4490,6 +4802,12 @@
             "nombre": "La Diagonal De Lucas",
             "descripcion": "Sector La Diagonal De Lucas. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdiagonal_lucas.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdiagonal_lucas.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "los-paredones-la-diagonal-de-lucas-1",
@@ -4506,6 +4824,12 @@
             "nombre": "La Cañada",
             "descripcion": "Sector La Cañada. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fcanada_general.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fcanada_general.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fcanada_arriba.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fcanada_abajo.png?alt=media",
             "vias": [
               {
                 "id": "los-paredones-la-canada-1",
@@ -4578,6 +4902,12 @@
             "nombre": "Pared Ochentera",
             "descripcion": "Sector Pared Ochentera. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fochentera_general.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fochentera_general.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fochentera_arriba.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fochentera_abajo.png?alt=media",
             "vias": [
               {
                 "id": "los-paredones-pared-ochentera-1",
@@ -4650,6 +4980,12 @@
             "nombre": "El Desplome De Satan",
             "descripcion": "Sector El Desplome De Satan. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdesplome_satan_general.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdesplome_satan_general.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdesplome_satan_derecha.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdesplome_satan_central.png?alt=media",
             "vias": [
               {
                 "id": "los-paredones-el-desplome-de-satan-1",
@@ -4730,6 +5066,12 @@
             "nombre": "La Ollita",
             "descripcion": "Sector La Ollita. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fla_ollita.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fla_ollita.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "los-paredones-la-ollita-1",
@@ -4794,6 +5136,12 @@
             "nombre": "Desplome Arriba",
             "descripcion": "Sector Desplome Arriba. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdesplome_arriba.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fdesplome_arriba.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "los-paredones-desplome-arriba-1",
@@ -4810,6 +5158,12 @@
             "nombre": "La Palma",
             "descripcion": "Sector La Palma. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fla_palma_general.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fla_palma_general.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fla_palma_derecha.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fla_palma_central.png?alt=media",
             "vias": [
               {
                 "id": "los-paredones-la-palma-1",
@@ -4898,6 +5252,12 @@
             "nombre": "Pared De Los Offwidths",
             "descripcion": "Sector Pared De Los Offwidths. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Foffwidths.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Foffwidths.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "los-paredones-pared-de-los-offwidths-1",
@@ -4962,6 +5322,12 @@
             "nombre": "Capilla Rock Fest",
             "descripcion": "Sector Capilla Rock Fest. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/rock_fest%2Frockfest_banner.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/rock_fest%2Frockfest_banner.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           }
         ]
@@ -4996,6 +5362,12 @@
             "nombre": "Sector Principal",
             "descripcion": "Sector Sector Principal. Orientación: Oeste",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paraiso%2Fparaiso_principal.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paraiso%2Fparaiso_principal.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-paraiso-sector-principal-1",
@@ -5282,6 +5654,12 @@
             "nombre": "Sector principal",
             "descripcion": "Placa y espolón del segundo puente, con rutas históricas de Norberto Quinteros.",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/copina%2Fsegundo_puente%2Fseg_puente1.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/copina%2Fsegundo_puente%2Fseg_puente1.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "copina-i-segundo-puente-sector-principal-1",
@@ -5447,6 +5825,12 @@
             "nombre": "Placa Naranja",
             "descripcion": "Sector Placa Naranja. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fplaca_naranja.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fplaca_naranja.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-placa-naranja-1",
@@ -5495,6 +5879,12 @@
             "nombre": "La Bocha Negra",
             "descripcion": "Sector La Bocha Negra. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fla_bocha_negra.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fla_bocha_negra.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-la-bocha-negra-1",
@@ -5527,6 +5917,12 @@
             "nombre": "Zona Roja",
             "descripcion": "Sector Zona Roja. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fzona_roja.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fzona_roja.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-zona-roja-1",
@@ -5551,6 +5947,12 @@
             "nombre": "El Tío",
             "descripcion": "Sector El Tío. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_tio_general.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_tio_general.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_tio_1.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_tio_2.png?alt=media",
             "vias": [
               {
                 "id": "guia-general-el-tio-1",
@@ -5831,6 +6233,12 @@
             "nombre": "Mogote Zuriaga",
             "descripcion": "Sector Mogote Zuriaga. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_zuriaga.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_zuriaga.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-mogote-zuriaga-1",
@@ -5871,6 +6279,12 @@
             "nombre": "Mogote Torpedo",
             "descripcion": "Sector Mogote Torpedo. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_torpedo.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_torpedo.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-mogote-torpedo-1",
@@ -5903,6 +6317,12 @@
             "nombre": "Mogote Grande",
             "descripcion": "Sector Mogote Grande. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_grande.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_grande.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-mogote-grande-1",
@@ -5935,6 +6355,12 @@
             "nombre": "Mogote Bareta",
             "descripcion": "Sector Mogote Bareta. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_bareta.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_bareta.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-mogote-bareta-1",
@@ -5983,6 +6409,12 @@
             "nombre": "Mogote Chico",
             "descripcion": "Sector Mogote Chico. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_chico.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_chico.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fmogote_chico_2.png?alt=media",
             "vias": [
               {
                 "id": "guia-general-mogote-chico-1",
@@ -6031,6 +6463,12 @@
             "nombre": "Vallecito",
             "descripcion": "Sector Vallecito. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvallecito.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvallecito.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Faguja_vita.png?alt=media",
             "vias": [
               {
                 "id": "guia-general-vallecito-1",
@@ -6055,6 +6493,12 @@
             "nombre": "Triedro del Tabaquillo",
             "descripcion": "Sector Triedro del Tabaquillo. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Ftriedro_del_tabaquillo.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Ftriedro_del_tabaquillo.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-triedro-del-tabaquillo-1",
@@ -6103,6 +6547,12 @@
             "nombre": "Cerro Giménez",
             "descripcion": "Sector Cerro Giménez. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fcerro_gimenez.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fcerro_gimenez.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-cerro-gimenez-1",
@@ -6151,6 +6601,12 @@
             "nombre": "El Gorila",
             "descripcion": "Sector El Gorila. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_gorila.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_gorila.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fel_gorila_2.png?alt=media",
             "vias": [
               {
                 "id": "guia-general-el-gorila-1",
@@ -6215,6 +6671,12 @@
             "nombre": "Gorila Anexo",
             "descripcion": "Sector Gorila Anexo. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fgorila_anexo.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fgorila_anexo.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-gorila-anexo-1",
@@ -6239,6 +6701,12 @@
             "nombre": "Bloque Empotrado",
             "descripcion": "Sector Bloque Empotrado. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fbloque_empotrado.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fbloque_empotrado.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-bloque-empotrado-1",
@@ -6255,6 +6723,12 @@
             "nombre": "Brasilero",
             "descripcion": "Sector Brasilero. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fbrasilero.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fbrasilero.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-brasilero-1",
@@ -6295,6 +6769,12 @@
             "nombre": "Valle de Los Lisos",
             "descripcion": "Sector Valle de Los Lisos. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvalle_lisos.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvalle_lisos.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "guia-general-valle-de-los-lisos-1",
@@ -6311,6 +6791,12 @@
             "nombre": "Valle \\",
             "descripcion": "Sector Valle \\. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvalle_siqueri.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvalle_siqueri.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fvalle_siqueri_2.png?alt=media",
             "vias": [
               {
                 "id": "guia-general-valle-1",
@@ -6349,6 +6835,12 @@
             "nombre": "Cerro de la cruz",
             "descripcion": "Sector Cerro de la cruz. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cerro_cruz%2Fcerro_de_la_cruz.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cerro_cruz%2Fcerro_de_la_cruz.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cerro-de-la-cruz-cerro-de-la-cruz-1",
@@ -6539,6 +7031,12 @@
             "nombre": "Lajita",
             "descripcion": "Sector Lajita. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flajita_1.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flajita_1.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flajita_2.png?alt=media",
             "vias": [
               {
                 "id": "zona-del-refugio-c-a-c-lajita-1",
@@ -6587,6 +7085,12 @@
             "nombre": "Las Cunas",
             "descripcion": "Sector Las Cunas. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flas_cunas.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flas_cunas.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-del-refugio-c-a-c-las-cunas-1",
@@ -6699,6 +7203,12 @@
             "nombre": "Mogote del ocaso",
             "descripcion": "Sector Mogote del ocaso. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Fmogote_ocaso.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Fmogote_ocaso.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-del-refugio-c-a-c-mogote-del-ocaso-1",
@@ -6771,6 +7281,12 @@
             "nombre": "Placas de arriba",
             "descripcion": "Sector Placas de arriba. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Fplacas_arriba.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Fplacas_arriba.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "zona-del-refugio-c-a-c-placas-de-arriba-1",
@@ -6825,6 +7341,12 @@
             "nombre": "El Ostiazo",
             "descripcion": "Sector El Ostiazo. Orientación: Norte",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ostiazo%2Fel_ostiazo.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ostiazo%2Fel_ostiazo.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-ostiazo-el-ostiazo-1",
@@ -6914,6 +7436,12 @@
             "nombre": "El Diamante",
             "descripcion": "3 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6921,6 +7449,12 @@
             "nombre": "La Ola",
             "descripcion": "7 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6928,6 +7462,12 @@
             "nombre": "Aguaribay",
             "descripcion": "2 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6935,6 +7475,12 @@
             "nombre": "El Nido",
             "descripcion": "20 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6942,6 +7488,12 @@
             "nombre": "El Bolón",
             "descripcion": "3 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6949,6 +7501,12 @@
             "nombre": "La Antesala",
             "descripcion": "10 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6956,6 +7514,12 @@
             "nombre": "El Cubo",
             "descripcion": "16 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6963,6 +7527,12 @@
             "nombre": "La Cueva",
             "descripcion": "4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -6970,6 +7540,12 @@
             "nombre": "La Cascada",
             "descripcion": "19 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           }
         ]
@@ -7049,6 +7625,12 @@
             "nombre": "Bloque de acampe",
             "descripcion": "Sector Bloque de acampe. Orientación: Oeste / Sur-Este",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fbloque_acampe1.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fbloque_acampe1.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-bloque-de-acampe-1",
@@ -7121,6 +7703,12 @@
             "nombre": "Piedra blanca",
             "descripcion": "Sector Piedra blanca. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fpiedra_blanca.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fpiedra_blanca.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-piedra-blanca-1",
@@ -7153,6 +7741,12 @@
             "nombre": "El erecto",
             "descripcion": "Sector El erecto. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fel_erecto.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fel_erecto.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-el-erecto-1",
@@ -7177,6 +7771,12 @@
             "nombre": "La rampa",
             "descripcion": "Sector La rampa. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fla_rampa.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fla_rampa.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-la-rampa-1",
@@ -7193,6 +7793,12 @@
             "nombre": "Gorila Stone",
             "descripcion": "Sector Gorila Stone. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fgorila_stone.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fgorila_stone.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-gorila-stone-1",
@@ -7217,6 +7823,12 @@
             "nombre": "Aguja del Topo",
             "descripcion": "Sector Aguja del Topo. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Faguja_topo1.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Faguja_topo1.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-aguja-del-topo-1",
@@ -7249,6 +7861,12 @@
             "nombre": "Placa de Ganesha",
             "descripcion": "Sector Placa de Ganesha. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fplaca_ganesha.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fplaca_ganesha.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-placa-de-ganesha-1",
@@ -7305,6 +7923,12 @@
             "nombre": "Aguja Escondida",
             "descripcion": "Sector Aguja Escondida. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Faguja_escondida.jpg?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Faguja_escondida.jpg?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "villa-del-carmen-aguja-escondida-1",
@@ -7354,6 +7978,12 @@
             "nombre": "Sección 1",
             "descripcion": "Sector Sección 1. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_1.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_1.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-1-1",
@@ -7410,6 +8040,12 @@
             "nombre": "Sección 2",
             "descripcion": "Sector Sección 2. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_2.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_2.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-2-1",
@@ -7434,6 +8070,12 @@
             "nombre": "Sección 3",
             "descripcion": "Sector Sección 3. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_3.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_3.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-3-1",
@@ -7466,6 +8108,12 @@
             "nombre": "Sección 4",
             "descripcion": "Sector Sección 4. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_4.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_4.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-4-1",
@@ -7530,6 +8178,12 @@
             "nombre": "Sección 5",
             "descripcion": "Sector Sección 5. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_5.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_5.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-5-1",
@@ -7570,6 +8224,12 @@
             "nombre": "Sección 6",
             "descripcion": "Sector Sección 6. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_6.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_6.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-6-1",
@@ -7618,6 +8278,12 @@
             "nombre": "Sección 7",
             "descripcion": "Sector Sección 7. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_7.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_7.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-7-1",
@@ -7666,6 +8332,12 @@
             "nombre": "Sección 8",
             "descripcion": "Sector Sección 8. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_8.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_8.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-8-1",
@@ -7690,6 +8362,12 @@
             "nombre": "Sección 9",
             "descripcion": "Sector Sección 9. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_9.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_9.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-9-1",
@@ -7762,6 +8440,12 @@
             "nombre": "Sección 10",
             "descripcion": "Sector Sección 10. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_10.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_10.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-10-1",
@@ -7802,6 +8486,12 @@
             "nombre": "Sección 11",
             "descripcion": "Sector Sección 11. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_11.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_11.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-11-1",
@@ -7834,6 +8524,12 @@
             "nombre": "Sección 12",
             "descripcion": "Sector Sección 12. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_12.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_12.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-12-1",
@@ -7858,6 +8554,12 @@
             "nombre": "Sección 13",
             "descripcion": "Sector Sección 13. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_13.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_13.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-13-1",
@@ -7898,6 +8600,12 @@
             "nombre": "Sección 14",
             "descripcion": "Sector Sección 14. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_14.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_14.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-14-1",
@@ -7922,6 +8630,12 @@
             "nombre": "Sección 15",
             "descripcion": "Sector Sección 15. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_15.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_15.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-15-1",
@@ -7962,6 +8676,12 @@
             "nombre": "Sección 16",
             "descripcion": "Sector Sección 16. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_16.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_16.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-16-1",
@@ -8010,6 +8730,12 @@
             "nombre": "Sección 17",
             "descripcion": "Sector Sección 17. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_17.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fseccion_17.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "cuesta-de-miranda-seccion-17-1",
@@ -8075,6 +8801,12 @@
             "nombre": "La Carretera",
             "descripcion": "Sector al lado de la carretera fuera del cañadón, a 450m de la entrada, enfrente del camping. 4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8082,6 +8814,12 @@
             "nombre": "Ongi Etorri",
             "descripcion": "Primer sector a la entrada del cañadón en el margen derecho. Significa ",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8089,6 +8827,12 @@
             "nombre": "El Laberinto",
             "descripcion": "Sector en el lado derecho del cañadón, en un pequeño pasaje lateral antes de llegar a El Alero. 4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8096,6 +8840,12 @@
             "nombre": "El Barro",
             "descripcion": "Sector del lado izquierdo, a 300m de la entrada, después de un pequeño cañón lateral. 1 vía con potencial para más.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8103,6 +8853,12 @@
             "nombre": "El Alero",
             "descripcion": "Primer sector equipado dentro del cañadón. Gran cueva con excavación arqueológica. 18 vías activas + 4 deshabilitadas.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8110,6 +8866,12 @@
             "nombre": "Promiscuidad",
             "descripcion": "Sector en el lado derecho del cañadón, a 300m desde la entrada, enfrente de El Alero. 9 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8117,6 +8879,12 @@
             "nombre": "La gran chorrera",
             "descripcion": "Sector en el lado izquierdo, a 30m desde la cueva de El Alero. Vía de 4 largos siguiendo una chorrera erosionada. 1 vía.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8124,6 +8892,12 @@
             "nombre": "El gruyere",
             "descripcion": "Sector en el lado izquierdo, a 450m desde la cueva de El Alero. Formación rocosa con huecos eólicos. 7 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8131,6 +8905,12 @@
             "nombre": "Ojos de buda",
             "descripcion": "Sector en el lado izquierdo, a 80m del sector El Gruyere. Placa rojiza con vías de alta dificultad. 8 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8138,6 +8918,12 @@
             "nombre": "La aguja de la virgen",
             "descripcion": "Sector La aguja de la virgen. Orientación: -",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8145,6 +8931,12 @@
             "nombre": "Mordor",
             "descripcion": "Sector inaugurado en 2012, en el lado derecho enfrente a Ojos de Buda. Identificable por dos grandes cuevas. 8 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8152,6 +8944,12 @@
             "nombre": "El Chorro Negro",
             "descripcion": "Sector en el lado izquierdo, enfrente a la Aguja de la Virgen. Identificable por una chorrera negra. 2 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8159,6 +8957,12 @@
             "nombre": "El totem",
             "descripcion": "Pequeño sector en el lado derecho, a 50m de Mordor. Gran bloque de roca de 35m de altura. 6 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8166,6 +8970,12 @@
             "nombre": "La Penca",
             "descripcion": "Sector en el centro del cañadón, a 50m de Mordor. Efecto de barrera en el paso a sectores más alejados. 3 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8173,6 +8983,12 @@
             "nombre": "Cañadon angosto",
             "descripcion": "Sector en el lado izquierdo donde el arroyo hace una curva. Cañón lateral que permanece en sombra. 11 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8180,6 +8996,12 @@
             "nombre": "Ortigas",
             "descripcion": "Sector en sombra constante, a 100m cruzando el arroyo desde La Penca. Nombrado por las ortigas en la base. 18 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8187,6 +9009,12 @@
             "nombre": "El circo",
             "descripcion": "Sector característico con pared amplia y gran techo superior. Grandes bloques en la base del lado derecho. 32 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8194,6 +9022,12 @@
             "nombre": "Le blond",
             "descripcion": "Placas aplomadas de color marrón claro en el lado derecho del sector El Circo. 4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8201,6 +9035,12 @@
             "nombre": "Anfiteatro",
             "descripcion": "Amplia pared con techo alargado que recorre casi toda la pared. Gran cueva en el medio. 27 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8208,6 +9048,12 @@
             "nombre": "Escorpion",
             "descripcion": "Sector en el lado izquierdo enfrente del Anfiteatro. Placas aplomadas hacia una cueva abovedada. 6 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8215,6 +9061,12 @@
             "nombre": "El Puño",
             "descripcion": "Hermosa formación rocosa prominente separada de la pared principal, semejante a un puño. 1 vía.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8222,6 +9074,12 @@
             "nombre": "El Parlamento",
             "descripcion": "Gran sector inaugurado en 2012. Muro elevado con fuertes desplomes. 10 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8229,6 +9087,12 @@
             "nombre": "El Alambrado",
             "descripcion": "Sector en el margen derecho del río, donde había un viejo alambrado. 4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8236,6 +9100,12 @@
             "nombre": "Jardin del Eden",
             "descripcion": "Cañón lateral con forma de herradura y placas verticales llenas de agujeros. 5 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8243,6 +9113,12 @@
             "nombre": "Naranjo",
             "descripcion": "Pequeño sector en el lado derecho del cañadón. Evidente chorrera negra en el lado izquierdo. 3 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8250,6 +9126,12 @@
             "nombre": "Tarjeta Roja",
             "descripcion": "Sector con evidente placa rojiza en el lado izquierdo del cañadón. 2 proyectos.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8257,6 +9139,12 @@
             "nombre": "Cañon de las sombras",
             "descripcion": "Sector en el lado derecho del cañadón, a 120m desde Jardín del Edén. Cañón lateral en sombra. 8 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8264,6 +9152,12 @@
             "nombre": "Tres torres",
             "descripcion": "Cañón lateral a 120m desde Jardín del Edén. Subida de 50m donde se encuentran las vías. 4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8271,6 +9165,12 @@
             "nombre": "La olita",
             "descripcion": "Sector en el lado derecho, a 20m desde Cañón de las Sombras. Evidentes desplomes agujereados. 4 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8278,6 +9178,12 @@
             "nombre": "El alamo",
             "descripcion": "Sector en el lado derecho, a 40m desde La Olita sobre la misma pared. 3 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8285,6 +9191,12 @@
             "nombre": "La calavera",
             "descripcion": "Sector en el lado derecho, a 450m desde La Olita. Gran cueva y placas a la izquierda. 16 vías.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8292,6 +9204,12 @@
             "nombre": "Cañon de la calavera",
             "descripcion": "Cañón lateral con 4 sub-sectores: Cortas, La Cueva, Las Gradas y Punta de Flecha. 15 vías totales.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8299,6 +9217,12 @@
             "nombre": "El gallinero",
             "descripcion": "Último sector del cañadón, a 150m desde La Calavera. Formación rocosa que se asemeja a una gallinita. 1 vía.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8306,6 +9230,12 @@
             "nombre": "Piedra Parada",
             "descripcion": "Impresionante formación rocosa de 260m de altura, la más emblemática del área. Alberga las más emocionantes historias y aventuras de escalada desde los años 50. 13 vías de alta dificultad y compromiso.",
             "imageUrl": "",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           }
         ]
@@ -8327,6 +9257,12 @@
             "nombre": "Sector 1: La Crux",
             "descripcion": "Sector Sector 1: La Crux. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_1_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_1_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8334,6 +9270,12 @@
             "nombre": "Sector 2: El Baden",
             "descripcion": "Sector Sector 2: El Baden. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_2_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_2_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8341,6 +9283,12 @@
             "nombre": "Sector 3: La Palestra",
             "descripcion": "Sector Sector 3: La Palestra. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_3_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_3_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           },
           {
@@ -8348,6 +9296,12 @@
             "nombre": "Sector 4: Cañadon de las Palomas",
             "descripcion": "Sector Sector 4: Cañadon de las Palomas. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_4_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fsector_4_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": []
           }
         ]
@@ -8369,6 +9323,12 @@
             "nombre": "Multilargos",
             "descripcion": "Sector Multilargos. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Fmultilargos.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Fmultilargos.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "trevelin-multilargos-1",
@@ -8489,6 +9449,12 @@
             "nombre": "Central",
             "descripcion": "Sector Central. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Fcentral.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Fcentral.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "trevelin-central-1",
@@ -8545,6 +9511,12 @@
             "nombre": "Los Techos",
             "descripcion": "Sector Los Techos. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Flos_techos.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Flos_techos.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "trevelin-los-techos-1",
@@ -8730,6 +9702,12 @@
             "nombre": "San Antonio A",
             "descripcion": "Sector San Antonio A. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsan_antonio_a.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsan_antonio_a.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "san-antonio-san-antonio-a-1",
@@ -8794,6 +9772,12 @@
             "nombre": "San Antonio B",
             "descripcion": "Sector San Antonio B. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsan_antonio_b.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsan_antonio_b.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "san-antonio-san-antonio-b-1",
@@ -8840,6 +9824,12 @@
             "nombre": "Crudo Invierno",
             "descripcion": "Sector Crudo Invierno. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcrudo_invierno.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcrudo_invierno.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "termas-de-reyes-crudo-invierno-1",
@@ -8902,6 +9892,12 @@
             "nombre": "Salto del Mono",
             "descripcion": "Sector Salto del Mono. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsalto_del_mono.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsalto_del_mono.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "las-escaleras-salto-del-mono-1",
@@ -8958,6 +9954,12 @@
             "nombre": "Los Fititos",
             "descripcion": "Sector Los Fititos. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Flos_fititos.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Flos_fititos.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Flos_fititos_b.png?alt=media",
             "vias": [
               {
                 "id": "las-escaleras-los-fititos-1",
@@ -9028,6 +10030,12 @@
             "nombre": "Volcán",
             "descripcion": "Sector Volcán. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fvolcan.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fvolcan.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "barcena-volcan-1",
@@ -9178,6 +10186,12 @@
             "nombre": "Don Lamas",
             "descripcion": "Sector Don Lamas. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fdon_lamas.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fdon_lamas.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-roncal-don-lamas-1",
@@ -9226,6 +10240,12 @@
             "nombre": "El Roncal",
             "descripcion": "Sector El Roncal. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fel_roncal.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fel_roncal.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "el-roncal-el-roncal-1",
@@ -9360,6 +10380,12 @@
             "nombre": "Cactus Escalador",
             "descripcion": "Sector Cactus Escalador. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcactus_escalador.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcactus_escalador.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tilcara-cactus-escalador-1",
@@ -9392,6 +10418,12 @@
             "nombre": "Frente-Contrafrente",
             "descripcion": "Sector Frente-Contrafrente. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ffrente_contrafrente.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ffrente_contrafrente.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tilcara-frente-contrafrente-1",
@@ -9432,6 +10464,12 @@
             "nombre": "Desde Abajo",
             "descripcion": "Sector Desde Abajo. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fdesde_abajo.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fdesde_abajo.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tilcara-desde-abajo-1",
@@ -9472,6 +10510,12 @@
             "nombre": "Festival Chino",
             "descripcion": "Sector Festival Chino. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ffestival_chino.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ffestival_chino.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tilcara-festival-chino-1",
@@ -9496,6 +10540,12 @@
             "nombre": "Seis Descuelgues",
             "descripcion": "Sector Seis Descuelgues. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fseis_descuelgues.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fseis_descuelgues.png?alt=media",
+            "centroImageUrl": "",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fseis_descuelgues_b.png?alt=media",
             "vias": [
               {
                 "id": "tilcara-seis-descuelgues-1",
@@ -9552,6 +10602,12 @@
             "nombre": "Chautermo",
             "descripcion": "Sector Chautermo. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fchautermo.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fchautermo.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tilcara-chautermo-1",
@@ -9622,6 +10678,12 @@
             "nombre": "8 Hermanos",
             "descripcion": "Sector 8 Hermanos. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2F8_hermanos.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2F8_hermanos.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "yavi-8-hermanos-1",
@@ -9694,6 +10756,12 @@
             "nombre": "El Mirador",
             "descripcion": "Sector El Mirador. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fel_mirador.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fel_mirador.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "yavi-el-mirador-1",
@@ -9766,6 +10834,12 @@
             "nombre": "Grevy",
             "descripcion": "Sector Grevy. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fgrevy.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fgrevy.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "yavi-grevy-1",
@@ -9814,6 +10888,12 @@
             "nombre": "Juanvy",
             "descripcion": "Sector Juanvy. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fjuanvy.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fjuanvy.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "yavi-juanvy-1",
@@ -9854,6 +10934,12 @@
             "nombre": "La Cueva",
             "descripcion": "Sector La Cueva. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fla_cueva.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fla_cueva.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "yavi-la-cueva-1",
@@ -9886,6 +10972,12 @@
             "nombre": "La Cascada",
             "descripcion": "Sector La Cascada. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fla_cascada.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fla_cascada.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "yavi-la-cascada-1",
@@ -9956,6 +11048,12 @@
             "nombre": "Bloque Línea Blanca",
             "descripcion": "Sector Bloque Línea Blanca. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fbloque_linea_blanca.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fbloque_linea_blanca.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-bloque-linea-blanca-1",
@@ -9988,6 +11086,12 @@
             "nombre": "La Panzona",
             "descripcion": "Sector La Panzona. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fla_panzona.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fla_panzona.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-la-panzona-1",
@@ -10004,6 +11108,12 @@
             "nombre": "Frente Piedra Partida",
             "descripcion": "Sector Frente Piedra Partida. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ffrente_piedra_partida.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ffrente_piedra_partida.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-frente-piedra-partida-1",
@@ -10028,6 +11138,12 @@
             "nombre": "Piedra Partida",
             "descripcion": "Sector Piedra Partida. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fpiedra_partida.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fpiedra_partida.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-piedra-partida-1",
@@ -10068,6 +11184,12 @@
             "nombre": "Partida Arriba",
             "descripcion": "Sector Partida Arriba. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fpartida_arriba.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fpartida_arriba.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fpartida_arriba_b.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fpartida_arriba_2.png?alt=media",
             "vias": [
               {
                 "id": "tuzgle-partida-arriba-1",
@@ -10148,6 +11270,12 @@
             "nombre": "Sector Caprez",
             "descripcion": "Sector Sector Caprez. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsector_caprez_overview.png?alt=media",
+            "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsector_caprez_overview.png?alt=media",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "",
+            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcaprez_1.png?alt=media",
+            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcaprez_2.png?alt=media",
+            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fcaprez_3.png?alt=media",
             "vias": [
               {
                 "id": "tuzgle-sector-caprez-1",
@@ -10276,6 +11404,12 @@
             "nombre": "Torre Torcida",
             "descripcion": "Sector Torre Torcida. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ftorre_torcida.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ftorre_torcida.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-torre-torcida-1",
@@ -10308,6 +11442,12 @@
             "nombre": "Portada Roja",
             "descripcion": "Sector Portada Roja. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fportada_roja.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fportada_roja.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-portada-roja-1",
@@ -10356,6 +11496,12 @@
             "nombre": "Boulder Expuesto",
             "descripcion": "Sector Boulder Expuesto. Orientación: -",
             "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fboulder_expuesto.png?alt=media",
+            "overviewImageUrl": "",
+            "comoLlegarImageUrl": "",
+            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fboulder_expuesto.png?alt=media",
+            "izquierdaImageUrl": "",
+            "centroImageUrl": "",
+            "derechaImageUrl": "",
             "vias": [
               {
                 "id": "tuzgle-boulder-expuesto-1",

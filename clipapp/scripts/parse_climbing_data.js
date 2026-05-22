@@ -293,6 +293,75 @@ function extractAreaImages(assets) {
   };
 }
 
+function extractSectorImages(content, storagePath) {
+  const images = {
+    overviewImageUrl: '',
+    comoLlegarImageUrl: '',
+    generalImageUrl: '',
+    izquierdaImageUrl: '',
+    centroImageUrl: '',
+    derechaImageUrl: ''
+  };
+
+  const imageRegexes = [
+    /_buildSectorImage\(\s*context\s*,\s*['"]([^'"]+)['"]/g,
+    /FirebaseStorageImage\(\s*storagePath\s*,\s*['"]([^'"]+)['"]/g,
+    /FirebaseStorageImage\(\s*storagePath\s*:\s*['"]([^'"]+)['"]/g,
+    /_buildSectorImage\(\s*context\s*,\s*['"]([^'"]+)['"]\s*,\s*['"]([^'"]+)['"]/g
+  ];
+
+  const foundPaths = [];
+
+  if (storagePath) {
+    foundPaths.push(storagePath);
+  }
+
+  for (const regex of imageRegexes) {
+    let match;
+    regex.lastIndex = 0;
+    while ((match = regex.exec(content)) !== null) {
+      const imgPath = match[1];
+      if (!foundPaths.includes(imgPath)) {
+        foundPaths.push(imgPath);
+      }
+    }
+  }
+
+  const staticStrRegex = /static\s+const\s+(?:String\s+)?(?:imagePath|storagePath|image|img)\s*=\s*['"]([^'"]+)['"]/gi;
+  let staticMatch;
+  while ((staticMatch = staticStrRegex.exec(content)) !== null) {
+    const imgPath = staticMatch[1];
+    if (!foundPaths.includes(imgPath)) {
+      foundPaths.push(imgPath);
+    }
+  }
+
+  const remaining = [];
+  for (const p of foundPaths) {
+    const lower = p.toLowerCase();
+    if (lower.includes('overview') || lower.includes('mapa') || lower.includes('map_')) {
+      images.overviewImageUrl = getStorageUrl(p);
+    } else if (lower.includes('llegar') || lower.includes('access') || lower.includes('how_to') || lower.includes('como-llegar')) {
+      images.comoLlegarImageUrl = getStorageUrl(p);
+    } else {
+      remaining.push(p);
+    }
+  }
+
+  if (remaining.length === 1) {
+    images.generalImageUrl = getStorageUrl(remaining[0]);
+  } else if (remaining.length === 2) {
+    images.izquierdaImageUrl = getStorageUrl(remaining[0]);
+    images.derechaImageUrl = getStorageUrl(remaining[1]);
+  } else if (remaining.length >= 3) {
+    images.izquierdaImageUrl = getStorageUrl(remaining[0]);
+    images.centroImageUrl = getStorageUrl(remaining[1]);
+    images.derechaImageUrl = getStorageUrl(remaining[2]);
+  }
+
+  return images;
+}
+
 function processAreaFile(areaFilePath, areaSlug) {
   const content = fs.readFileSync(areaFilePath, 'utf8');
 
@@ -394,11 +463,22 @@ function processAreaFile(areaFilePath, areaSlug) {
       console.log(`Processing Sector: ${name} (class: ${classMatch ? classMatch[1] : 'Unknown'})`);
 
       let vias = [];
+      let sectorImages = {
+        overviewImageUrl: '',
+        comoLlegarImageUrl: '',
+        generalImageUrl: '',
+        izquierdaImageUrl: '',
+        centroImageUrl: '',
+        derechaImageUrl: ''
+      };
+
       if (classMatch) {
         const sectorClassName = classMatch[1];
         const sectorFilePath = findSectorFileByClass(sectorClassName);
         if (sectorFilePath && fs.existsSync(sectorFilePath)) {
           vias = parseSectorFile(sectorFilePath, sectorClassName, sectorSlug);
+          const sectorFileContent = fs.readFileSync(sectorFilePath, 'utf8');
+          sectorImages = extractSectorImages(sectorFileContent, storagePath);
         } else {
           console.warn(`  Warning: Could not find file defining class ${sectorClassName}`);
         }
@@ -409,6 +489,12 @@ function processAreaFile(areaFilePath, areaSlug) {
         nombre: name,
         descripcion: summary || `Sector ${name}. Orientación: ${orientation}`,
         imageUrl: getStorageUrl(storagePath),
+        overviewImageUrl: sectorImages.overviewImageUrl,
+        comoLlegarImageUrl: sectorImages.comoLlegarImageUrl,
+        generalImageUrl: sectorImages.generalImageUrl,
+        izquierdaImageUrl: sectorImages.izquierdaImageUrl,
+        centroImageUrl: sectorImages.centroImageUrl,
+        derechaImageUrl: sectorImages.derechaImageUrl,
         vias: vias
       });
     }

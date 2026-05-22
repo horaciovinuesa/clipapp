@@ -28,7 +28,7 @@ import {
   AlertTriangle,
   RefreshCw
 } from 'lucide-react';
-import { db } from '@/lib/firebase';
+import { db, storage } from '@/lib/firebase';
 import { 
   collection, 
   doc, 
@@ -37,6 +37,7 @@ import {
   deleteDoc, 
   updateDoc 
 } from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 export default function ProvinciasEditor() {
   const { isDemoMode } = useAdmin();
@@ -52,6 +53,7 @@ export default function ProvinciasEditor() {
   const [saving, setSaving] = useState(false);
   const [seeding, setSeeding] = useState(false);
   const [actionMessage, setActionMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
 
   // Editor states (for adding new Province/Area/Sector)
   const [showAddProvinceModal, setShowAddProvinceModal] = useState(false);
@@ -273,6 +275,88 @@ export default function ProvinciasEditor() {
   const saveProvincesToLocal = (updatedProvinces: Province[]) => {
     setProvinces(updatedProvinces);
     localStorage.setItem('clipapp_provinces', JSON.stringify(updatedProvinces));
+  };
+
+  // Firebase Storage Image Upload
+  const handleImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    isArea: boolean,
+    fieldName: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const ext = file.name.split('.').pop() || 'jpg';
+    let storagePath = '';
+    if (isArea) {
+      storagePath = `${selectedProvinceId}/${selectedAreaId}/${fieldName}.${ext}`;
+    } else {
+      if (!selectedSector) return;
+      storagePath = `${selectedProvinceId}/${selectedAreaId}/${selectedSector.id}/${fieldName}.${ext}`;
+    }
+
+    const progressKey = isArea ? `area-${fieldName}` : `sector-${fieldName}`;
+    setUploadProgress(prev => ({ ...prev, [progressKey]: 0 }));
+
+    try {
+      const storageRef = ref(storage, storagePath);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress(prev => ({ ...prev, [progressKey]: Math.round(progress) }));
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+          setActionMessage({ text: `Error al subir imagen: ${error.message}`, type: 'error' });
+          setUploadProgress(prev => {
+            const next = { ...prev };
+            delete next[progressKey];
+            return next;
+          });
+        },
+        async () => {
+          try {
+            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+            
+            if (isArea) {
+              if (fieldName === 'imageUrl') setAreaEditImage(downloadUrl);
+              else if (fieldName === 'howToGetImageUrl') setAreaEditHowToGetImage(downloadUrl);
+              else if (fieldName === 'overviewImageUrl') setAreaEditOverviewImage(downloadUrl);
+            } else {
+              if (fieldName === 'imageUrl') setSectorEditImage(downloadUrl);
+              else if (fieldName === 'overviewImageUrl') setSectorEditOverviewImage(downloadUrl);
+              else if (fieldName === 'comoLlegarImageUrl') setSectorEditComoLlegarImage(downloadUrl);
+              else if (fieldName === 'generalImageUrl') setSectorEditGeneralImage(downloadUrl);
+              else if (fieldName === 'izquierdaImageUrl') setSectorEditIzquierdaImage(downloadUrl);
+              else if (fieldName === 'centroImageUrl') setSectorEditCentroImage(downloadUrl);
+              else if (fieldName === 'derechaImageUrl') setSectorEditDerechaImage(downloadUrl);
+            }
+            
+            setActionMessage({ text: 'Imagen subida y URL actualizada.', type: 'success' });
+          } catch (err: unknown) {
+            const e = err as { message?: string };
+            setActionMessage({ text: `Error al obtener URL de descarga: ${e.message}`, type: 'error' });
+          } finally {
+            setUploadProgress(prev => {
+              const next = { ...prev };
+              delete next[progressKey];
+              return next;
+            });
+          }
+        }
+      );
+    } catch (err: unknown) {
+      const e = err as { message?: string };
+      setActionMessage({ text: `Error al iniciar subida: ${e.message}`, type: 'error' });
+      setUploadProgress(prev => {
+        const next = { ...prev };
+        delete next[progressKey];
+        return next;
+      });
+    }
   };
 
   // Seeding Firebase DB
@@ -774,6 +858,14 @@ export default function ProvinciasEditor() {
   // Filter routes based on selected tab group
   const filteredRoutes = selectedSector?.vias.filter(v => v.grupo === activeGroupTab) || [];
 
+  const getActiveCroquisUrl = () => {
+    if (activeGroupTab === 'General') return sectorEditGeneralImage;
+    if (activeGroupTab === 'Izquierda') return sectorEditIzquierdaImage;
+    if (activeGroupTab === 'Centro') return sectorEditCentroImage;
+    if (activeGroupTab === 'Derecha') return sectorEditDerechaImage;
+    return '';
+  };
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       
@@ -1138,6 +1230,25 @@ export default function ProvinciasEditor() {
                             placeholder="https://..."
                             className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
                           />
+                          <div className="flex items-center justify-between gap-2 mt-1">
+                            <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                              <Plus className="w-3 h-3" /> Subir
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => handleImageUpload(e, true, 'imageUrl')}
+                              />
+                            </label>
+                            {uploadProgress['area-imageUrl'] !== undefined && (
+                              <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                                {uploadProgress['area-imageUrl']}%
+                              </span>
+                            )}
+                          </div>
+                          <span className="block text-[9px] text-zinc-550 font-medium truncate mt-1">
+                            📂 {selectedProvinceId}/{selectedAreaId}/imageUrl.jpg
+                          </span>
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Acceso (URL)</label>
@@ -1148,6 +1259,25 @@ export default function ProvinciasEditor() {
                             placeholder="https://..."
                             className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
                           />
+                          <div className="flex items-center justify-between gap-2 mt-1">
+                            <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                              <Plus className="w-3 h-3" /> Subir
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => handleImageUpload(e, true, 'howToGetImageUrl')}
+                              />
+                            </label>
+                            {uploadProgress['area-howToGetImageUrl'] !== undefined && (
+                              <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                                {uploadProgress['area-howToGetImageUrl']}%
+                              </span>
+                            )}
+                          </div>
+                          <span className="block text-[9px] text-zinc-550 font-medium truncate mt-1">
+                            📂 {selectedProvinceId}/{selectedAreaId}/howToGetImageUrl.jpg
+                          </span>
                         </div>
                         <div>
                           <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Overview/Mapa (URL)</label>
@@ -1158,6 +1288,25 @@ export default function ProvinciasEditor() {
                             placeholder="https://..."
                             className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
                           />
+                          <div className="flex items-center justify-between gap-2 mt-1">
+                            <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                              <Plus className="w-3 h-3" /> Subir
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => handleImageUpload(e, true, 'overviewImageUrl')}
+                              />
+                            </label>
+                            {uploadProgress['area-overviewImageUrl'] !== undefined && (
+                              <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                                {uploadProgress['area-overviewImageUrl']}%
+                              </span>
+                            )}
+                          </div>
+                          <span className="block text-[9px] text-zinc-550 font-medium truncate mt-1">
+                            📂 {selectedProvinceId}/{selectedAreaId}/overviewImageUrl.jpg
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1322,6 +1471,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'imageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-imageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-450 font-bold animate-pulse">
+                          {uploadProgress['sector-imageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-500 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/imageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 2: Overview (Vista General) */}
@@ -1344,6 +1512,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'overviewImageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-overviewImageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-450 font-bold animate-pulse">
+                          {uploadProgress['sector-overviewImageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-550 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/overviewImageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 3: Cómo Llegar */}
@@ -1366,6 +1553,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'comoLlegarImageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-comoLlegarImageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-450 font-bold animate-pulse">
+                          {uploadProgress['sector-comoLlegarImageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-550 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/comoLlegarImageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 4: Croquis Set General */}
@@ -1388,6 +1594,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'generalImageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-generalImageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                          {uploadProgress['sector-generalImageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-555 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/generalImageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 5: Croquis Set Izquierda (Vías 1) */}
@@ -1410,6 +1635,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'izquierdaImageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-izquierdaImageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                          {uploadProgress['sector-izquierdaImageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-555 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/izquierdaImageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 6: Croquis Set Centro (Vías 2) */}
@@ -1432,6 +1676,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'centroImageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-centroImageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                          {uploadProgress['sector-centroImageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-555 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/centroImageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 7: Croquis Set Derecha (Vías 3) */}
@@ -1454,6 +1717,25 @@ export default function ProvinciasEditor() {
                       placeholder="URL de la imagen..."
                       className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                    <div className="flex items-center justify-between gap-2 mt-1">
+                      <label className="cursor-pointer px-2 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-350 hover:text-white rounded text-[10px] font-bold flex items-center gap-1 border border-zinc-800 transition">
+                        <Plus className="w-3 h-3" /> Subir
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(e, false, 'derechaImageUrl')}
+                        />
+                      </label>
+                      {uploadProgress['sector-derechaImageUrl'] !== undefined && (
+                        <span className="text-[10px] text-emerald-455 font-bold animate-pulse">
+                          {uploadProgress['sector-derechaImageUrl']}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="block text-[9px] text-zinc-555 font-medium truncate mt-0.5">
+                      📂 {selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/derechaImageUrl.jpg
+                    </span>
                   </div>
 
                   {/* Card 8: Save Action Button */}
@@ -1507,6 +1789,32 @@ export default function ProvinciasEditor() {
                     })}
                   </div>
                 </div>
+
+                {/* Contextual Croquis Preview */}
+                {getActiveCroquisUrl() && (
+                  <div className="bg-zinc-950/60 border border-zinc-850 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center animate-fade-in mb-4">
+                    <div className="w-full md:w-64 aspect-video rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950 relative flex-shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={getActiveCroquisUrl()} 
+                        alt={`Croquis ${activeGroupTab}`} 
+                        className="w-full h-full object-contain" 
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
+                        Croquis Activo: {activeGroupTab}
+                      </span>
+                      <h4 className="text-xs font-bold text-white">Imagen de referencia para este grupo de vías</h4>
+                      <p className="text-[11px] text-zinc-400">
+                        Esta imagen de croquis se mostrará en la app móvil al visualizar las vías de la sección &quot;{activeGroupTab}&quot;.
+                      </p>
+                      <span className="block text-[10px] text-zinc-550 font-mono truncate max-w-md">
+                        {getActiveCroquisUrl()}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 {/* Vias table */}
                 <div className="overflow-x-auto">
