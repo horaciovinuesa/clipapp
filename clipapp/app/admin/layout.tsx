@@ -11,7 +11,6 @@ import {
   Compass, 
   AlertTriangle, 
   LogOut, 
-  Lock, 
   Database,
   Menu,
   X
@@ -253,10 +252,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
 
+        {/* Large blurred background logo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img 
+          src="/images/main_icon.png" 
+          alt="" 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-[0.03] blur-[20px] select-none object-contain pointer-events-none" 
+        />
+
         <div className="w-full max-w-md bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-3xl p-8 shadow-2xl relative z-10">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-8 h-8 text-emerald-400" />
+            <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/images/main_icon.png" 
+                alt="ClipApp Logo" 
+                className="w-12 h-12 object-cover rounded-lg"
+              />
             </div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight">ClipApp Admin</h1>
             <p className="text-sm text-zinc-400 mt-2">Panel de Administración de Vías e Información</p>
@@ -311,16 +323,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   // If logged in, render Dashboard with Navigation Sidebar
   return (
     <AdminContext.Provider value={{ isDemoMode, setIsDemoMode, user, loading }}>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex font-sans selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-hidden">
         
+        {/* Background elements: Large blurred ClipApp logo with green gradient */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          {/* Green gradient glow */}
+          <div className="absolute -right-40 -bottom-40 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px]"></div>
+          <div className="absolute -left-40 -top-40 w-[600px] h-[600px] bg-green-500/10 rounded-full blur-[120px]"></div>
+          
+          {/* Large blurred logo */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src="/images/main_icon.png" 
+            alt="" 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] opacity-[0.04] blur-[15px] select-none object-contain" 
+          />
+        </div>
+
         {/* Sidebar */}
-        <aside className={`bg-zinc-900 border-r border-zinc-800 flex flex-col z-20 transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-20'}`}>
+        <aside className={`bg-zinc-900/90 backdrop-blur-md border-r border-zinc-800/80 flex flex-col z-20 transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-20'}`}>
           {/* Logo Section */}
           <div className="h-16 px-6 border-b border-zinc-800 flex items-center justify-between">
             <div className="flex items-center gap-3 overflow-hidden">
-              <div className="w-8 h-8 bg-gradient-to-tr from-emerald-500 to-green-400 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/20">
-                <span className="font-black text-zinc-950 text-sm">C</span>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/images/main_icon.png" 
+                alt="ClipApp Logo" 
+                className="w-8 h-8 rounded-lg flex-shrink-0 object-cover bg-zinc-850"
+              />
               {sidebarOpen && <span className="font-extrabold text-white tracking-wide text-lg">ClipApp Admin</span>}
             </div>
             <button 
@@ -399,15 +429,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </aside>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+        <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden relative z-10">
           <header className="h-16 border-b border-zinc-800 bg-zinc-900/40 px-8 flex items-center justify-between">
             <h2 className="text-lg font-bold text-white tracking-tight">
               {navItems.find(item => pathname === item.path || (item.path !== '/admin' && pathname.startsWith(item.path)))?.name || 'Administración'}
             </h2>
             <div className="flex items-center gap-4 text-xs">
-              <span className="px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-400 rounded-full">
+              <span className="px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-zinc-400 rounded-full hidden sm:inline-block">
                 Versión Web 1.0.0
               </span>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-red-950/45 border border-red-900/30 hover:bg-red-900 hover:text-zinc-950 text-red-400 hover:border-transparent rounded-xl transition font-semibold"
+                title="Cerrar sesión"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Salir</span>
+              </button>
             </div>
           </header>
 

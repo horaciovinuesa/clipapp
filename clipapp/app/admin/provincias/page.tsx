@@ -85,10 +85,28 @@ export default function ProvinciasEditor() {
   // Active route set tab inside Sector view
   const [activeGroupTab, setActiveGroupTab] = useState<'General' | 'Izquierda' | 'Centro' | 'Derecha'>('General');
 
+  // Area metadata edit states
+  const [isEditingArea, setIsEditingArea] = useState(false);
+  const [areaEditName, setAreaEditName] = useState('');
+  const [areaEditDesc, setAreaEditDesc] = useState('');
+  const [areaEditTiempoCaminata, setAreaEditTiempoCaminata] = useState('');
+  const [areaEditGoogleMapsLink, setAreaEditGoogleMapsLink] = useState('');
+  const [areaEditHospitalLink, setAreaEditHospitalLink] = useState('');
+  const [areaEditWindguruLink, setAreaEditWindguruLink] = useState('');
+  const [areaEditImage, setAreaEditImage] = useState('');
+  const [areaEditHowToGetImage, setAreaEditHowToGetImage] = useState('');
+  const [areaEditOverviewImage, setAreaEditOverviewImage] = useState('');
+
   // Sector title/image inline edits
   const [sectorEditName, setSectorEditName] = useState('');
   const [sectorEditDesc, setSectorEditDesc] = useState('');
   const [sectorEditImage, setSectorEditImage] = useState('');
+  const [sectorEditOverviewImage, setSectorEditOverviewImage] = useState('');
+  const [sectorEditComoLlegarImage, setSectorEditComoLlegarImage] = useState('');
+  const [sectorEditGeneralImage, setSectorEditGeneralImage] = useState('');
+  const [sectorEditIzquierdaImage, setSectorEditIzquierdaImage] = useState('');
+  const [sectorEditCentroImage, setSectorEditCentroImage] = useState('');
+  const [sectorEditDerechaImage, setSectorEditDerechaImage] = useState('');
 
   // Auto-clear success message
   useEffect(() => {
@@ -109,18 +127,23 @@ export default function ProvinciasEditor() {
           const parsed = JSON.parse(localData);
           setProvinces(parsed);
           if (parsed.length > 0) {
-            setSelectedProvinceId(parsed[0].id);
-            if (parsed[0].areas.length > 0) {
-              setSelectedAreaId(parsed[0].areas[0].id);
+            // Find "córdoba" (case-insensitive) or default to index 0
+            const cordobaIndex = parsed.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
+            const defaultIndex = cordobaIndex !== -1 ? cordobaIndex : 0;
+            setSelectedProvinceId(parsed[defaultIndex].id);
+            if (parsed[defaultIndex].areas.length > 0) {
+              setSelectedAreaId(parsed[defaultIndex].areas[0].id);
             }
           }
         } else {
           setProvinces(climbingData);
           localStorage.setItem('clipapp_provinces', JSON.stringify(climbingData));
           if (climbingData.length > 0) {
-            setSelectedProvinceId(climbingData[0].id);
-            if (climbingData[0].areas.length > 0) {
-              setSelectedAreaId(climbingData[0].areas[0].id);
+            const cordobaIndex = climbingData.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
+            const defaultIndex = cordobaIndex !== -1 ? cordobaIndex : 0;
+            setSelectedProvinceId(climbingData[defaultIndex].id);
+            if (climbingData[defaultIndex].areas.length > 0) {
+              setSelectedAreaId(climbingData[defaultIndex].areas[0].id);
             }
           }
         }
@@ -150,6 +173,12 @@ export default function ProvinciasEditor() {
                 nombre: sData.nombre || '',
                 descripcion: sData.descripcion || '',
                 imageUrl: sData.imageUrl || '',
+                overviewImageUrl: sData.overviewImageUrl || '',
+                comoLlegarImageUrl: sData.comoLlegarImageUrl || '',
+                generalImageUrl: sData.generalImageUrl || '',
+                izquierdaImageUrl: sData.izquierdaImageUrl || '',
+                centroImageUrl: sData.centroImageUrl || '',
+                derechaImageUrl: sData.derechaImageUrl || '',
                 vias: sData.vias || []
               });
             });
@@ -157,6 +186,14 @@ export default function ProvinciasEditor() {
             areas.push({
               id: areaId,
               nombre: aData.nombre || '',
+              descripcion: aData.descripcion || '',
+              tiempoCaminata: aData.tiempoCaminata || '',
+              googleMapsLink: aData.googleMapsLink || '',
+              hospitalLink: aData.hospitalLink || '',
+              windguruLink: aData.windguruLink || '',
+              imageUrl: aData.imageUrl || '',
+              howToGetImageUrl: aData.howToGetImageUrl || '',
+              overviewImageUrl: aData.overviewImageUrl || '',
               sectores
             });
           }
@@ -170,9 +207,11 @@ export default function ProvinciasEditor() {
         
         setProvinces(tempProvinces);
         if (tempProvinces.length > 0) {
-          setSelectedProvinceId(tempProvinces[0].id);
-          if (tempProvinces[0].areas.length > 0) {
-            setSelectedAreaId(tempProvinces[0].areas[0].id);
+          const cordobaIndex = tempProvinces.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
+          const defaultIndex = cordobaIndex !== -1 ? cordobaIndex : 0;
+          setSelectedProvinceId(tempProvinces[defaultIndex].id);
+          if (tempProvinces[defaultIndex].areas.length > 0) {
+            setSelectedAreaId(tempProvinces[defaultIndex].areas[0].id);
           }
         }
       }
@@ -190,21 +229,45 @@ export default function ProvinciasEditor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDemoMode]);
 
+  const activeProvince = provinces.find(p => p.id === selectedProvinceId);
+  const activeArea = activeProvince?.areas.find(a => a.id === selectedAreaId);
+
+  // Sync edited area data to state when selecting a different Area
+  useEffect(() => {
+    if (activeArea) {
+      setAreaEditName(activeArea.nombre);
+      setAreaEditDesc(activeArea.descripcion || '');
+      setAreaEditTiempoCaminata(activeArea.tiempoCaminata || '');
+      setAreaEditGoogleMapsLink(activeArea.googleMapsLink || '');
+      setAreaEditHospitalLink(activeArea.hospitalLink || '');
+      setAreaEditWindguruLink(activeArea.windguruLink || '');
+      setAreaEditImage(activeArea.imageUrl || '');
+      setAreaEditHowToGetImage(activeArea.howToGetImageUrl || '');
+      setAreaEditOverviewImage(activeArea.overviewImageUrl || '');
+      setIsEditingArea(false);
+    } else {
+      setIsEditingArea(false);
+    }
+  }, [selectedAreaId, selectedProvinceId]);
+
   // Sync edited sector data to state when opening Sector Editor
   useEffect(() => {
     if (selectedSector) {
       setSectorEditName(selectedSector.nombre);
       setSectorEditDesc(selectedSector.descripcion || '');
       setSectorEditImage(selectedSector.imageUrl || '');
+      setSectorEditOverviewImage(selectedSector.overviewImageUrl || '');
+      setSectorEditComoLlegarImage(selectedSector.comoLlegarImageUrl || '');
+      setSectorEditGeneralImage(selectedSector.generalImageUrl || '');
+      setSectorEditIzquierdaImage(selectedSector.izquierdaImageUrl || '');
+      setSectorEditCentroImage(selectedSector.centroImageUrl || '');
+      setSectorEditDerechaImage(selectedSector.derechaImageUrl || '');
       // Select appropriate tab based on routes.
       // If there are left/center/right routes, default to Left. Otherwise General.
       const hasGroups = selectedSector.vias.some(v => v.grupo !== 'General');
       setActiveGroupTab(hasGroups ? 'Izquierda' : 'General');
     }
   }, [selectedSector]);
-
-  const activeProvince = provinces.find(p => p.id === selectedProvinceId);
-  const activeArea = activeProvince?.areas.find(a => a.id === selectedAreaId);
 
   // Local Save utility (Demo mode helper)
   const saveProvincesToLocal = (updatedProvinces: Province[]) => {
@@ -226,7 +289,17 @@ export default function ProvinciasEditor() {
           for (const area of prov.areas) {
             // Write Area
             const areaRef = doc(db, `provincias/${prov.id}/areas`, area.id);
-            await setDoc(areaRef, { nombre: area.nombre });
+            await setDoc(areaRef, {
+              nombre: area.nombre,
+              descripcion: area.descripcion || '',
+              tiempoCaminata: area.tiempoCaminata || '',
+              googleMapsLink: area.googleMapsLink || '',
+              hospitalLink: area.hospitalLink || '',
+              windguruLink: area.windguruLink || '',
+              imageUrl: area.imageUrl || '',
+              howToGetImageUrl: area.howToGetImageUrl || '',
+              overviewImageUrl: area.overviewImageUrl || ''
+            });
 
             for (const sector of area.sectores) {
               // Write Sector
@@ -235,6 +308,12 @@ export default function ProvinciasEditor() {
                 nombre: sector.nombre,
                 descripcion: sector.descripcion || '',
                 imageUrl: sector.imageUrl || '',
+                overviewImageUrl: sector.overviewImageUrl || '',
+                comoLlegarImageUrl: sector.comoLlegarImageUrl || '',
+                generalImageUrl: sector.generalImageUrl || '',
+                izquierdaImageUrl: sector.izquierdaImageUrl || '',
+                centroImageUrl: sector.centroImageUrl || '',
+                derechaImageUrl: sector.derechaImageUrl || '',
                 vias: sector.vias
               });
             }
@@ -307,6 +386,14 @@ export default function ProvinciasEditor() {
     const newAreaObj: Area = {
       id: newId,
       nombre: newAreaName.trim(),
+      descripcion: '',
+      tiempoCaminata: '',
+      googleMapsLink: '',
+      hospitalLink: '',
+      windguruLink: '',
+      imageUrl: '',
+      howToGetImageUrl: '',
+      overviewImageUrl: '',
       sectores: []
     };
 
@@ -326,7 +413,17 @@ export default function ProvinciasEditor() {
     } else {
       setSaving(true);
       try {
-        await setDoc(doc(db, `provincias/${selectedProvinceId}/areas`, newId), { nombre: newAreaObj.nombre });
+        await setDoc(doc(db, `provincias/${selectedProvinceId}/areas`, newId), {
+          nombre: newAreaObj.nombre,
+          descripcion: '',
+          tiempoCaminata: '',
+          googleMapsLink: '',
+          hospitalLink: '',
+          windguruLink: '',
+          imageUrl: '',
+          howToGetImageUrl: '',
+          overviewImageUrl: ''
+        });
         setProvinces(updatedProvinces);
         setSelectedAreaId(newId);
         setShowAddAreaModal(false);
@@ -335,6 +432,72 @@ export default function ProvinciasEditor() {
       } catch (err: unknown) {
         const e = err as { message?: string };
         setActionMessage({ text: `Error: ${e.message}`, type: 'error' });
+      } finally {
+        setSaving(false);
+      }
+    }
+  };
+
+  // CRUD -- SAVE AREA DETAILS
+  const handleSaveAreaData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeArea || !selectedProvinceId) return;
+
+    setSaving(true);
+
+    const updatedAreaObj: Area = {
+      ...activeArea,
+      nombre: areaEditName.trim(),
+      descripcion: areaEditDesc.trim(),
+      tiempoCaminata: areaEditTiempoCaminata.trim(),
+      googleMapsLink: areaEditGoogleMapsLink.trim(),
+      hospitalLink: areaEditHospitalLink.trim(),
+      windguruLink: areaEditWindguruLink.trim(),
+      imageUrl: areaEditImage.trim(),
+      howToGetImageUrl: areaEditHowToGetImage.trim(),
+      overviewImageUrl: areaEditOverviewImage.trim(),
+    };
+
+    const updatedProvinces = provinces.map(p => {
+      if (p.id === selectedProvinceId) {
+        return {
+          ...p,
+          areas: p.areas.map(a => {
+            if (a.id === activeArea.id) {
+              return updatedAreaObj;
+            }
+            return a;
+          })
+        };
+      }
+      return p;
+    });
+
+    if (isDemoMode) {
+      saveProvincesToLocal(updatedProvinces);
+      setIsEditingArea(false);
+      setSaving(false);
+      setActionMessage({ text: "Datos de la zona actualizados localmente.", type: 'success' });
+    } else {
+      try {
+        const areaRef = doc(db, `provincias/${selectedProvinceId}/areas`, activeArea.id);
+        await updateDoc(areaRef, {
+          nombre: updatedAreaObj.nombre,
+          descripcion: updatedAreaObj.descripcion || '',
+          tiempoCaminata: updatedAreaObj.tiempoCaminata || '',
+          googleMapsLink: updatedAreaObj.googleMapsLink || '',
+          hospitalLink: updatedAreaObj.hospitalLink || '',
+          windguruLink: updatedAreaObj.windguruLink || '',
+          imageUrl: updatedAreaObj.imageUrl || '',
+          howToGetImageUrl: updatedAreaObj.howToGetImageUrl || '',
+          overviewImageUrl: updatedAreaObj.overviewImageUrl || '',
+        });
+        setProvinces(updatedProvinces);
+        setIsEditingArea(false);
+        setActionMessage({ text: "Zona guardada en Firestore con éxito.", type: 'success' });
+      } catch (err: unknown) {
+        const e = err as { message?: string };
+        setActionMessage({ text: `Error al guardar: ${e.message}`, type: 'error' });
       } finally {
         setSaving(false);
       }
@@ -356,6 +519,12 @@ export default function ProvinciasEditor() {
       nombre: newSectorName.trim(),
       descripcion: newSectorDesc.trim(),
       imageUrl: newSectorImage.trim() || 'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=600&q=80',
+      overviewImageUrl: '',
+      comoLlegarImageUrl: '',
+      generalImageUrl: '',
+      izquierdaImageUrl: '',
+      centroImageUrl: '',
+      derechaImageUrl: '',
       vias: []
     };
 
@@ -388,6 +557,12 @@ export default function ProvinciasEditor() {
           nombre: newSecObj.nombre,
           descripcion: newSecObj.descripcion,
           imageUrl: newSecObj.imageUrl,
+          overviewImageUrl: '',
+          comoLlegarImageUrl: '',
+          generalImageUrl: '',
+          izquierdaImageUrl: '',
+          centroImageUrl: '',
+          derechaImageUrl: '',
           vias: []
         });
         setProvinces(updatedProvinces);
@@ -444,6 +619,12 @@ export default function ProvinciasEditor() {
           nombre: updatedSector.nombre,
           descripcion: updatedSector.descripcion || '',
           imageUrl: updatedSector.imageUrl || '',
+          overviewImageUrl: updatedSector.overviewImageUrl || '',
+          comoLlegarImageUrl: updatedSector.comoLlegarImageUrl || '',
+          generalImageUrl: updatedSector.generalImageUrl || '',
+          izquierdaImageUrl: updatedSector.izquierdaImageUrl || '',
+          centroImageUrl: updatedSector.centroImageUrl || '',
+          derechaImageUrl: updatedSector.derechaImageUrl || '',
           vias: updatedSector.vias
         });
         setProvinces(updatedProvinces);
@@ -464,7 +645,13 @@ export default function ProvinciasEditor() {
       ...selectedSector,
       nombre: sectorEditName,
       descripcion: sectorEditDesc,
-      imageUrl: sectorEditImage
+      imageUrl: sectorEditImage,
+      overviewImageUrl: sectorEditOverviewImage,
+      comoLlegarImageUrl: sectorEditComoLlegarImage,
+      generalImageUrl: sectorEditGeneralImage,
+      izquierdaImageUrl: sectorEditIzquierdaImage,
+      centroImageUrl: sectorEditCentroImage,
+      derechaImageUrl: sectorEditDerechaImage
     };
     handleSaveSectorData(updated);
   };
@@ -728,7 +915,264 @@ export default function ProvinciasEditor() {
 
           {/* Grid of Sectors */}
           {activeArea && !selectedSector && (
-            <div>
+            <div className="space-y-6">
+              
+              {/* Detalles de la Zona (Area Details Editor) */}
+              <div className="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-md space-y-6">
+                
+                {/* Area Editor Header */}
+                <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80">
+                  <div className="flex items-center gap-2">
+                    <Sliders className="w-5 h-5 text-emerald-450" />
+                    <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                      {isEditingArea ? `Editar Zona: ${activeArea.nombre}` : `Detalles de la Zona: ${activeArea.nombre}`}
+                    </h3>
+                  </div>
+                  {!isEditingArea ? (
+                    <button
+                      onClick={() => setIsEditingArea(true)}
+                      className="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-zinc-700/50"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" /> Editar Zona
+                    </button>
+                  ) : (
+                    <div className="flex gap-2">
+                      <button
+                        type="submit"
+                        form="area-edit-form"
+                        disabled={saving}
+                        className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-950 text-xs font-bold rounded-xl transition flex items-center gap-1"
+                      >
+                        <Save className="w-3.5 h-3.5" /> Guardar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAreaEditName(activeArea.nombre);
+                          setAreaEditDesc(activeArea.descripcion || '');
+                          setAreaEditTiempoCaminata(activeArea.tiempoCaminata || '');
+                          setAreaEditGoogleMapsLink(activeArea.googleMapsLink || '');
+                          setAreaEditHospitalLink(activeArea.hospitalLink || '');
+                          setAreaEditWindguruLink(activeArea.windguruLink || '');
+                          setAreaEditImage(activeArea.imageUrl || '');
+                          setAreaEditHowToGetImage(activeArea.howToGetImageUrl || '');
+                          setAreaEditOverviewImage(activeArea.overviewImageUrl || '');
+                          setIsEditingArea(false);
+                        }}
+                        className="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-750 text-zinc-400 hover:text-white text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-zinc-700/50"
+                      >
+                        <X className="w-3.5 h-3.5" /> Cancelar
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Area Editor Body */}
+                {!isEditingArea ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Left: Metadata list */}
+                    <div className="space-y-4 md:col-span-1 border-r border-zinc-800/40 pr-6">
+                      <div>
+                        <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Nombre</span>
+                        <p className="text-sm text-zinc-200 font-bold">{activeArea.nombre}</p>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Tiempo aproximado caminata</span>
+                        <p className="text-xs text-zinc-200 bg-zinc-950/40 border border-zinc-850 px-3 py-2 rounded-xl">
+                          {activeArea.tiempoCaminata || <span className="text-zinc-650 italic">No especificado</span>}
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Enlaces de utilidad</span>
+                        <div className="flex flex-col gap-1.5">
+                          {activeArea.googleMapsLink ? (
+                            <a href={activeArea.googleMapsLink} target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-455 hover:text-emerald-350 hover:underline flex items-center gap-1">
+                              <MapPin className="w-3.5 h-3.5 text-emerald-400" /> Cómo llegar (Google Maps)
+                            </a>
+                          ) : (
+                            <span className="text-xs text-zinc-600 italic">Sin enlace a Google Maps</span>
+                          )}
+                          {activeArea.hospitalLink ? (
+                            <a href={activeArea.hospitalLink} target="_blank" rel="noopener noreferrer" className="text-xs text-red-400 hover:text-red-300 hover:underline flex items-center gap-1">
+                              <MapPin className="w-3.5 h-3.5 text-red-400/80" /> Hospital Cercano (Maps)
+                            </a>
+                          ) : (
+                            <span className="text-xs text-zinc-600 italic">Sin enlace a Hospital</span>
+                          )}
+                          {activeArea.windguruLink ? (
+                            <a href={activeArea.windguruLink} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-400 hover:text-blue-300 hover:underline flex items-center gap-1">
+                              <Sliders className="w-3.5 h-3.5 text-blue-400/80" /> Windguru (Reporte Clima)
+                            </a>
+                          ) : (
+                            <span className="text-xs text-zinc-600 italic">Sin enlace a Windguru</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Desc & Images */}
+                    <div className="space-y-4 md:col-span-2">
+                      <div>
+                        <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Descripción de la zona & aproximación</span>
+                        <p className="text-xs text-zinc-300 leading-relaxed bg-zinc-950/40 p-4 rounded-xl border border-zinc-850 max-h-32 overflow-y-auto whitespace-pre-wrap">
+                          {activeArea.descripcion || 'Sin descripción o indicaciones cargadas.'}
+                        </p>
+                      </div>
+
+                      {/* Images grid previews */}
+                      <div className="grid grid-cols-3 gap-3 pt-2">
+                        <div>
+                          <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-500 mb-1 truncate">Portada Zona</span>
+                          <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/80 relative">
+                            {activeArea.imageUrl ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img src={activeArea.imageUrl} alt="Portada" className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-500 mb-1 truncate">Detalle Acceso</span>
+                          <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/80 relative">
+                            {activeArea.howToGetImageUrl ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img src={activeArea.howToGetImageUrl} alt="Cómo llegar" className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-500 mb-1 truncate">Vista General (Mapa)</span>
+                          <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/80 relative">
+                            {activeArea.overviewImageUrl ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img src={activeArea.overviewImageUrl} alt="Overview" className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <form id="area-edit-form" onSubmit={handleSaveAreaData} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {/* Column 1 */}
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Nombre Zona</label>
+                          <input
+                            type="text"
+                            value={areaEditName}
+                            onChange={(e) => setAreaEditName(e.target.value)}
+                            required
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Tiempo de Caminata</label>
+                          <input
+                            type="text"
+                            value={areaEditTiempoCaminata}
+                            onChange={(e) => setAreaEditTiempoCaminata(e.target.value)}
+                            placeholder="e.g. 15 min / 1 hora"
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Google Maps Link</label>
+                          <input
+                            type="text"
+                            value={areaEditGoogleMapsLink}
+                            onChange={(e) => setAreaEditGoogleMapsLink(e.target.value)}
+                            placeholder="https://maps.google.com/..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Column 2 */}
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Hospital Link</label>
+                          <input
+                            type="text"
+                            value={areaEditHospitalLink}
+                            onChange={(e) => setAreaEditHospitalLink(e.target.value)}
+                            placeholder="https://maps.google.com/..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Windguru Link</label>
+                          <input
+                            type="text"
+                            value={areaEditWindguruLink}
+                            onChange={(e) => setAreaEditWindguruLink(e.target.value)}
+                            placeholder="https://www.windguru.cz/..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Descripción de la zona & aproximación</label>
+                          <textarea
+                            value={areaEditDesc}
+                            onChange={(e) => setAreaEditDesc(e.target.value)}
+                            placeholder="Descripción general o detalles sobre cómo llegar a la roca..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-1.5 text-xs text-zinc-200 outline-none h-[72px] resize-none"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Column 3 */}
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Portada (URL)</label>
+                          <input
+                            type="text"
+                            value={areaEditImage}
+                            onChange={(e) => setAreaEditImage(e.target.value)}
+                            placeholder="https://..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Acceso (URL)</label>
+                          <input
+                            type="text"
+                            value={areaEditHowToGetImage}
+                            onChange={(e) => setAreaEditHowToGetImage(e.target.value)}
+                            placeholder="https://..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Overview/Mapa (URL)</label>
+                          <input
+                            type="text"
+                            value={areaEditOverviewImage}
+                            onChange={(e) => setAreaEditOverviewImage(e.target.value)}
+                            placeholder="https://..."
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                )}
+              </div>
+
+              {/* Sectores Title Bar */}
+              <div className="flex items-center justify-between pt-2">
+                <h3 className="text-[11px] font-extrabold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <Folder className="w-4 h-4 text-emerald-450" />
+                  Sectores de Escalada ({activeArea.sectores.length})
+                </h3>
+              </div>
+
               {activeArea.sectores.length === 0 ? (
                 <div className="p-12 border border-dashed border-zinc-800 rounded-3xl text-center space-y-2">
                   <Folder className="w-8 h-8 text-zinc-600 mx-auto" />
@@ -768,7 +1212,7 @@ export default function ProvinciasEditor() {
                             onClick={() => setSelectedSector(sector)}
                             className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-lg transition flex items-center gap-1 border border-zinc-700/50"
                           >
-                            Editar Sector & Vías <ArrowRight className="w-3 h-3 text-emerald-400" />
+                            Editar Sector & Vías <ArrowRight className="w-3 h-3 text-emerald-450" />
                           </button>
                         </div>
                       </div>
@@ -819,7 +1263,7 @@ export default function ProvinciasEditor() {
               </div>
 
               {/* Sector settings / Inline edit fields */}
-              <div className="px-6 grid grid-cols-1 md:grid-cols-3 gap-4 pb-4 border-b border-zinc-850">
+              <div className="px-6 grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-zinc-850">
                 <div>
                   <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1.5">Nombre Sector</label>
                   <input
@@ -839,23 +1283,189 @@ export default function ProvinciasEditor() {
                     className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-150 outline-none"
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1.5">Imagen (URL)</label>
-                  <div className="flex gap-2">
+              </div>
+
+              {/* Imágenes y Croquis del Sector */}
+              <div className="px-6 space-y-4 pb-4 border-b border-zinc-850">
+                <div className="flex items-center justify-between pb-2 border-b border-zinc-800/80">
+                  <div className="flex items-center gap-1.5">
+                    <ImageIcon className="w-4 h-4 text-emerald-450" />
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">Imágenes y Croquis del Sector</span>
+                  </div>
+                  <button
+                    onClick={handleUpdateSectorInfo}
+                    disabled={saving}
+                    className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-955 text-xs font-bold rounded-xl transition flex items-center gap-1.5"
+                  >
+                    <Save className="w-3.5 h-3.5 text-zinc-950" /> Guardar Imágenes
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {/* Card 1: Portada (Cover) */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Portada (Cover)</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditImage} alt="Portada" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
                     <input
                       type="text"
                       value={sectorEditImage}
                       onChange={(e) => setSectorEditImage(e.target.value)}
-                      placeholder="https://images.unsplash.com/..."
-                      className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-150 outline-none"
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
                     />
+                  </div>
+
+                  {/* Card 2: Overview (Vista General) */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Overview (Vista General)</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditOverviewImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditOverviewImage} alt="Vista General" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={sectorEditOverviewImage}
+                      onChange={(e) => setSectorEditOverviewImage(e.target.value)}
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                    />
+                  </div>
+
+                  {/* Card 3: Cómo Llegar */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Cómo Llegar</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditComoLlegarImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditComoLlegarImage} alt="Cómo Llegar" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={sectorEditComoLlegarImage}
+                      onChange={(e) => setSectorEditComoLlegarImage(e.target.value)}
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                    />
+                  </div>
+
+                  {/* Card 4: Croquis Set General */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set General</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditGeneralImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditGeneralImage} alt="Croquis General" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={sectorEditGeneralImage}
+                      onChange={(e) => setSectorEditGeneralImage(e.target.value)}
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                    />
+                  </div>
+
+                  {/* Card 5: Croquis Set Izquierda (Vías 1) */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set Izquierda (Vías 1)</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditIzquierdaImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditIzquierdaImage} alt="Croquis Izquierda" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={sectorEditIzquierdaImage}
+                      onChange={(e) => setSectorEditIzquierdaImage(e.target.value)}
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                    />
+                  </div>
+
+                  {/* Card 6: Croquis Set Centro (Vías 2) */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set Centro (Vías 2)</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditCentroImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditCentroImage} alt="Croquis Centro" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={sectorEditCentroImage}
+                      onChange={(e) => setSectorEditCentroImage(e.target.value)}
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                    />
+                  </div>
+
+                  {/* Card 7: Croquis Set Derecha (Vías 3) */}
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set Derecha (Vías 3)</span>
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                        {sectorEditDerechaImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={sectorEditDerechaImage} alt="Croquis Derecha" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
+                        )}
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      value={sectorEditDerechaImage}
+                      onChange={(e) => setSectorEditDerechaImage(e.target.value)}
+                      placeholder="URL de la imagen..."
+                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                    />
+                  </div>
+
+                  {/* Card 8: Save Action Button */}
+                  <div className="bg-zinc-950/10 border border-dashed border-zinc-800 p-3 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-zinc-700/60 transition group">
+                    <Sliders className="w-5 h-5 text-zinc-555 group-hover:text-emerald-400 transition" />
+                    <span className="text-[10px] text-zinc-500 text-center font-bold">Guardar cambios en Firestore</span>
                     <button
                       onClick={handleUpdateSectorInfo}
                       disabled={saving}
-                      className="px-3 bg-zinc-800 hover:bg-zinc-755 hover:text-white text-zinc-300 rounded-xl transition border border-zinc-700 flex items-center justify-center"
-                      title="Guardar metadatos"
+                      className="w-full py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[10px] font-bold rounded-lg border border-zinc-700 transition"
                     >
-                      <Save className="w-3.5 h-3.5" />
+                      Sincronizar
                     </button>
                   </div>
                 </div>

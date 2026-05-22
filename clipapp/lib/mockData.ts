@@ -11,13 +11,27 @@ export interface Sector {
   id: string;
   nombre: string;
   descripcion?: string;
-  imageUrl?: string;
+  imageUrl?: string;          // Main background/cover
+  overviewImageUrl?: string;  // overview.jpg
+  comoLlegarImageUrl?: string; // how_to_get_there.jpg
+  generalImageUrl?: string;   // Image for "General" group
+  izquierdaImageUrl?: string; // Image for "Izquierda" group (vias1)
+  centroImageUrl?: string;    // Image for "Centro" group (vias2)
+  derechaImageUrl?: string;   // Image for "Derecha" group (vias3)
   vias: Route[];
 }
 
 export interface Area {
   id: string;
   nombre: string;
+  descripcion?: string;
+  tiempoCaminata?: string;
+  googleMapsLink?: string;
+  hospitalLink?: string;
+  windguruLink?: string;
+  imageUrl?: string;
+  howToGetImageUrl?: string;
+  overviewImageUrl?: string;
   sectores: Sector[];
 }
 
