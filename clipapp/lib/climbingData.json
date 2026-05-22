@@ -6,6 +6,14 @@
       {
         "id": "la-cantera",
         "nombre": "La Cantera",
+        "descripcion": "La Cantera se encuentra a pocos minutos del centro de Córdoba. Se puede acceder en auto hasta el sector \"Escuela\" y aún más allá. Para llegar, seguir las indicaciones en los mapas proporcionados.",
+        "tiempoCaminata": "1 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.675568060090615,-64.4492346485338",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.67084752431989, -64.43293676158493",
+        "windguruLink": "https://www.windguru.cz/171354",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Frutas_bg_cantera.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "la-cantera-pared-principal",
@@ -436,6 +444,14 @@
       {
         "id": "el-colibri",
         "nombre": "El Colibrí",
+        "descripcion": "El Colibrí se encuentra ubicado sobre los márgenes del Río Suquía y a cercanías de un barrio rural. Hay que tener en cuenta que al tratarse de un barrio residencial, el respeto por las personas que viven en la zona es fundamental para una buena convivencia con los escaladores.",
+        "tiempoCaminata": "5 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=El+Colibrí+La+Calera",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.35199784564699, -64.36470804723717",
+        "windguruLink": "https://www.windguru.cz/378627",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Frutas_bg_colibri.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_colibri%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "el-colibri-pared-principal",
@@ -674,6 +690,14 @@
       {
         "id": "cueva-de-las-brujas",
         "nombre": "Cueva de las Brujas",
+        "descripcion": "El sector cuenta con más de 20 vías deportivas, equipadas con parabolts y descuelgue de 2 argollas en todas las vías. La orientación es sur-este, por lo que resulta ideal para disfrutar la sombra en los meses cálidos.",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://maps.app.goo.gl/pppX5c3gVS1ic2738",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-32.163962965839445, -64.45658429739083",
+        "windguruLink": "https://www.windguru.cz/18699",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Frutas_bg_cuevaBrujas.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_de_las_brujas%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "cueva-de-las-brujas-pared-a-f",
@@ -920,6 +944,14 @@
       {
         "id": "ascochinga",
         "nombre": "Ascochinga",
+        "descripcion": "Hermoso sector de escalada ubicado al lado del río en sus dos pies de vía. Hay un estacionamiento en la entrada de la reserva natural con guardaparques que se quedan hasta el atardecer. En época alta, los guardaparques suelen pedir una colaboración a voluntad.",
+        "tiempoCaminata": "5 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-30.957007263232484,-64.29400773853585",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-30.97139094926581, -64.09089473271533",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=214541&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Frutas_bg_ascochinga.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ascochinga%2Foverview_1.jpg?alt=media",
         "sectores": [
           {
             "id": "ascochinga-clasica-o-carape",
@@ -1054,6 +1086,14 @@
       {
         "id": "bialet-masse",
         "nombre": "Bialet Massé",
+        "descripcion": "Bialet Massé tiene un sector: \"Pared Principal\", es un destino para escaladores principalmente de niveles iniciales. La roca es de buena calidad y las vías varían en dificultad.",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.30326064098206,-64.46590331468087",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.23223280656622, -64.47254884590919",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=127287&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Frutas_bg_bialet.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "bialet-masse-pared-principal",
@@ -1172,6 +1212,14 @@
       {
         "id": "la-calera-el-horno",
         "nombre": "La Calera - El Horno",
+        "descripcion": "A 27 km de Córdoba se encuentra el \"El Horno\". Sobre la Ruta RP E55 a unos 6,5 kilómetros de La Calera (yendo hacia el Dique San Roque) se encuentran las vías sobre la ruta a mano izquierda. Tiene un total de 13 vías deportivas y 2 clásicas con orientación Noroeste.",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://maps.app.goo.gl/jun1gwoMeM5DFj2w9",
+        "hospitalLink": "https://maps.app.goo.gl/EdvcCYm9DPibNjUWA",
+        "windguruLink": "https://www.windguru.cz/378627",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_horno%2Frutas_bg_el-horno.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_horno%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_horno%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "la-calera-el-horno-pared-principal",
@@ -1322,6 +1370,14 @@
       {
         "id": "valle-hermoso",
         "nombre": "Valle Hermoso",
+        "descripcion": "A 78 Km de Córdoba se encuentra Valle Hermoso. Se puede llegar por la Ruta RP E53 y luego Camino del Cuadrado (Siempre averiguar antes si está habilitado el camino porque lo cierran seguido) o por la ruta RP E55 hacía Carlos Paz y luego tomar la ruta RN38. Estando en Valle Hermoso se debe tomar la calle Eva Perón, que luego pasa a llamarse Leonardo Da Vinci, hasta llegar al río (Vado). Luego, se debe caminar 50 metros sobre el río hacia la derecha y ahí se encuentran las vías. Tiene un total de 7 vías con orientación Norte.",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://maps.app.goo.gl/TxrYSNthGCdm4auu9",
+        "hospitalLink": "https://maps.app.goo.gl/Afkm2k5HCSpbrmB16",
+        "windguruLink": "https://www.windguru.cz/228022",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/valle_hermoso%2Frutas_bg_valle_hermoso.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/valle_hermoso%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/valle_hermoso%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "valle-hermoso-pared-principal",
@@ -1392,6 +1448,14 @@
       {
         "id": "mina-clavero",
         "nombre": "Mina Clavero",
+        "descripcion": "Desde la plaza principal de Mina Clavero tomar la calle que conduce al balneario La Toma (dirección a la montaña) y continuar unos 3,5 km en línea recta. Girar a la derecha y recorrer aproximadamente 1 km hasta encontrar, a mano izquierda y junto al balneario, la tranquera donde se dejan los vehículos (fuera de temporada el estacionamiento suele ser a voluntad). Una vez a pie, cruzar el puente colgante y remontar el río Mina Clavero durante unos 25 minutos hasta llegar al sector.",
+        "tiempoCaminata": "25 min",
+        "googleMapsLink": "https://maps.app.goo.gl/gDPnSQnGeT8tEY6Q7",
+        "hospitalLink": "https://maps.app.goo.gl/t5nAmkn1va9eW4nLA",
+        "windguruLink": "https://www.windguru.cz/560715",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fmina_clavero_cover.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fcomo_llegar_1.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mina_clavero%2Fcomo_llegar_2.png?alt=media",
         "sectores": [
           {
             "id": "mina-clavero-el-totem",
@@ -1694,6 +1758,14 @@
       {
         "id": "la-cueva-de-los-pajaritos",
         "nombre": "La Cueva de los Pajaritos",
+        "descripcion": "A 60 Km de Córdoba se encuentra La cueva de los pajaritos. Se puede llegar por la Ruta RN 20 hasta Carlos Paz y luego tomar la ruta RP 28 hasta llegar Tanti. Se ingresa en la entrada principal que sale a la derecha, se recorre 1,2 km aprox. hasta llegar a la plaza principal del pueblo. Ahí se dobla a la derecha, se cruza un vado y en la primer calle que sale a mano derecha (a unos 150 mts) se debe doblar y recorrer aproximadamente 7 km de tierra. Donde se bifurca el camino, y un poco antes de la cueva de los pajaritos, se ven las vías a mano izquierda a unos 200 metros . Hay 6 vías con orientación Este. Le gente que cuida el campo donde están ubicadas las vías no tienen problema en dejar pasar, siempre y cuando sea para estar en el sector y no más allá de él.",
+        "tiempoCaminata": "5 min",
+        "googleMapsLink": "https://maps.app.goo.gl/F6tDnBsTcLKK6dNB9",
+        "hospitalLink": "https://maps.app.goo.gl/b4buhWf4EzEqaEbz9",
+        "windguruLink": "https://www.windguru.cz/149897",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_pajaritos%2Frutas_bg_cueva_pajaritos.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_pajaritos%2Fhow_to_get_there.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cueva_pajaritos%2Foverview_1.jpg?alt=media",
         "sectores": [
           {
             "id": "la-cueva-de-los-pajaritos-pared-principal",
@@ -1764,6 +1836,14 @@
       {
         "id": "el-secretillo",
         "nombre": "El Secretillo",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.721673439452374,-64.88886791413951",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.742758033302543, -64.99680634563862",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=296144&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Frutas_bg_secretillo.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fhow_to_get_there_1.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/el_secretillo%2Fhow_to_get_there_1.jpg?alt=media",
         "sectores": [
           {
             "id": "el-secretillo-via-solitaria",
@@ -2074,6 +2154,14 @@
       {
         "id": "teatro-corral",
         "nombre": "Teatro / Corral",
+        "descripcion": "En las huellas de una larga y fructuosa tradición, la Ola hospedó a finales de 2022 un proyecto internacional de equipamiento de vías de escalada.",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.650433406010674,-64.9021218288072",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.742758033302543, -64.99680634563862",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=479273&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Frutas_bg_escenario.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fescenario_overview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/teatro%2Fescenario_overview.png?alt=media",
         "sectores": [
           {
             "id": "teatro-corral-escenario",
@@ -2808,6 +2896,14 @@
       {
         "id": "la-ola",
         "nombre": "La Ola",
+        "descripcion": "La Ola es una zona de escalada deportiva con excelentes rutas en granito de gran calidad. La mayoría de sus vías han sido abiertas con parabolts y descuelgues. Situada en el camino de las Altas Cumbres, a 120 Km. de Córdoba y a 20 Km. de El Cóndor, es el área de escalada en la provincia con mayor desarrollo en los últimos años. Comenzó a equiparse en el año 1993 y sobrepasa actualmente las 110 rutas.\n\nEn la zona se han descubierto numerosas paredes con potencial para decenas de vías. Lugares como El Teatro y El Nacimiento del Río Mina Clavero están en pleno equipamiento y en el futuro serán excelentes centros de escalada.",
+        "tiempoCaminata": "15 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.650433406010674,-64.9021218288072",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.742758033302543, -64.99680634563862",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=479273&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Frutas_bg_laola.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Ftoboganes_como_llegar.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_ola%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "la-ola-parte-baja",
@@ -3862,6 +3958,14 @@
       {
         "id": "zona-torres-gemelas-la-ballena",
         "nombre": "Zona Torres Gemelas-La Ballena",
+        "descripcion": "📍 Torres Gemelas:\nA 120 km aproximados de Córdoba por la RP 34 (camino a Mina Clavero) se encuentra \"La Ola\". Este es el Sector Torres Gemelas y está a unos 200 metros hacia la izquierda de la ruta (yendo de Cba a Mina Clavero). La casa a mano izquierda (después de pasar el sector la Ola) es la referencia para entrar a la montaña.\n\n🏔️ El Barrilete:\nPasando las Torres Gemelas, entramos a la izquierda antes de llegar a la siguiente pared de voladuras. Seguimos en la misma dirección que la pared-terraza por la que salimos de la ruta y nos montamos en la pampa. Continuamos caminando al Sureste hasta ver el río Los Sauces, que en este punto hace una curva y sigue paralelo a la ruta. Nos dirigimos a esta curva y después de pasar por una pirca en un col, bajamos al río. Al cruzarlo, se ve a la izquierda El Barrilete.\n\n🚢 El Barco:\nSiguiendo desde El Barrilete por la misma margen unos 600 m, llegamos al marcado cauce de un arroyo seco que baja desde la derecha. Subiendo por la izquierda de este 200 m, llegamos a El Barco.\n\n🌊 La Ballena:\nDesde el Campamento de La Ola, salimos en dirección Sureste y nos montamos a la pampa. Después caminamos paralelos a la ruta unos 300 m y doblamos a la izquierda para seguir hacia el Este por el cauce de un arroyo seco encajonado (o al costado de este), hasta llegar a un rancho abandonado. Siguiendo en la misma dirección en la que veníamos 10 min más, llegamos a un vallecito y a La Ballena, que está a la derecha (las rutas de escalada miran al Este).",
+        "tiempoCaminata": "5 min",
+        "googleMapsLink": "https://www.google.com.ar/maps/place/31%C2%B040\\",
+        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.742758033302543, -64.99680634563862",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=479273&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Frutas_bg_torres_gemelas.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Ftorres_overview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/torres_gemelas%2Ftorres_overview.png?alt=media",
         "sectores": [
           {
             "id": "zona-torres-gemelas-la-ballena-torres-gemelas",
@@ -4156,6 +4260,14 @@
       {
         "id": "los-paredones",
         "nombre": "Los Paredones",
+        "descripcion": "\"Paredones\" es un lugar de incomparable encanto, mágicamente ubicado en medio de las sierras de Córdoba, a la vera de dos hermosos ríos. La escalada transcurre en paredes de granito rojizo, caracterizadas por curiosas formaciones, que nos regalan hermosas fisuras, placas \"regleteras\" de finos y técnicos movimientos, semi desplomes de gran continuidad y algún que otro desplome fuerte, de esos que pesan sobre los brazos.",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-30.80354682679822, -64.53556558087239",
+        "hospitalLink": "",
+        "windguruLink": "https://www.windguru.cz/47708",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fparedones_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fparedones_como_llegar.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paredones%2Fcanada_general.png?alt=media",
         "sectores": [
           {
             "id": "los-paredones-el-pantano",
@@ -4857,11 +4969,27 @@
       {
         "id": "mogotes",
         "nombre": "Mogotes",
+        "descripcion": "Desde la Ruta 38 en dirección a Cruz del Eje, pasar Capilla del Monte y, a unos 2 km, tomar la calle a mano izquierda señalizada hacia Mogotes. Seguir hasta el ingreso del balneario y estacionar en las zonas habilitadas.",
+        "tiempoCaminata": "",
+        "googleMapsLink": "https://maps.app.goo.gl/JRgaNpDMD3PqBazi6",
+        "hospitalLink": "https://maps.app.goo.gl/TkrEQ2urhH9ydfPT9",
+        "windguruLink": "https://www.windguru.cz/47708",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mogotes%2Fmogotes_cover.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mogotes%2Fcomo_llegar_1.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mogotes%2Foverview.png?alt=media",
         "sectores": []
       },
       {
         "id": "el-paraiso",
         "nombre": "El Paraiso",
+        "descripcion": "¿CÓMO LLEGAR?\nEl Parador El Paraíso se encuentra a 2,4 km desde el centro de Capilla del Monte. Dirigirse hacia el oeste por Av. Hipólito Yrigoyen en dirección a Bartolomé Mitre. Cruzar la RN 38. Al llegar al río, el sector de escalada se encuentra a la izquierda. (podes hacer click en el link de google maps abajo)",
+        "tiempoCaminata": "10 min",
+        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-30.851494822980037, -64.54881229127318",
+        "hospitalLink": "",
+        "windguruLink": "https://www.windguru.cz/47708",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paraiso%2Fparaiso_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paraiso%2Fparaiso_principal.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/paraiso%2Fparaiso_principal.png?alt=media",
         "sectores": [
           {
             "id": "el-paraiso-sector-principal",
@@ -5140,6 +5268,14 @@
       {
         "id": "copina-i-segundo-puente",
         "nombre": "Copina I (Segundo Puente)",
+        "descripcion": "Desde la Ruta Provincial 14 (camino de las Altas Cumbres) tomar el desvío señalizado hacia Copina. Continuar por camino de ripio hasta el segundo puente; hay espacio acotado para estacionar. Seguir el sendero balizado que bordea el curso de agua durante unos minutos hasta la base del muro principal.",
+        "tiempoCaminata": "5 min",
+        "googleMapsLink": "https://maps.app.goo.gl/wfM7moXzRhG82SH37",
+        "hospitalLink": "https://maps.app.goo.gl/RBpRdxzt7WptoiPQ9",
+        "windguruLink": "https://www.windguru.cz/119155",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/copina%2Fsegundo_puente%2Fseg_puente_cover.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/copina%2Fsegundo_puente%2Fcomo_llegar.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/copina%2Fsegundo_puente%2Fseg_puente2.png?alt=media",
         "sectores": [
           {
             "id": "copina-i-segundo-puente-sector-principal",
@@ -5258,21 +5394,53 @@
       {
         "id": "copina-ii-sector-hernan",
         "nombre": "Copina II (Sector Hernan)",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "copina-iii-sector-imperial",
         "nombre": "Copina III (Sector Imperial)",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "copina-iv",
         "nombre": "Copina IV",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "guia-general",
         "nombre": "Guia General",
+        "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
+        "tiempoCaminata": "20 min",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "https://www.windguru.cz/106701",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fguia_general.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fplaca_naranja.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/gigantes_general%2Fguia_general.jpg?alt=media",
         "sectores": [
           {
             "id": "guia-general-placa-naranja",
@@ -6167,6 +6335,14 @@
       {
         "id": "cerro-de-la-cruz",
         "nombre": "Cerro de la cruz",
+        "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
+        "tiempoCaminata": "20 min",
+        "googleMapsLink": "https://maps.app.goo.gl/dUgKgZAFs89AjFUQ6?g_st=ipc",
+        "hospitalLink": "",
+        "windguruLink": "https://www.windguru.cz/106701",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cerro_cruz%2Fcerro_cruz.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cerro_cruz%2Fcerro_de_la_cruz.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/cerro_cruz%2Fcerro_de_la_cruz_derecha.png?alt=media",
         "sectores": [
           {
             "id": "cerro-de-la-cruz-cerro-de-la-cruz",
@@ -6349,6 +6525,14 @@
       {
         "id": "zona-del-refugio-c-a-c",
         "nombre": "Zona del Refugio C.A.C",
+        "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
+        "tiempoCaminata": "20 min",
+        "googleMapsLink": "https://maps.app.goo.gl/PfMDBMw67WV5kLWw9",
+        "hospitalLink": "",
+        "windguruLink": "https://www.windguru.cz/106701",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Frefu_cac.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flajita_1.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/refugio_cac%2Flajita_2.png?alt=media",
         "sectores": [
           {
             "id": "zona-del-refugio-c-a-c-lajita",
@@ -6627,6 +6811,14 @@
       {
         "id": "el-ostiazo",
         "nombre": "El Ostiazo",
+        "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
+        "tiempoCaminata": "20 min",
+        "googleMapsLink": "https://maps.app.goo.gl/PfMDBMw67WV5kLWw9",
+        "hospitalLink": "",
+        "windguruLink": "https://www.windguru.cz/106701",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ostiazo%2Fel_ostiazo.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ostiazo%2Fostiazo_overview.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/ostiazo%2Fostiazo_overview.jpg?alt=media",
         "sectores": [
           {
             "id": "el-ostiazo-el-ostiazo",
@@ -6695,11 +6887,27 @@
       {
         "id": "agua-de-las-avispas",
         "nombre": "Agua de Las Avispas",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "el-santuario",
         "nombre": "El Santuario",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "https://share.google/NJ1BZHYlczXiPOiZ8",
+        "hospitalLink": "https://maps.app.goo.gl/FnnFWXduqqwZVWTn6",
+        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=431960&m=3&n=&from=search&start=0&full=1",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mendoza%2Fel_santuario%2Fel_santuario_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mendoza%2Fel_santuario%2Fsantuario_overview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/mendoza%2Fel_santuario%2Fsantuario_overview.png?alt=media",
         "sectores": [
           {
             "id": "el-santuario-el-diamante",
@@ -6769,21 +6977,53 @@
       {
         "id": "cacheuta",
         "nombre": "Cacheuta",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "potretillos",
         "nombre": "Potretillos",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "cajon-de-arenales",
         "nombre": "Cajon de Arenales",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "agua-del-toro",
         "nombre": "Agua Del Toro",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       }
     ]
@@ -6795,6 +7035,14 @@
       {
         "id": "villa-del-carmen",
         "nombre": "Villa Del Carmen",
+        "descripcion": "Desde Villa del Carmen nos dirigimos en dirección Este, hasta la última calle del pueblo y tomamos el camino de tierra que sale frente a \"LOS AROMOS\" que va hacia la virgen, al pie de las sierras y a 1,8 Km. llegamos a la virgen, giramos a la izquierda y a 50 mts. encontraremos la entrada a una propiedad, por la que estacionamos el vehículo antes, procurando no molestar al propietario y dejándo libre el paso.\n\nRECUERDE: estamos dentro de propiedad privada. Deje el vehículo fuera del camino.\n\nDel Estacionamiento nos dirigimos hacia las sierras y encontraremos un sendero que deberemos continuar hasta cruzar con el arroyo. Una vez que cruzamos el arroyo, subimos un poco por el mismo sendero y veremos hacia la derecha los sauces, hacia donde debemos dirigirnos.",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fcomo_llegar.jpg?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Fcomo_llegar.jpg?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/san_luis%2Fvilla_del_carmen%2Foverview.jpg?alt=media",
         "sectores": [
           {
             "id": "villa-del-carmen-bloque-de-acampe",
@@ -7073,6 +7321,14 @@
       {
         "id": "valle-de-pacanta-penon",
         "nombre": "Valle De Pacanta / Peñon",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       }
     ]
@@ -7084,6 +7340,14 @@
       {
         "id": "cuesta-de-miranda",
         "nombre": "Cuesta de Miranda",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "https://maps.app.goo.gl/4it1HNkajjk93Pv47",
+        "hospitalLink": "https://maps.app.goo.gl/Wwp3NcwgXyAkHR2F7",
+        "windguruLink": "https://www.windguru.cz/1154817",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fcuesta_cover.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Fcomo_llegar.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_rioja%2Fcuesta_miranda%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "cuesta-de-miranda-seccion-1",
@@ -7784,11 +8048,27 @@
       {
         "id": "lago-puelo",
         "nombre": "Lago Puelo",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "piedra-parada-la-buitrera",
         "nombre": "Piedra Parada/La Buitrera",
+        "descripcion": "Viniendo de otras provincias, lo más recomendable será llegar primero a la ciudad de Esquel. Si se viene desde Bariloche o el Bolsón, 25km antes de llegar a Esquel encontraremos la señalización de la ruta número 12 con dirección a Gualjaina y Paso del Sapo. \n\nDesde la ciudad de Esquel se accede por la ruta nacional N° 40 hacia el norte, recorrer 25km hasta encontrar a mano derecha el acceso a ruta provincial N° 12, continuar 65km (los primeros 20km se encuentran asfaltados) en dirección a Gualjaina. \n\nDesde Gualjaina continuar por la ruta N° 12, rumbo a Paso del Sapo, a 45km se encuentra la Piedra Parada, fácilmente identificable a mano izquierda del camino. Metros antes de llegar a la Piedra Parada hay un camino a mano izquierda por el cual se accede al Cañadón de La Buitrera, avanzar 500m hasta encontrarse con el puente que cruza el río Chubut y luego recorrer unos 600m para llegar a la entrada del cañadón. Continuar otros 600m para acceder al camping \"Establecimiento la Buitrera\".\n\nEn caso de venir desde Rawson, en la costa Este de Chubut, tomar la ruta n° 25 con dirección a Las Plumas, Paso de Indios y Tecka. 5km antes de llegar a Paso de Indios, tomar la ruta número 12 con dirección a Paso del Sapo, continuar por el camino de ripio. Una vez en Paso del Sapo, continuar otros 40km hasta llegar a Piedra Parada.\n\nEs posible llegar a Piedra Parada utilizando transporte público desde Esquel mediante la empresa Jacobson. La misma ofrece un servicio con una frecuencia de tres veces por semana a la localidad de Paso del Sapo y otro servicio diario al pueblo de Gualjaina. Desde Gualjaina se puede hacer dedo hasta Piedra Parada, pero debido al escaso tráfico esto puede demorar un tiempo considerable.",
+        "tiempoCaminata": "",
+        "googleMapsLink": "https://maps.app.goo.gl/FSCwsKXVwHwd3Wcf8",
+        "hospitalLink": "https://maps.app.goo.gl/pnW4qWiJnNefrq2Z8",
+        "windguruLink": "https://www.windguru.cz/379898",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fpiedra_parada%2Fpiedra_parada_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fpiedra_parada%2Fcomo_llegar.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fpiedra_parada%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "piedra-parada-la-buitrera-la-carretera",
@@ -8033,6 +8313,14 @@
       {
         "id": "esquel",
         "nombre": "Esquel",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Fesquel_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Fesquel%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "esquel-sector-1-la-crux",
@@ -8067,6 +8355,14 @@
       {
         "id": "trevelin",
         "nombre": "Trevelin",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "https://maps.app.goo.gl/J34jJQPXNDT6HpDV6",
+        "hospitalLink": "https://maps.app.goo.gl/mPrXFfnZPczgciri8",
+        "windguruLink": "https://www.windguru.cz/134302",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Fbanner_trevelin.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Fcomo_llegar.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/chubut%2Ftrevelin%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "trevelin-multilargos",
@@ -8305,6 +8601,14 @@
       {
         "id": "boca-toma",
         "nombre": "Boca Toma",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       }
     ]
@@ -8316,21 +8620,53 @@
       {
         "id": "las-juntas",
         "nombre": "Las Juntas",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "anquincila",
         "nombre": "Anquincila",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "isla-larga",
         "nombre": "Isla Larga",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       },
       {
         "id": "el-jumeal",
         "nombre": "El Jumeal",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       }
     ]
@@ -8342,6 +8678,14 @@
       {
         "id": "en-construccion",
         "nombre": "En construcción",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       }
     ]
@@ -8353,6 +8697,14 @@
       {
         "id": "san-martin-de-los-andes",
         "nombre": "San Martin de los Andes",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "",
+        "howToGetImageUrl": "",
+        "overviewImageUrl": "",
         "sectores": []
       }
     ]
@@ -8364,6 +8716,14 @@
       {
         "id": "san-antonio",
         "nombre": "San Antonio",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fsan_antonio_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "san-antonio-san-antonio-a",
@@ -8466,6 +8826,14 @@
       {
         "id": "termas-de-reyes",
         "nombre": "Termas de Reyes",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ftermas_de_reyes_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "termas-de-reyes-crudo-invierno",
@@ -8520,6 +8888,14 @@
       {
         "id": "las-escaleras",
         "nombre": "Las Escaleras",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Flas_escaleras_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "las-escaleras-salto-del-mono",
@@ -8638,6 +9014,14 @@
       {
         "id": "barcena",
         "nombre": "Barcena",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fbarcena_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "barcena-volcan",
@@ -8780,6 +9164,14 @@
       {
         "id": "el-roncal",
         "nombre": "El Roncal",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fel_roncal_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "el-roncal-don-lamas",
@@ -8954,6 +9346,14 @@
       {
         "id": "tilcara",
         "nombre": "Tilcara",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ftilcara_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "tilcara-cactus-escalador",
@@ -9208,6 +9608,14 @@
       {
         "id": "yavi",
         "nombre": "Yavi",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Fyavi_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "yavi-8-hermanos",
@@ -9534,6 +9942,14 @@
       {
         "id": "tuzgle",
         "nombre": "Tuzgle",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
+        "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Ftuzgle_banner.png?alt=media",
+        "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
+        "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/jujuy%2Foverview.png?alt=media",
         "sectores": [
           {
             "id": "tuzgle-bloque-linea-blanca",
