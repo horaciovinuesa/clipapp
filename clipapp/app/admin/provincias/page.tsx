@@ -28,7 +28,8 @@ import {
   AlertTriangle,
   RefreshCw
 } from 'lucide-react';
-import { db } from '@/lib/firebase';
+import { db, storage } from '@/lib/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { 
   collection, 
   doc, 
@@ -115,6 +116,62 @@ export default function ProvinciasEditor() {
       return () => clearTimeout(timer);
     }
   }, [actionMessage]);
+
+  const [isUploading, setIsUploading] = useState<Record<string, boolean>>({});
+
+  const handleImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    isArea: boolean,
+    fieldName: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!selectedProvinceId || !selectedAreaId || (!isArea && !selectedSector)) {
+      setActionMessage({ text: 'Por favor, selecciona una provincia y una zona primero.', type: 'error' });
+      return;
+    }
+
+    const key = `${isArea ? 'area' : 'sector'}-${fieldName}`;
+    setIsUploading(prev => ({ ...prev, [key]: true }));
+    setActionMessage({ text: `Subiendo imagen a Storage...`, type: 'info' });
+
+    try {
+      const ext = file.name.split('.').pop() || 'jpg';
+      let path = '';
+      if (isArea) {
+        path = `provincias/${selectedProvinceId}/${selectedAreaId}/${fieldName}.${ext}`;
+      } else {
+        path = `provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/${fieldName}.${ext}`;
+      }
+
+      const storageRef = ref(storage, path);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+
+      // Update corresponding state
+      if (isArea) {
+        if (fieldName === 'imageUrl') setAreaEditImage(downloadURL);
+        else if (fieldName === 'howToGetImageUrl') setAreaEditHowToGetImage(downloadURL);
+        else if (fieldName === 'overviewImageUrl') setAreaEditOverviewImage(downloadURL);
+      } else {
+        if (fieldName === 'imageUrl') setSectorEditImage(downloadURL);
+        else if (fieldName === 'overviewImageUrl') setSectorEditOverviewImage(downloadURL);
+        else if (fieldName === 'comoLlegarImageUrl') setSectorEditComoLlegarImage(downloadURL);
+        else if (fieldName === 'generalImageUrl') setSectorEditGeneralImage(downloadURL);
+        else if (fieldName === 'izquierdaImageUrl') setSectorEditIzquierdaImage(downloadURL);
+        else if (fieldName === 'centroImageUrl') setSectorEditCentroImage(downloadURL);
+        else if (fieldName === 'derechaImageUrl') setSectorEditDerechaImage(downloadURL);
+      }
+
+      setActionMessage({ text: 'Imagen subida y URL actualizada.', type: 'success' });
+    } catch (err: any) {
+      console.error(err);
+      setActionMessage({ text: `Error al subir imagen: ${err.message}`, type: 'error' });
+    } finally {
+      setIsUploading(prev => ({ ...prev, [key]: false }));
+    }
+  };
 
   // Load Provinces
   const loadProvinces = async () => {
@@ -1128,38 +1185,106 @@ export default function ProvinciasEditor() {
                       </div>
 
                       {/* Column 3 */}
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Portada (URL)</label>
-                          <input
-                            type="text"
-                            value={areaEditImage}
-                            onChange={(e) => setAreaEditImage(e.target.value)}
-                            placeholder="https://..."
-                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                          />
+                        <div className="space-y-3">
+                          <div>
+                            <div className="flex items-center justify-between mb-1">
+                              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Portada (URL)</label>
+                              <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/imageUrl.jpg`}>
+                                📂 {selectedProvinceId}/{selectedAreaId}/imageUrl.jpg
+                              </span>
+                            </div>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                value={areaEditImage}
+                                onChange={(e) => setAreaEditImage(e.target.value)}
+                                placeholder="https://..."
+                                className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                              />
+                              <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
+                                {isUploading['area-imageUrl'] ? (
+                                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                                ) : (
+                                  <ImageIcon className="w-3.5 h-3.5" />
+                                )}
+                                <span className="hidden sm:inline">Subir</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => handleImageUpload(e, true, 'imageUrl')}
+                                  className="hidden"
+                                  disabled={isUploading['area-imageUrl']}
+                                />
+                              </label>
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex items-center justify-between mb-1">
+                              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Acceso (URL)</label>
+                              <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/howToGetImageUrl.jpg`}>
+                                📂 {selectedProvinceId}/{selectedAreaId}/howToGetImageUrl.jpg
+                              </span>
+                            </div>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                value={areaEditHowToGetImage}
+                                onChange={(e) => setAreaEditHowToGetImage(e.target.value)}
+                                placeholder="https://..."
+                                className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                              />
+                              <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
+                                {isUploading['area-howToGetImageUrl'] ? (
+                                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                                ) : (
+                                  <ImageIcon className="w-3.5 h-3.5" />
+                                )}
+                                <span className="hidden sm:inline">Subir</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => handleImageUpload(e, true, 'howToGetImageUrl')}
+                                  className="hidden"
+                                  disabled={isUploading['area-howToGetImageUrl']}
+                                />
+                              </label>
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="flex items-center justify-between mb-1">
+                              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Overview/Mapa (URL)</label>
+                              <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/overviewImageUrl.jpg`}>
+                                📂 {selectedProvinceId}/{selectedAreaId}/overviewImageUrl.jpg
+                              </span>
+                            </div>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                value={areaEditOverviewImage}
+                                onChange={(e) => setAreaEditOverviewImage(e.target.value)}
+                                placeholder="https://..."
+                                className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                              />
+                              <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
+                                {isUploading['area-overviewImageUrl'] ? (
+                                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                                ) : (
+                                  <ImageIcon className="w-3.5 h-3.5" />
+                                )}
+                                <span className="hidden sm:inline">Subir</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => handleImageUpload(e, true, 'overviewImageUrl')}
+                                  className="hidden"
+                                  disabled={isUploading['area-overviewImageUrl']}
+                                />
+                              </label>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Acceso (URL)</label>
-                          <input
-                            type="text"
-                            value={areaEditHowToGetImage}
-                            onChange={(e) => setAreaEditHowToGetImage(e.target.value)}
-                            placeholder="https://..."
-                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Imagen Overview/Mapa (URL)</label>
-                          <input
-                            type="text"
-                            value={areaEditOverviewImage}
-                            onChange={(e) => setAreaEditOverviewImage(e.target.value)}
-                            placeholder="https://..."
-                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                          />
-                        </div>
-                      </div>
                     </div>
                   </form>
                 )}
@@ -1305,7 +1430,12 @@ export default function ProvinciasEditor() {
                   {/* Card 1: Portada (Cover) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Portada (Cover)</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Portada (Cover)</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/imageUrl`}>
+                          📂 .../{selectedSector!.id}/imageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1315,19 +1445,41 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditImage}
-                      onChange={(e) => setSectorEditImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditImage}
+                        onChange={(e) => setSectorEditImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-imageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'imageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-imageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 2: Overview (Vista General) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Overview (Vista General)</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Overview (Vista)</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/overviewImageUrl`}>
+                          📂 .../{selectedSector!.id}/overviewImageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditOverviewImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1337,19 +1489,41 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditOverviewImage}
-                      onChange={(e) => setSectorEditOverviewImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditOverviewImage}
+                        onChange={(e) => setSectorEditOverviewImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-overviewImageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'overviewImageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-overviewImageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 3: Cómo Llegar */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Cómo Llegar</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Cómo Llegar</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/comoLlegarImageUrl`}>
+                          📂 .../{selectedSector!.id}/comoLlegarImageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditComoLlegarImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1359,19 +1533,41 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditComoLlegarImage}
-                      onChange={(e) => setSectorEditComoLlegarImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditComoLlegarImage}
+                        onChange={(e) => setSectorEditComoLlegarImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-comoLlegarImageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'comoLlegarImageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-comoLlegarImageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 4: Croquis Set General */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set General</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis General</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/generalImageUrl`}>
+                          📂 .../{selectedSector!.id}/generalImageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditGeneralImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1381,19 +1577,41 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditGeneralImage}
-                      onChange={(e) => setSectorEditGeneralImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditGeneralImage}
+                        onChange={(e) => setSectorEditGeneralImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-generalImageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'generalImageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-generalImageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 5: Croquis Set Izquierda (Vías 1) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set Izquierda (Vías 1)</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis Izquierda</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/izquierdaImageUrl`}>
+                          📂 .../{selectedSector!.id}/izquierdaImageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditIzquierdaImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1403,19 +1621,41 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditIzquierdaImage}
-                      onChange={(e) => setSectorEditIzquierdaImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditIzquierdaImage}
+                        onChange={(e) => setSectorEditIzquierdaImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-izquierdaImageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'izquierdaImageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-izquierdaImageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 6: Croquis Set Centro (Vías 2) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set Centro (Vías 2)</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis Centro</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/centroImageUrl`}>
+                          📂 .../{selectedSector!.id}/centroImageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditCentroImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1425,19 +1665,41 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditCentroImage}
-                      onChange={(e) => setSectorEditCentroImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditCentroImage}
+                        onChange={(e) => setSectorEditCentroImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-centroImageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'centroImageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-centroImageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 7: Croquis Set Derecha (Vías 3) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1 truncate">Croquis Set Derecha (Vías 3)</span>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis Derecha</span>
+                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/derechaImageUrl`}>
+                          📂 .../{selectedSector!.id}/derechaImageUrl
+                        </span>
+                      </div>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditDerechaImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -1447,13 +1709,30 @@ export default function ProvinciasEditor() {
                         )}
                       </div>
                     </div>
-                    <input
-                      type="text"
-                      value={sectorEditDerechaImage}
-                      onChange={(e) => setSectorEditDerechaImage(e.target.value)}
-                      placeholder="URL de la imagen..."
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                    />
+                    <div className="flex gap-1.5 mt-1">
+                      <input
+                        type="text"
+                        value={sectorEditDerechaImage}
+                        onChange={(e) => setSectorEditDerechaImage(e.target.value)}
+                        placeholder="URL..."
+                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
+                      />
+                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
+                        {isUploading['sector-derechaImageUrl'] ? (
+                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
+                        ) : (
+                          <ImageIcon className="w-3 h-3" />
+                        )}
+                        <span>Subir</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(e, false, 'derechaImageUrl')}
+                          className="hidden"
+                          disabled={isUploading['sector-derechaImageUrl']}
+                        />
+                      </label>
+                    </div>
                   </div>
 
                   {/* Card 8: Save Action Button */}

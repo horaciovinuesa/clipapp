@@ -5,6 +5,7 @@ export interface Route {
   altura?: string;
   chapas?: number;
   grupo: 'General' | 'Izquierda' | 'Centro' | 'Derecha';
+  climbType?: string;
 }
 
 export interface Sector {

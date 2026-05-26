@@ -265,11 +265,86 @@ function parseSectorFile(sectorFilePath, sectorClassName, sectorSlug) {
       grado: grade,
       altura: altura,
       chapas: chapas,
-      grupo: via.grupo || 'General'
+      grupo: via.grupo || 'General',
+      climbType: via.climbType || via.tipo || via.type || ''
     };
   });
 
   return finalRoutes;
+}
+
+function extractSectorImages(sectorFilePath) {
+  const images = {
+    overviewImageUrl: '',
+    comoLlegarImageUrl: '',
+    generalImageUrl: '',
+    izquierdaImageUrl: '',
+    centroImageUrl: '',
+    derechaImageUrl: ''
+  };
+
+  if (!sectorFilePath || !fs.existsSync(sectorFilePath)) {
+    return images;
+  }
+
+  const content = fs.readFileSync(sectorFilePath, 'utf8');
+  const imageRegex = /['"]([^'"]+\.(?:jpg|jpeg|png))['"]/g;
+  let match;
+  const paths = new Set();
+  while ((match = imageRegex.exec(content)) !== null) {
+    const val = match[1];
+    if (!val.includes('packages/') && !val.includes('assets/icons/')) {
+      paths.add(val);
+    }
+  }
+
+  const uniquePaths = Array.from(paths);
+  console.log(`  Found ${uniquePaths.length} image paths in ${path.basename(sectorFilePath)}: ${uniquePaths.join(', ')}`);
+
+  const classified = new Set();
+
+  for (const p of uniquePaths) {
+    const lower = p.toLowerCase();
+    if (lower.includes('overview') || lower.includes('mapa') || lower.includes('map_')) {
+      images.overviewImageUrl = getStorageUrl(p);
+      classified.add(p);
+    } else if (lower.includes('llegar') || lower.includes('how_to_get') || lower.includes('acceso')) {
+      images.comoLlegarImageUrl = getStorageUrl(p);
+      classified.add(p);
+    } else if (lower.includes('izq') || lower.includes('izquierda') || lower.includes('left')) {
+      images.izquierdaImageUrl = getStorageUrl(p);
+      classified.add(p);
+    } else if (lower.includes('cen') || lower.includes('centro') || lower.includes('central') || lower.includes('middle')) {
+      images.centroImageUrl = getStorageUrl(p);
+      classified.add(p);
+    } else if (lower.includes('der') || lower.includes('derecha') || lower.includes('right')) {
+      images.derechaImageUrl = getStorageUrl(p);
+      classified.add(p);
+    } else if (lower.includes('general')) {
+      images.generalImageUrl = getStorageUrl(p);
+      classified.add(p);
+    }
+  }
+
+  const unclassified = uniquePaths.filter(p => !classified.has(p));
+
+  if (unclassified.length === 3) {
+    if (!images.izquierdaImageUrl) images.izquierdaImageUrl = getStorageUrl(unclassified[0]);
+    if (!images.centroImageUrl) images.centroImageUrl = getStorageUrl(unclassified[1]);
+    if (!images.derechaImageUrl) images.derechaImageUrl = getStorageUrl(unclassified[2]);
+  } else if (unclassified.length === 2) {
+    if (!images.izquierdaImageUrl) images.izquierdaImageUrl = getStorageUrl(unclassified[0]);
+    if (!images.derechaImageUrl) images.derechaImageUrl = getStorageUrl(unclassified[1]);
+  } else if (unclassified.length === 1) {
+    if (!images.generalImageUrl) images.generalImageUrl = getStorageUrl(unclassified[0]);
+  } else if (unclassified.length > 3) {
+    if (!images.izquierdaImageUrl) images.izquierdaImageUrl = getStorageUrl(unclassified[0]);
+    if (!images.centroImageUrl) images.centroImageUrl = getStorageUrl(unclassified[1]);
+    if (!images.derechaImageUrl) images.derechaImageUrl = getStorageUrl(unclassified[2]);
+    if (!images.generalImageUrl) images.generalImageUrl = getStorageUrl(unclassified[3]);
+  }
+
+  return images;
 }
 
 function extractAreaImages(assets) {
@@ -394,11 +469,21 @@ function processAreaFile(areaFilePath, areaSlug) {
       console.log(`Processing Sector: ${name} (class: ${classMatch ? classMatch[1] : 'Unknown'})`);
 
       let vias = [];
+      let sectorImages = {
+        overviewImageUrl: '',
+        comoLlegarImageUrl: '',
+        generalImageUrl: '',
+        izquierdaImageUrl: '',
+        centroImageUrl: '',
+        derechaImageUrl: ''
+      };
+
       if (classMatch) {
         const sectorClassName = classMatch[1];
         const sectorFilePath = findSectorFileByClass(sectorClassName);
         if (sectorFilePath && fs.existsSync(sectorFilePath)) {
           vias = parseSectorFile(sectorFilePath, sectorClassName, sectorSlug);
+          sectorImages = extractSectorImages(sectorFilePath);
         } else {
           console.warn(`  Warning: Could not find file defining class ${sectorClassName}`);
         }
@@ -409,6 +494,12 @@ function processAreaFile(areaFilePath, areaSlug) {
         nombre: name,
         descripcion: summary || `Sector ${name}. Orientación: ${orientation}`,
         imageUrl: getStorageUrl(storagePath),
+        overviewImageUrl: sectorImages.overviewImageUrl,
+        comoLlegarImageUrl: sectorImages.comoLlegarImageUrl,
+        generalImageUrl: sectorImages.generalImageUrl,
+        izquierdaImageUrl: sectorImages.izquierdaImageUrl,
+        centroImageUrl: sectorImages.centroImageUrl,
+        derechaImageUrl: sectorImages.derechaImageUrl,
         vias: vias
       });
     }
