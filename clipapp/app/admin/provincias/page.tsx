@@ -32,7 +32,7 @@ import {
   GripVertical
 } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
-import { ref, uploadBytes, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, listAll, deleteObject, StorageReference } from 'firebase/storage';
 import { 
   collection, 
   doc, 
@@ -194,9 +194,10 @@ export default function ProvinciasEditor() {
       }
 
       setActionMessage({ text: 'Archivo subido y URL actualizada.', type: 'success' });
-    } catch (err: any) {
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
       console.error(err);
-      setActionMessage({ text: `Error al subir archivo: ${err.message}`, type: 'error' });
+      setActionMessage({ text: `Error al subir archivo: ${errorMsg}`, type: 'error' });
     } finally {
       setIsUploading(prev => ({ ...prev, [key]: false }));
     }
@@ -1099,7 +1100,7 @@ export default function ProvinciasEditor() {
         // Delete all Firebase Storage files under `provincias/{provinceId}/{areaId}` recursively
         const areaStorageRef = ref(storage, `provincias/${selectedProvinceId}/${areaId}`);
         
-        const deleteStorageFolderRecursive = async (folderRef: any) => {
+        const deleteStorageFolderRecursive = async (folderRef: StorageReference) => {
           const listResult = await listAll(folderRef);
           
           // Delete files
