@@ -60,6 +60,7 @@ export default function Dashboard() {
           const areaRef = doc(db, `provincias/${province.id}/areas`, area.id);
           await setDoc(areaRef, {
             nombre: area.nombre,
+            subRegion: area.subRegion || '',
             descripcion: area.descripcion || '',
             tiempoCaminata: area.tiempoCaminata || '',
             googleMapsLink: area.googleMapsLink || '',

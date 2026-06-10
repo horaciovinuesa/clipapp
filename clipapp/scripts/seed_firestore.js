@@ -161,6 +161,7 @@ async function main() {
           `provincias/${province.id}/areas/${area.id}`,
           makeFirestoreFields({
             nombre: area.nombre,
+            subRegion: area.subRegion || '',
             descripcion: area.descripcion || '',
             tiempoCaminata: area.tiempoCaminata || '',
             googleMapsLink: area.googleMapsLink || '',

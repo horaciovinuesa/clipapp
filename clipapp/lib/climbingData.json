@@ -6,517 +6,21 @@
       {
         "id": "la-cantera",
         "nombre": "La Cantera",
-        "descripcion": "La Cantera se encuentra a pocos minutos del centro de Córdoba. Se puede acceder en auto hasta el sector \"Escuela\" y aún más allá. Para llegar, seguir las indicaciones en los mapas proporcionados.",
-        "tiempoCaminata": "1 min",
-        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.675568060090615,-64.4492346485338",
-        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.67084752431989, -64.43293676158493",
-        "windguruLink": "https://www.windguru.cz/171354",
+        "subRegion": "Areas En Cordoba",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
         "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Frutas_bg_cantera.jpg?alt=media",
         "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fhow_to_get_there.jpg?alt=media",
         "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Foverview.jpg?alt=media",
-        "sectores": [
-          {
-            "id": "la-cantera-pared-principal",
-            "nombre": "Pared principal",
-            "descripcion": "Sector Pared principal. Orientación: Norte",
-            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fpared_principal.jpg?alt=media",
-            "overviewImageUrl": "",
-            "comoLlegarImageUrl": "",
-            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fpared_principal.jpg?alt=media",
-            "izquierdaImageUrl": "",
-            "centroImageUrl": "",
-            "derechaImageUrl": "",
-            "vias": [
-              {
-                "id": "la-cantera-pared-principal-1",
-                "nombre": "Mercurio Retrogado",
-                "grado": "7A+",
-                "altura": "19m",
-                "chapas": 10,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-2",
-                "nombre": "Tirando Lavarropas",
-                "grado": "6C+",
-                "altura": "20m",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-3",
-                "nombre": "El susano anda cerca",
-                "grado": "7A+",
-                "altura": "20m",
-                "chapas": 9,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-4",
-                "nombre": "Variante de:",
-                "grado": "7A+",
-                "altura": "20m",
-                "chapas": 9,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-5",
-                "nombre": "La energia dividida",
-                "grado": "6C",
-                "altura": "17m",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-6",
-                "nombre": "Moviendo las caderas",
-                "grado": "6C+",
-                "altura": "15m",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-7",
-                "nombre": "Por la tangente",
-                "grado": "6B",
-                "altura": "19m",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-8",
-                "nombre": "La historia sin fin",
-                "grado": "6B",
-                "altura": "21m",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-9",
-                "nombre": "Bajando al pozo",
-                "grado": "7A",
-                "altura": "22m",
-                "chapas": 9,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-10",
-                "nombre": "Oscuro potecito",
-                "grado": "6C+",
-                "altura": "22m",
-                "chapas": 9,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-11",
-                "nombre": "En la placa no se hace fuerza",
-                "grado": "7A",
-                "altura": "22m",
-                "chapas": 10,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-12",
-                "nombre": "Metele que son pasteles",
-                "grado": "7A+",
-                "altura": "14m",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-13",
-                "nombre": "A dos manos",
-                "grado": "7B+",
-                "altura": "20m",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-14",
-                "nombre": "Culito con manija",
-                "grado": "7A",
-                "altura": "18m",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-15",
-                "nombre": "No seas tan hipocrita",
-                "grado": "6B+",
-                "altura": "14m",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-16",
-                "nombre": "Polvo cosmico (variante)",
-                "grado": "6B",
-                "altura": "15m",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-17",
-                "nombre": "Polvo cósmico",
-                "grado": "6B",
-                "altura": "15m",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-18",
-                "nombre": "Petit Mort",
-                "grado": "6A",
-                "altura": "8m",
-                "chapas": 4,
-                "grupo": "General",
-                "climbType": "aplome"
-              },
-              {
-                "id": "la-cantera-pared-principal-19",
-                "nombre": "?",
-                "grado": "6C",
-                "altura": "?",
-                "chapas": 4,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-pared-principal-20",
-                "nombre": "La morocha",
-                "grado": "5+",
-                "altura": "16m",
-                "chapas": 4,
-                "grupo": "General",
-                "climbType": "aplome"
-              },
-              {
-                "id": "la-cantera-pared-principal-21",
-                "nombre": "No opines de los cuerpos agenos",
-                "grado": "6A+",
-                "altura": "18m",
-                "chapas": 4,
-                "grupo": "General",
-                "climbType": "aplome"
-              },
-              {
-                "id": "la-cantera-pared-principal-22",
-                "nombre": "Un domingo en familia",
-                "grado": "5+",
-                "altura": "10m",
-                "chapas": 4,
-                "grupo": "General",
-                "climbType": "aplome"
-              }
-            ]
-          },
-          {
-            "id": "la-cantera-sector-la-cueva",
-            "nombre": "Sector la cueva",
-            "descripcion": "Sector Sector la cueva. Orientación: Norte",
-            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fcueva_derecha.jpg?alt=media",
-            "overviewImageUrl": "",
-            "comoLlegarImageUrl": "",
-            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fla_cueva_2.jpg?alt=media",
-            "izquierdaImageUrl": "",
-            "centroImageUrl": "",
-            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fcueva_derecha.jpg?alt=media",
-            "vias": [
-              {
-                "id": "la-cantera-sector-la-cueva-1",
-                "nombre": "Al paranoico lo encerraron",
-                "grado": "8A",
-                "altura": "?",
-                "chapas": 10,
-                "grupo": "General",
-                "climbType": "desplome"
-              },
-              {
-                "id": "la-cantera-sector-la-cueva-2",
-                "nombre": "Que no te agarre el cuernavirus",
-                "grado": "8B",
-                "altura": "?",
-                "chapas": 10,
-                "grupo": "General",
-                "climbType": "desplome"
-              },
-              {
-                "id": "la-cantera-sector-la-cueva-3",
-                "nombre": "El tio mano larga",
-                "grado": "8A",
-                "altura": "?",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "desplomeLeve"
-              },
-              {
-                "id": "la-cantera-sector-la-cueva-4",
-                "nombre": "Lluvia de televisores",
-                "grado": "8A",
-                "altura": "?",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "desplome"
-              },
-              {
-                "id": "la-cantera-sector-la-cueva-5",
-                "nombre": "No me deja comer pan",
-                "grado": "7C",
-                "altura": "?",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "desplome"
-              },
-              {
-                "id": "la-cantera-sector-la-cueva-6",
-                "nombre": "El Nico me maltrata",
-                "grado": "8A",
-                "altura": "?",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "desplome"
-              }
-            ]
-          },
-          {
-            "id": "la-cantera-escuela",
-            "nombre": "Escuela",
-            "descripcion": "Sector Escuela. Orientación: Norte",
-            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_escuela.jpg?alt=media",
-            "overviewImageUrl": "",
-            "comoLlegarImageUrl": "",
-            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_escuela.jpg?alt=media",
-            "izquierdaImageUrl": "",
-            "centroImageUrl": "",
-            "derechaImageUrl": "",
-            "vias": [
-              {
-                "id": "la-cantera-escuela-1",
-                "nombre": "Fisurados",
-                "grado": "6A+",
-                "altura": "12m",
-                "chapas": 0,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-escuela-2",
-                "nombre": "Afilando las garras",
-                "grado": "6A",
-                "altura": "12m",
-                "chapas": 5,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-escuela-3",
-                "nombre": "Cerra los ojos y sopla",
-                "grado": "5+",
-                "altura": "12m",
-                "chapas": 5,
-                "grupo": "General",
-                "climbType": "aplome"
-              },
-              {
-                "id": "la-cantera-escuela-4",
-                "nombre": "Despues del 4° son todos gatos",
-                "grado": "5+",
-                "altura": "12m",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "aplome"
-              }
-            ]
-          },
-          {
-            "id": "la-cantera-poliamor",
-            "nombre": "Poliamor",
-            "descripcion": "Sector Poliamor. Orientación: Norte",
-            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_poliamor.jpg?alt=media",
-            "overviewImageUrl": "",
-            "comoLlegarImageUrl": "",
-            "generalImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/la_cantera%2Fsector_poliamor.jpg?alt=media",
-            "izquierdaImageUrl": "",
-            "centroImageUrl": "",
-            "derechaImageUrl": "",
-            "vias": [
-              {
-                "id": "la-cantera-poliamor-1",
-                "nombre": "Se hace el deconstruido *NO ESCALAR*",
-                "grado": "7C",
-                "altura": "?",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-2",
-                "nombre": "Patitas al hombro",
-                "grado": "7A+",
-                "altura": "?",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-3",
-                "nombre": "Te voy a dar poliamor",
-                "grado": "6B+",
-                "altura": "?",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-4",
-                "nombre": "Erecciones de mierda",
-                "grado": "7A+",
-                "altura": "?",
-                "chapas": 3,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-5",
-                "nombre": "Como la de orly",
-                "grado": "6B",
-                "altura": "?",
-                "chapas": 3,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-6",
-                "nombre": "Mitad pelada",
-                "grado": "6C",
-                "altura": "?",
-                "chapas": 4,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-7",
-                "nombre": "Mitad peluda",
-                "grado": "7A",
-                "altura": "?",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-8",
-                "nombre": "Del vuelo y de los cuernos no se salva nadie",
-                "grado": "7C+",
-                "altura": "?",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-9",
-                "nombre": "?",
-                "grado": "8A",
-                "altura": "?",
-                "chapas": 10,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-10",
-                "nombre": "Decisiones de mierda",
-                "grado": "7B+",
-                "altura": "?",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-11",
-                "nombre": "Si duele es amor",
-                "grado": "8A",
-                "altura": "?",
-                "chapas": 10,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-12",
-                "nombre": "La vida es corta hacete torta",
-                "grado": "7C+",
-                "altura": "?",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-13",
-                "nombre": "El reciclcador de novias",
-                "grado": "7B",
-                "altura": "?",
-                "chapas": 6,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-14",
-                "nombre": "A todo herrero le llega su panadero",
-                "grado": "7B+",
-                "altura": "?",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-15",
-                "nombre": "Confiate de ese agujerito",
-                "grado": "7C",
-                "altura": "?",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-16",
-                "nombre": "Ya va a volver",
-                "grado": "7A+",
-                "altura": "?",
-                "chapas": 7,
-                "grupo": "General",
-                "climbType": "placa"
-              },
-              {
-                "id": "la-cantera-poliamor-17",
-                "nombre": "Amores toxicos",
-                "grado": "7A+",
-                "altura": "?",
-                "chapas": 8,
-                "grupo": "General",
-                "climbType": "placa"
-              }
-            ]
-          }
-        ]
+        "sectores": []
       },
       {
         "id": "el-colibri",
         "nombre": "El Colibrí",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "El Colibrí se encuentra ubicado sobre los márgenes del Río Suquía y a cercanías de un barrio rural. Hay que tener en cuenta que al tratarse de un barrio residencial, el respeto por las personas que viven en la zona es fundamental para una buena convivencia con los escaladores.",
         "tiempoCaminata": "5 min",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=El+Colibrí+La+Calera",
@@ -802,6 +306,7 @@
       {
         "id": "cueva-de-las-brujas",
         "nombre": "Cueva de las Brujas",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "El sector cuenta con más de 20 vías deportivas, equipadas con parabolts y descuelgue de 2 argollas en todas las vías. La orientación es sur-este, por lo que resulta ideal para disfrutar la sombra en los meses cálidos.",
         "tiempoCaminata": "10 min",
         "googleMapsLink": "https://maps.app.goo.gl/pppX5c3gVS1ic2738",
@@ -1096,6 +601,7 @@
       {
         "id": "ascochinga",
         "nombre": "Ascochinga",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "Hermoso sector de escalada ubicado al lado del río en sus dos pies de vía. Hay un estacionamiento en la entrada de la reserva natural con guardaparques que se quedan hasta el atardecer. En época alta, los guardaparques suelen pedir una colaboración a voluntad.",
         "tiempoCaminata": "5 min",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-30.957007263232484,-64.29400773853585",
@@ -1264,151 +770,21 @@
       {
         "id": "bialet-masse",
         "nombre": "Bialet Massé",
-        "descripcion": "Bialet Massé tiene un sector: \"Pared Principal\", es un destino para escaladores principalmente de niveles iniciales. La roca es de buena calidad y las vías varían en dificultad.",
-        "tiempoCaminata": "10 min",
-        "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.30326064098206,-64.46590331468087",
-        "hospitalLink": "https://www.google.com/maps/search/?api=1&query=-31.23223280656622, -64.47254884590919",
-        "windguruLink": "https://wap2.windguru.cz/view.php?&sc=127287&m=3&n=&from=search&start=0&full=1",
+        "subRegion": "Areas En Cordoba",
+        "descripcion": "",
+        "tiempoCaminata": "",
+        "googleMapsLink": "",
+        "hospitalLink": "",
+        "windguruLink": "",
         "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Frutas_bg_bialet.jpg?alt=media",
         "howToGetImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fhow_to_get_there.jpg?alt=media",
         "overviewImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Foverview.jpg?alt=media",
-        "sectores": [
-          {
-            "id": "bialet-masse-pared-principal",
-            "nombre": "Pared Principal",
-            "descripcion": "Sector Pared Principal. Orientación: Norte",
-            "imageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_1.jpg?alt=media",
-            "overviewImageUrl": "",
-            "comoLlegarImageUrl": "",
-            "generalImageUrl": "",
-            "izquierdaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_1.jpg?alt=media",
-            "centroImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_2-9.jpg?alt=media",
-            "derechaImageUrl": "https://firebasestorage.googleapis.com/v0/b/clipapp-62a1f.firebasestorage.app/o/bialet_masse%2Fbialet_10-11.jpg?alt=media",
-            "vias": [
-              {
-                "id": "bialet-masse-pared-principal-1",
-                "nombre": "Buscale la primera",
-                "grado": "6B+",
-                "altura": "10m",
-                "chapas": 6,
-                "grupo": "Izquierda",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-2",
-                "nombre": "Diedro de los ladrones",
-                "grado": "6B+",
-                "altura": "12m",
-                "chapas": 6,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-3",
-                "nombre": "Cómo hace el chelco",
-                "grado": "4+",
-                "altura": "15m",
-                "chapas": 5,
-                "grupo": "Centro",
-                "climbType": "aplome"
-              },
-              {
-                "id": "bialet-masse-pared-principal-4",
-                "nombre": "La amargada",
-                "grado": "5+",
-                "altura": "8m",
-                "chapas": 4,
-                "grupo": "Centro",
-                "climbType": "aplome"
-              },
-              {
-                "id": "bialet-masse-pared-principal-5",
-                "nombre": "Tren! ... Qué Tren? (izquierda)",
-                "grado": "6B+",
-                "altura": "14m",
-                "chapas": 8,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-6",
-                "nombre": "Tren! ... Qué Tren? (derecha)",
-                "grado": "6B",
-                "altura": "14m",
-                "chapas": 8,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-7",
-                "nombre": "Un paso al vacío",
-                "grado": "5+",
-                "altura": "10m",
-                "chapas": 6,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-8",
-                "nombre": "Via opcional",
-                "grado": "6C",
-                "altura": "13m",
-                "chapas": 7,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-9",
-                "nombre": "La brujita",
-                "grado": "6B",
-                "altura": "9m",
-                "chapas": 5,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-10",
-                "nombre": "?",
-                "grado": "?",
-                "altura": "11m",
-                "chapas": 7,
-                "grupo": "Centro",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-11",
-                "nombre": "Pachamama",
-                "grado": "6A",
-                "altura": "11m",
-                "chapas": 7,
-                "grupo": "Derecha",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-12",
-                "nombre": "Le salió un cuerno (izquierda)",
-                "grado": "6B",
-                "altura": "12m",
-                "chapas": 8,
-                "grupo": "Derecha",
-                "climbType": "placa"
-              },
-              {
-                "id": "bialet-masse-pared-principal-13",
-                "nombre": "Le salió un cuerno (derecha)",
-                "grado": "5+",
-                "altura": "12m",
-                "chapas": 6,
-                "grupo": "Derecha",
-                "climbType": "placa"
-              }
-            ]
-          }
-        ]
+        "sectores": []
       },
       {
         "id": "la-calera-el-horno",
         "nombre": "La Calera - El Horno",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "A 27 km de Córdoba se encuentra el \"El Horno\". Sobre la Ruta RP E55 a unos 6,5 kilómetros de La Calera (yendo hacia el Dique San Roque) se encuentran las vías sobre la ruta a mano izquierda. Tiene un total de 13 vías deportivas y 2 clásicas con orientación Noroeste.",
         "tiempoCaminata": "10 min",
         "googleMapsLink": "https://maps.app.goo.gl/jun1gwoMeM5DFj2w9",
@@ -1590,6 +966,7 @@
       {
         "id": "valle-hermoso",
         "nombre": "Valle Hermoso",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "A 78 Km de Córdoba se encuentra Valle Hermoso. Se puede llegar por la Ruta RP E53 y luego Camino del Cuadrado (Siempre averiguar antes si está habilitado el camino porque lo cierran seguido) o por la ruta RP E55 hacía Carlos Paz y luego tomar la ruta RN38. Estando en Valle Hermoso se debe tomar la calle Eva Perón, que luego pasa a llamarse Leonardo Da Vinci, hasta llegar al río (Vado). Luego, se debe caminar 50 metros sobre el río hacia la derecha y ahí se encuentran las vías. Tiene un total de 7 vías con orientación Norte.",
         "tiempoCaminata": "10 min",
         "googleMapsLink": "https://maps.app.goo.gl/TxrYSNthGCdm4auu9",
@@ -1681,6 +1058,7 @@
       {
         "id": "mina-clavero",
         "nombre": "Mina Clavero",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "Desde la plaza principal de Mina Clavero tomar la calle que conduce al balneario La Toma (dirección a la montaña) y continuar unos 3,5 km en línea recta. Girar a la derecha y recorrer aproximadamente 1 km hasta encontrar, a mano izquierda y junto al balneario, la tranquera donde se dejan los vehículos (fuera de temporada el estacionamiento suele ser a voluntad). Una vez a pie, cruzar el puente colgante y remontar el río Mina Clavero durante unos 25 minutos hasta llegar al sector.",
         "tiempoCaminata": "25 min",
         "googleMapsLink": "https://maps.app.goo.gl/gDPnSQnGeT8tEY6Q7",
@@ -2058,6 +1436,7 @@
       {
         "id": "la-cueva-de-los-pajaritos",
         "nombre": "La Cueva de los Pajaritos",
+        "subRegion": "Areas En Cordoba",
         "descripcion": "A 60 Km de Córdoba se encuentra La cueva de los pajaritos. Se puede llegar por la Ruta RN 20 hasta Carlos Paz y luego tomar la ruta RP 28 hasta llegar Tanti. Se ingresa en la entrada principal que sale a la derecha, se recorre 1,2 km aprox. hasta llegar a la plaza principal del pueblo. Ahí se dobla a la derecha, se cruza un vado y en la primer calle que sale a mano derecha (a unos 150 mts) se debe doblar y recorrer aproximadamente 7 km de tierra. Donde se bifurca el camino, y un poco antes de la cueva de los pajaritos, se ven las vías a mano izquierda a unos 200 metros . Hay 6 vías con orientación Este. Le gente que cuida el campo donde están ubicadas las vías no tienen problema en dejar pasar, siempre y cuando sea para estar en el sector y no más allá de él.",
         "tiempoCaminata": "5 min",
         "googleMapsLink": "https://maps.app.goo.gl/F6tDnBsTcLKK6dNB9",
@@ -2149,6 +1528,7 @@
       {
         "id": "el-secretillo",
         "nombre": "El Secretillo",
+        "subRegion": "Altas Cumbres",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.721673439452374,-64.88886791413951",
@@ -2530,6 +1910,7 @@
       {
         "id": "teatro-corral",
         "nombre": "Teatro / Corral",
+        "subRegion": "Altas Cumbres",
         "descripcion": "En las huellas de una larga y fructuosa tradición, la Ola hospedó a finales de 2022 un proyecto internacional de equipamiento de vías de escalada.",
         "tiempoCaminata": "10 min",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.650433406010674,-64.9021218288072",
@@ -3413,6 +2794,7 @@
       {
         "id": "la-ola",
         "nombre": "La Ola",
+        "subRegion": "Altas Cumbres",
         "descripcion": "La Ola es una zona de escalada deportiva con excelentes rutas en granito de gran calidad. La mayoría de sus vías han sido abiertas con parabolts y descuelgues. Situada en el camino de las Altas Cumbres, a 120 Km. de Córdoba y a 20 Km. de El Cóndor, es el área de escalada en la provincia con mayor desarrollo en los últimos años. Comenzó a equiparse en el año 1993 y sobrepasa actualmente las 110 rutas.\n\nEn la zona se han descubierto numerosas paredes con potencial para decenas de vías. Lugares como El Teatro y El Nacimiento del Río Mina Clavero están en pleno equipamiento y en el futuro serán excelentes centros de escalada.",
         "tiempoCaminata": "15 min",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-31.650433406010674,-64.9021218288072",
@@ -4651,6 +4033,7 @@
       {
         "id": "zona-torres-gemelas-la-ballena",
         "nombre": "Zona Torres Gemelas-La Ballena",
+        "subRegion": "Altas Cumbres",
         "descripcion": "📍 Torres Gemelas:\nA 120 km aproximados de Córdoba por la RP 34 (camino a Mina Clavero) se encuentra \"La Ola\". Este es el Sector Torres Gemelas y está a unos 200 metros hacia la izquierda de la ruta (yendo de Cba a Mina Clavero). La casa a mano izquierda (después de pasar el sector la Ola) es la referencia para entrar a la montaña.\n\n🏔️ El Barrilete:\nPasando las Torres Gemelas, entramos a la izquierda antes de llegar a la siguiente pared de voladuras. Seguimos en la misma dirección que la pared-terraza por la que salimos de la ruta y nos montamos en la pampa. Continuamos caminando al Sureste hasta ver el río Los Sauces, que en este punto hace una curva y sigue paralelo a la ruta. Nos dirigimos a esta curva y después de pasar por una pirca en un col, bajamos al río. Al cruzarlo, se ve a la izquierda El Barrilete.\n\n🚢 El Barco:\nSiguiendo desde El Barrilete por la misma margen unos 600 m, llegamos al marcado cauce de un arroyo seco que baja desde la derecha. Subiendo por la izquierda de este 200 m, llegamos a El Barco.\n\n🌊 La Ballena:\nDesde el Campamento de La Ola, salimos en dirección Sureste y nos montamos a la pampa. Después caminamos paralelos a la ruta unos 300 m y doblamos a la izquierda para seguir hacia el Este por el cauce de un arroyo seco encajonado (o al costado de este), hasta llegar a un rancho abandonado. Siguiendo en la misma dirección en la que veníamos 10 min más, llegamos a un vallecito y a La Ballena, que está a la derecha (las rutas de escalada miran al Este).",
         "tiempoCaminata": "5 min",
         "googleMapsLink": "https://www.google.com.ar/maps/place/31%C2%B040\\",
@@ -5009,6 +4392,7 @@
       {
         "id": "los-paredones",
         "nombre": "Los Paredones",
+        "subRegion": "Capilla Del Monte",
         "descripcion": "\"Paredones\" es un lugar de incomparable encanto, mágicamente ubicado en medio de las sierras de Córdoba, a la vera de dos hermosos ríos. La escalada transcurre en paredes de granito rojizo, caracterizadas por curiosas formaciones, que nos regalan hermosas fisuras, placas \"regleteras\" de finos y técnicos movimientos, semi desplomes de gran continuidad y algún que otro desplome fuerte, de esos que pesan sobre los brazos.",
         "tiempoCaminata": "10 min",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-30.80354682679822, -64.53556558087239",
@@ -5870,6 +5254,7 @@
       {
         "id": "mogotes",
         "nombre": "Mogotes",
+        "subRegion": "Capilla Del Monte",
         "descripcion": "Desde la Ruta 38 en dirección a Cruz del Eje, pasar Capilla del Monte y, a unos 2 km, tomar la calle a mano izquierda señalizada hacia Mogotes. Seguir hasta el ingreso del balneario y estacionar en las zonas habilitadas.",
         "tiempoCaminata": "",
         "googleMapsLink": "https://maps.app.goo.gl/JRgaNpDMD3PqBazi6",
@@ -5883,6 +5268,7 @@
       {
         "id": "el-paraiso",
         "nombre": "El Paraiso",
+        "subRegion": "Capilla Del Monte",
         "descripcion": "¿CÓMO LLEGAR?\nEl Parador El Paraíso se encuentra a 2,4 km desde el centro de Capilla del Monte. Dirigirse hacia el oeste por Av. Hipólito Yrigoyen en dirección a Bartolomé Mitre. Cruzar la RN 38. Al llegar al río, el sector de escalada se encuentra a la izquierda. (podes hacer click en el link de google maps abajo)",
         "tiempoCaminata": "10 min",
         "googleMapsLink": "https://www.google.com/maps/search/?api=1&query=-30.851494822980037, -64.54881229127318",
@@ -6208,6 +5594,7 @@
       {
         "id": "copina-i-segundo-puente",
         "nombre": "Copina I (Segundo Puente)",
+        "subRegion": "Copina",
         "descripcion": "Desde la Ruta Provincial 14 (camino de las Altas Cumbres) tomar el desvío señalizado hacia Copina. Continuar por camino de ripio hasta el segundo puente; hay espacio acotado para estacionar. Seguir el sendero balizado que bordea el curso de agua durante unos minutos hasta la base del muro principal.",
         "tiempoCaminata": "5 min",
         "googleMapsLink": "https://maps.app.goo.gl/wfM7moXzRhG82SH37",
@@ -6353,6 +5740,7 @@
       {
         "id": "copina-ii-sector-hernan",
         "nombre": "Copina II (Sector Hernan)",
+        "subRegion": "Copina",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -6366,6 +5754,7 @@
       {
         "id": "copina-iii-sector-imperial",
         "nombre": "Copina III (Sector Imperial)",
+        "subRegion": "Copina",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -6379,6 +5768,7 @@
       {
         "id": "copina-iv",
         "nombre": "Copina IV",
+        "subRegion": "Copina",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -6392,6 +5782,7 @@
       {
         "id": "guia-general",
         "nombre": "Guia General",
+        "subRegion": "Los Gigantes",
         "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
         "tiempoCaminata": "20 min",
         "googleMapsLink": "",
@@ -7495,6 +6886,7 @@
       {
         "id": "cerro-de-la-cruz",
         "nombre": "Cerro de la cruz",
+        "subRegion": "Los Gigantes",
         "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
         "tiempoCaminata": "20 min",
         "googleMapsLink": "https://maps.app.goo.gl/dUgKgZAFs89AjFUQ6?g_st=ipc",
@@ -7712,6 +7104,7 @@
       {
         "id": "zona-del-refugio-c-a-c",
         "nombre": "Zona del Refugio C.A.C",
+        "subRegion": "Los Gigantes",
         "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
         "tiempoCaminata": "20 min",
         "googleMapsLink": "https://maps.app.goo.gl/PfMDBMw67WV5kLWw9",
@@ -8052,6 +7445,7 @@
       {
         "id": "el-ostiazo",
         "nombre": "El Ostiazo",
+        "subRegion": "Los Gigantes",
         "descripcion": "El macizo de Los Gigantes es el lugar tradicional de la escalada en Córdoba. Sus paredes de granito han sido testigo de escaladas por más de cuarenta años. Si bien en los últimos años los escaladores se han volcado más a la escalada en desplomes, este lugar mantiene su especial atracción y encanto para todos nosotros, no solamente por su belleza, sino también por los nuevos desafíos que ofrecen sus paredes. Caminar entre laberínticos mogotes, descubrir nuevos vallecitos o compartir la tarde tomando mate, son momentos que disfrutamos cada vez que vamos. En esta reedición de la guía Escalada en Córdoba se agregaron las vías abiertas y reequipadas durante los cuatro años que pasaron desde la anterior impresión.",
         "tiempoCaminata": "20 min",
         "googleMapsLink": "https://maps.app.goo.gl/PfMDBMw67WV5kLWw9",
@@ -8140,6 +7534,7 @@
       {
         "id": "agua-de-las-avispas",
         "nombre": "Agua de Las Avispas",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8153,6 +7548,7 @@
       {
         "id": "el-santuario",
         "nombre": "El Santuario",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "https://share.google/NJ1BZHYlczXiPOiZ8",
@@ -8284,6 +7680,7 @@
       {
         "id": "cacheuta",
         "nombre": "Cacheuta",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8297,6 +7694,7 @@
       {
         "id": "potretillos",
         "nombre": "Potretillos",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8310,6 +7708,7 @@
       {
         "id": "cajon-de-arenales",
         "nombre": "Cajon de Arenales",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8323,6 +7722,7 @@
       {
         "id": "agua-del-toro",
         "nombre": "Agua Del Toro",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8342,6 +7742,7 @@
       {
         "id": "villa-del-carmen",
         "nombre": "Villa Del Carmen",
+        "subRegion": "",
         "descripcion": "Desde Villa del Carmen nos dirigimos en dirección Este, hasta la última calle del pueblo y tomamos el camino de tierra que sale frente a \"LOS AROMOS\" que va hacia la virgen, al pie de las sierras y a 1,8 Km. llegamos a la virgen, giramos a la izquierda y a 50 mts. encontraremos la entrada a una propiedad, por la que estacionamos el vehículo antes, procurando no molestar al propietario y dejándo libre el paso.\n\nRECUERDE: estamos dentro de propiedad privada. Deje el vehículo fuera del camino.\n\nDel Estacionamiento nos dirigimos hacia las sierras y encontraremos un sendero que deberemos continuar hasta cruzar con el arroyo. Una vez que cruzamos el arroyo, subimos un poco por el mismo sendero y veremos hacia la derecha los sauces, hacia donde debemos dirigirnos.",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8702,6 +8103,7 @@
       {
         "id": "valle-de-pacanta-penon",
         "nombre": "Valle De Pacanta / Peñon",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -8721,6 +8123,7 @@
       {
         "id": "cuesta-de-miranda",
         "nombre": "Cuesta de Miranda",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "https://maps.app.goo.gl/4it1HNkajjk93Pv47",
@@ -9600,6 +9003,7 @@
       {
         "id": "lago-puelo",
         "nombre": "Lago Puelo",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -9613,6 +9017,7 @@
       {
         "id": "piedra-parada-la-buitrera",
         "nombre": "Piedra Parada/La Buitrera",
+        "subRegion": "",
         "descripcion": "Viniendo de otras provincias, lo más recomendable será llegar primero a la ciudad de Esquel. Si se viene desde Bariloche o el Bolsón, 25km antes de llegar a Esquel encontraremos la señalización de la ruta número 12 con dirección a Gualjaina y Paso del Sapo. \n\nDesde la ciudad de Esquel se accede por la ruta nacional N° 40 hacia el norte, recorrer 25km hasta encontrar a mano derecha el acceso a ruta provincial N° 12, continuar 65km (los primeros 20km se encuentran asfaltados) en dirección a Gualjaina. \n\nDesde Gualjaina continuar por la ruta N° 12, rumbo a Paso del Sapo, a 45km se encuentra la Piedra Parada, fácilmente identificable a mano izquierda del camino. Metros antes de llegar a la Piedra Parada hay un camino a mano izquierda por el cual se accede al Cañadón de La Buitrera, avanzar 500m hasta encontrarse con el puente que cruza el río Chubut y luego recorrer unos 600m para llegar a la entrada del cañadón. Continuar otros 600m para acceder al camping \"Establecimiento la Buitrera\".\n\nEn caso de venir desde Rawson, en la costa Este de Chubut, tomar la ruta n° 25 con dirección a Las Plumas, Paso de Indios y Tecka. 5km antes de llegar a Paso de Indios, tomar la ruta número 12 con dirección a Paso del Sapo, continuar por el camino de ripio. Una vez en Paso del Sapo, continuar otros 40km hasta llegar a Piedra Parada.\n\nEs posible llegar a Piedra Parada utilizando transporte público desde Esquel mediante la empresa Jacobson. La misma ofrece un servicio con una frecuencia de tres veces por semana a la localidad de Paso del Sapo y otro servicio diario al pueblo de Gualjaina. Desde Gualjaina se puede hacer dedo hasta Piedra Parada, pero debido al escaso tráfico esto puede demorar un tiempo considerable.",
         "tiempoCaminata": "",
         "googleMapsLink": "https://maps.app.goo.gl/FSCwsKXVwHwd3Wcf8",
@@ -10069,6 +9474,7 @@
       {
         "id": "esquel",
         "nombre": "Esquel",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10135,6 +9541,7 @@
       {
         "id": "trevelin",
         "nombre": "Trevelin",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "https://maps.app.goo.gl/J34jJQPXNDT6HpDV6",
@@ -10425,6 +9832,7 @@
       {
         "id": "boca-toma",
         "nombre": "Boca Toma",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10444,6 +9852,7 @@
       {
         "id": "las-juntas",
         "nombre": "Las Juntas",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10457,6 +9866,7 @@
       {
         "id": "anquincila",
         "nombre": "Anquincila",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10470,6 +9880,7 @@
       {
         "id": "isla-larga",
         "nombre": "Isla Larga",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10483,6 +9894,7 @@
       {
         "id": "el-jumeal",
         "nombre": "El Jumeal",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10502,6 +9914,7 @@
       {
         "id": "en-construccion",
         "nombre": "En construcción",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10521,6 +9934,7 @@
       {
         "id": "san-martin-de-los-andes",
         "nombre": "San Martin de los Andes",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10540,6 +9954,7 @@
       {
         "id": "san-antonio",
         "nombre": "San Antonio",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10672,6 +10087,7 @@
       {
         "id": "termas-de-reyes",
         "nombre": "Termas de Reyes",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10745,6 +10161,7 @@
       {
         "id": "las-escaleras",
         "nombre": "Las Escaleras",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -10895,6 +10312,7 @@
       {
         "id": "barcena",
         "nombre": "Barcena",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -11067,6 +10485,7 @@
       {
         "id": "el-roncal",
         "nombre": "El Roncal",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -11280,6 +10699,7 @@
       {
         "id": "tilcara",
         "nombre": "Tilcara",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -11603,6 +11023,7 @@
       {
         "id": "yavi",
         "nombre": "Yavi",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",
@@ -12007,6 +11428,7 @@
       {
         "id": "tuzgle",
         "nombre": "Tuzgle",
+        "subRegion": "",
         "descripcion": "",
         "tiempoCaminata": "",
         "googleMapsLink": "",

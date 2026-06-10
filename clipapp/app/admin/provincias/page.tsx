@@ -26,10 +26,13 @@ import {
   ArrowRight,
   Sliders,
   AlertTriangle,
-  RefreshCw
+  RefreshCw,
+  ChevronUp,
+  ChevronDown,
+  GripVertical
 } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
 import { 
   collection, 
   doc, 
@@ -60,6 +63,8 @@ export default function ProvinciasEditor() {
 
   const [showAddAreaModal, setShowAddAreaModal] = useState(false);
   const [newAreaName, setNewAreaName] = useState('');
+  const [newAreaSubRegion, setNewAreaSubRegion] = useState('General');
+  const [newAreaCustomSubRegion, setNewAreaCustomSubRegion] = useState('');
 
   const [showAddSectorModal, setShowAddSectorModal] = useState(false);
   const [newSectorName, setNewSectorName] = useState('');
@@ -82,9 +87,19 @@ export default function ProvinciasEditor() {
     chapas: 6,
     grupo: 'General'
   });
+  const [isBulkEditing, setIsBulkEditing] = useState(false);
+  const [bulkText, setBulkText] = useState('');
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   // Active route set tab inside Sector view
   const [activeGroupTab, setActiveGroupTab] = useState<'General' | 'Izquierda' | 'Centro' | 'Derecha'>('General');
+
+  // Province metadata edit states
+  const [isEditingProvince, setIsEditingProvince] = useState(false);
+  const [provinceEditName, setProvinceEditName] = useState('');
+  const [provinceEditImage, setProvinceEditImage] = useState('');
+  const [provinceEditPdf, setProvinceEditPdf] = useState('');
 
   // Area metadata edit states
   const [isEditingArea, setIsEditingArea] = useState(false);
@@ -97,6 +112,7 @@ export default function ProvinciasEditor() {
   const [areaEditImage, setAreaEditImage] = useState('');
   const [areaEditHowToGetImage, setAreaEditHowToGetImage] = useState('');
   const [areaEditOverviewImage, setAreaEditOverviewImage] = useState('');
+  const [areaEditSubRegion, setAreaEditSubRegion] = useState('');
 
   // Sector title/image inline edits
   const [sectorEditName, setSectorEditName] = useState('');
@@ -121,25 +137,35 @@ export default function ProvinciasEditor() {
 
   const handleImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    isArea: boolean,
+    entityType: 'province' | 'area' | 'sector',
     fieldName: string
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!selectedProvinceId || !selectedAreaId || (!isArea && !selectedSector)) {
+    if (entityType === 'province' && !selectedProvinceId) {
+      setActionMessage({ text: 'Por favor, selecciona una provincia primero.', type: 'error' });
+      return;
+    }
+    if (entityType === 'area' && (!selectedProvinceId || !selectedAreaId)) {
       setActionMessage({ text: 'Por favor, selecciona una provincia y una zona primero.', type: 'error' });
       return;
     }
+    if (entityType === 'sector' && (!selectedProvinceId || !selectedAreaId || !selectedSector)) {
+      setActionMessage({ text: 'Por favor, selecciona una provincia, zona y sector primero.', type: 'error' });
+      return;
+    }
 
-    const key = `${isArea ? 'area' : 'sector'}-${fieldName}`;
+    const key = `${entityType}-${fieldName}`;
     setIsUploading(prev => ({ ...prev, [key]: true }));
-    setActionMessage({ text: `Subiendo imagen a Storage...`, type: 'info' });
+    setActionMessage({ text: `Subiendo archivo a Storage...`, type: 'info' });
 
     try {
       const ext = file.name.split('.').pop() || 'jpg';
       let path = '';
-      if (isArea) {
+      if (entityType === 'province') {
+        path = `provincias/${selectedProvinceId}/${fieldName}.${ext}`;
+      } else if (entityType === 'area') {
         path = `provincias/${selectedProvinceId}/${selectedAreaId}/${fieldName}.${ext}`;
       } else {
         path = `provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/${fieldName}.${ext}`;
@@ -150,7 +176,10 @@ export default function ProvinciasEditor() {
       const downloadURL = await getDownloadURL(storageRef);
 
       // Update corresponding state
-      if (isArea) {
+      if (entityType === 'province') {
+        if (fieldName === 'imageUrl') setProvinceEditImage(downloadURL);
+        else if (fieldName === 'pdfUrl') setProvinceEditPdf(downloadURL);
+      } else if (entityType === 'area') {
         if (fieldName === 'imageUrl') setAreaEditImage(downloadURL);
         else if (fieldName === 'howToGetImageUrl') setAreaEditHowToGetImage(downloadURL);
         else if (fieldName === 'overviewImageUrl') setAreaEditOverviewImage(downloadURL);
@@ -164,10 +193,10 @@ export default function ProvinciasEditor() {
         else if (fieldName === 'derechaImageUrl') setSectorEditDerechaImage(downloadURL);
       }
 
-      setActionMessage({ text: 'Imagen subida y URL actualizada.', type: 'success' });
+      setActionMessage({ text: 'Archivo subido y URL actualizada.', type: 'success' });
     } catch (err: any) {
       console.error(err);
-      setActionMessage({ text: `Error al subir imagen: ${err.message}`, type: 'error' });
+      setActionMessage({ text: `Error al subir archivo: ${err.message}`, type: 'error' });
     } finally {
       setIsUploading(prev => ({ ...prev, [key]: false }));
     }
@@ -251,13 +280,16 @@ export default function ProvinciasEditor() {
               imageUrl: aData.imageUrl || '',
               howToGetImageUrl: aData.howToGetImageUrl || '',
               overviewImageUrl: aData.overviewImageUrl || '',
-              sectores
+              sectores,
+              subRegion: aData.subRegion || 'General'
             });
           }
           
           tempProvinces.push({
             id: provId,
             nombre: pData.nombre || '',
+            imageUrl: pData.imageUrl || '',
+            pdfUrl: pData.pdfUrl || '',
             areas
           });
         }
@@ -301,11 +333,24 @@ export default function ProvinciasEditor() {
       setAreaEditImage(activeArea.imageUrl || '');
       setAreaEditHowToGetImage(activeArea.howToGetImageUrl || '');
       setAreaEditOverviewImage(activeArea.overviewImageUrl || '');
+      setAreaEditSubRegion(activeArea.subRegion || 'General');
       setIsEditingArea(false);
     } else {
       setIsEditingArea(false);
     }
   }, [selectedAreaId, selectedProvinceId]);
+
+  // Sync edited province data to state when selecting a different Province
+  useEffect(() => {
+    if (activeProvince) {
+      setProvinceEditName(activeProvince.nombre);
+      setProvinceEditImage(activeProvince.imageUrl || '');
+      setProvinceEditPdf(activeProvince.pdfUrl || '');
+      setIsEditingProvince(false);
+    } else {
+      setIsEditingProvince(false);
+    }
+  }, [selectedProvinceId, activeProvince]);
 
   // Sync edited sector data to state when opening Sector Editor
   useEffect(() => {
@@ -341,7 +386,11 @@ export default function ProvinciasEditor() {
         for (const prov of climbingData) {
           // Write Province
           const provRef = doc(db, 'provincias', prov.id);
-          await setDoc(provRef, { nombre: prov.nombre });
+          await setDoc(provRef, { 
+            nombre: prov.nombre,
+            imageUrl: prov.imageUrl || '',
+            pdfUrl: prov.pdfUrl || ''
+          });
 
           for (const area of prov.areas) {
             // Write Area
@@ -401,7 +450,9 @@ export default function ProvinciasEditor() {
     const newProvObj: Province = {
       id: newId,
       nombre: newProvinceName.trim(),
-      areas: []
+      areas: [],
+      imageUrl: '',
+      pdfUrl: ''
     };
 
     if (isDemoMode) {
@@ -414,7 +465,11 @@ export default function ProvinciasEditor() {
     } else {
       setSaving(true);
       try {
-        await setDoc(doc(db, 'provincias', newId), { nombre: newProvObj.nombre });
+        await setDoc(doc(db, 'provincias', newId), { 
+          nombre: newProvObj.nombre,
+          imageUrl: '',
+          pdfUrl: ''
+        });
         const updated = [...provinces, newProvObj];
         setProvinces(updated);
         setSelectedProvinceId(newId);
@@ -424,6 +479,52 @@ export default function ProvinciasEditor() {
       } catch (err: unknown) {
         const e = err as { message?: string };
         setActionMessage({ text: `Error: ${e.message}`, type: 'error' });
+      } finally {
+        setSaving(false);
+      }
+    }
+  };
+
+  // CRUD -- SAVE PROVINCE DETAILS
+  const handleSaveProvinceData = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeProvince) return;
+
+    setSaving(true);
+
+    const updatedProvObj: Province = {
+      ...activeProvince,
+      nombre: provinceEditName.trim(),
+      imageUrl: provinceEditImage.trim(),
+      pdfUrl: provinceEditPdf.trim()
+    };
+
+    const updatedProvinces = provinces.map(p => {
+      if (p.id === activeProvince.id) {
+        return updatedProvObj;
+      }
+      return p;
+    });
+
+    if (isDemoMode) {
+      saveProvincesToLocal(updatedProvinces);
+      setIsEditingProvince(false);
+      setSaving(false);
+      setActionMessage({ text: "Datos de la provincia actualizados localmente.", type: 'success' });
+    } else {
+      try {
+        const provRef = doc(db, 'provincias', activeProvince.id);
+        await updateDoc(provRef, {
+          nombre: updatedProvObj.nombre,
+          imageUrl: updatedProvObj.imageUrl || '',
+          pdfUrl: updatedProvObj.pdfUrl || ''
+        });
+        setProvinces(updatedProvinces);
+        setIsEditingProvince(false);
+        setActionMessage({ text: "Provincia guardada en Firestore con éxito.", type: 'success' });
+      } catch (err: unknown) {
+        const e = err as { message?: string };
+        setActionMessage({ text: `Error al guardar provincia: ${e.message}`, type: 'error' });
       } finally {
         setSaving(false);
       }
@@ -440,6 +541,10 @@ export default function ProvinciasEditor() {
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '');
 
+    const subRegionValue = newAreaSubRegion === 'Otro' 
+      ? (newAreaCustomSubRegion.trim() || 'General') 
+      : newAreaSubRegion;
+
     const newAreaObj: Area = {
       id: newId,
       nombre: newAreaName.trim(),
@@ -451,7 +556,8 @@ export default function ProvinciasEditor() {
       imageUrl: '',
       howToGetImageUrl: '',
       overviewImageUrl: '',
-      sectores: []
+      sectores: [],
+      subRegion: subRegionValue
     };
 
     const updatedProvinces = provinces.map(p => {
@@ -466,6 +572,8 @@ export default function ProvinciasEditor() {
       setSelectedAreaId(newId);
       setShowAddAreaModal(false);
       setNewAreaName('');
+      setNewAreaSubRegion('General');
+      setNewAreaCustomSubRegion('');
       setActionMessage({ text: `Zona '${newAreaName}' creada localmente.`, type: 'success' });
     } else {
       setSaving(true);
@@ -479,12 +587,15 @@ export default function ProvinciasEditor() {
           windguruLink: '',
           imageUrl: '',
           howToGetImageUrl: '',
-          overviewImageUrl: ''
+          overviewImageUrl: '',
+          subRegion: subRegionValue
         });
         setProvinces(updatedProvinces);
         setSelectedAreaId(newId);
         setShowAddAreaModal(false);
         setNewAreaName('');
+        setNewAreaSubRegion('General');
+        setNewAreaCustomSubRegion('');
         setActionMessage({ text: `Zona '${newAreaObj.nombre}' guardada en Firestore.`, type: 'success' });
       } catch (err: unknown) {
         const e = err as { message?: string };
@@ -513,6 +624,7 @@ export default function ProvinciasEditor() {
       imageUrl: areaEditImage.trim(),
       howToGetImageUrl: areaEditHowToGetImage.trim(),
       overviewImageUrl: areaEditOverviewImage.trim(),
+      subRegion: areaEditSubRegion.trim() || 'General'
     };
 
     const updatedProvinces = provinces.map(p => {
@@ -548,6 +660,7 @@ export default function ProvinciasEditor() {
           imageUrl: updatedAreaObj.imageUrl || '',
           howToGetImageUrl: updatedAreaObj.howToGetImageUrl || '',
           overviewImageUrl: updatedAreaObj.overviewImageUrl || '',
+          subRegion: updatedAreaObj.subRegion
         });
         setProvinces(updatedProvinces);
         setIsEditingArea(false);
@@ -777,6 +890,125 @@ export default function ProvinciasEditor() {
     setEditingRouteId(null);
   };
 
+  // Bulk Editor Vías
+  const startBulkEdit = () => {
+    if (!selectedSector) return;
+    const text = selectedSector.vias
+      .map(v => `${v.nombre} | ${v.grado} | ${v.altura || ''} | ${v.chapas || 0} | ${v.grupo || 'General'}`)
+      .join('\n');
+    setBulkText(text);
+    setIsBulkEditing(true);
+  };
+
+  const handleSaveBulk = () => {
+    if (!selectedSector) return;
+    const lines = bulkText.split('\n');
+    const parsedVias: Route[] = [];
+
+    lines.forEach((line, index) => {
+      const trimmedLine = line.trim();
+      if (!trimmedLine) return;
+
+      const parts = trimmedLine.split('|');
+      const nombre = parts[0]?.trim() || '';
+      const grado = parts[1]?.trim() || '';
+      const altura = parts[2]?.trim() || '15m';
+      const chapas = Number(parts[3]?.trim()) || 0;
+      let grupo = parts[4]?.trim() || 'General';
+
+      const validGroups = ['General', 'Izquierda', 'Centro', 'Derecha'];
+      if (!validGroups.includes(grupo)) {
+        grupo = validGroups.includes(activeGroupTab) ? activeGroupTab : 'General';
+      }
+
+      parsedVias.push({
+        id: `r-${Date.now()}-${index}`,
+        nombre,
+        grado,
+        altura,
+        chapas,
+        grupo: grupo as 'General' | 'Izquierda' | 'Centro' | 'Derecha'
+      });
+    });
+
+    const updatedSector = {
+      ...selectedSector,
+      vias: parsedVias
+    };
+
+    handleSaveSectorData(updatedSector);
+    setIsBulkEditing(false);
+  };
+
+  // Reordering Vías
+  const moveRoute = (index: number, direction: 'up' | 'down') => {
+    if (!selectedSector) return;
+    const routesToOrder = selectedSector.vias.filter(v => v.grupo === activeGroupTab) || [];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= routesToOrder.length) return;
+
+    const itemA = routesToOrder[index];
+    const itemB = routesToOrder[targetIndex];
+
+    const viasCopy = [...selectedSector.vias];
+    const indexA = viasCopy.findIndex(v => v.id === itemA.id);
+    const indexB = viasCopy.findIndex(v => v.id === itemB.id);
+
+    if (indexA !== -1 && indexB !== -1) {
+      const temp = viasCopy[indexA];
+      viasCopy[indexA] = viasCopy[indexB];
+      viasCopy[indexB] = temp;
+
+      handleSaveSectorData({
+        ...selectedSector,
+        vias: viasCopy
+      });
+    }
+  };
+
+  const handleDragStart = (e: React.DragEvent, index: number) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === targetIndex || !selectedSector) return;
+
+    const routesToOrder = selectedSector.vias.filter(v => v.grupo === activeGroupTab) || [];
+    const itemA = routesToOrder[draggedIndex];
+    const itemB = routesToOrder[targetIndex];
+
+    const viasCopy = [...selectedSector.vias];
+    const indexA = viasCopy.findIndex(v => v.id === itemA.id);
+    const indexB = viasCopy.findIndex(v => v.id === itemB.id);
+
+    if (indexA !== -1 && indexB !== -1) {
+      const [removed] = viasCopy.splice(indexA, 1);
+      const newIndexB = viasCopy.findIndex(v => v.id === itemB.id);
+      viasCopy.splice(newIndexB, 0, removed);
+
+      handleSaveSectorData({
+        ...selectedSector,
+        vias: viasCopy
+      });
+    }
+
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  };
+
   // CRUD -- DELETE SECTOR
   const handleDeleteSector = async (sectorId: string) => {
     if (!window.confirm("¿Estás seguro de que deseas eliminar este sector y todas sus vías de manera permanente?")) return;
@@ -806,13 +1038,92 @@ export default function ProvinciasEditor() {
     } else {
       setSaving(true);
       try {
+        // Delete Firestore document
         await deleteDoc(doc(db, `provincias/${selectedProvinceId}/areas/${selectedAreaId}/sectores`, sectorId));
+
+        // Delete Firebase Storage files for this sector
+        const sectorStorageRef = ref(storage, `provincias/${selectedProvinceId}/${selectedAreaId}/${sectorId}`);
+        try {
+          const listResult = await listAll(sectorStorageRef);
+          await Promise.all(
+            listResult.items.map((itemRef) => deleteObject(itemRef))
+          );
+        } catch (storageErr) {
+          console.warn("Storage deletion error (probably empty folder or permission issue):", storageErr);
+        }
+
         setProvinces(updatedProvinces);
         setSelectedSector(null);
-        setActionMessage({ text: "Sector eliminado de Firestore.", type: 'success' });
+        setActionMessage({ text: "Sector y sus imágenes eliminados de Firestore y Storage.", type: 'success' });
       } catch (err: unknown) {
         const e = err as { message?: string };
         setActionMessage({ text: `Error: ${e.message}`, type: 'error' });
+      } finally {
+        setSaving(false);
+      }
+    }
+  };
+
+  // CRUD -- DELETE AREA
+  const handleDeleteArea = async (areaId: string) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar esta zona, todos sus sectores y todas sus vías y archivos asociados permanentemente?")) return;
+    
+    const updatedProvinces = provinces.map(p => {
+      if (p.id === selectedProvinceId) {
+        return {
+          ...p,
+          areas: p.areas.filter(a => a.id !== areaId)
+        };
+      }
+      return p;
+    });
+
+    if (isDemoMode) {
+      saveProvincesToLocal(updatedProvinces);
+      setSelectedAreaId('');
+      setSelectedSector(null);
+      setActionMessage({ text: "Zona eliminada localmente.", type: 'success' });
+    } else {
+      setSaving(true);
+      try {
+        // Delete all sectors in this area (Firestore)
+        const areaSectorsRef = collection(db, `provincias/${selectedProvinceId}/areas/${areaId}/sectores`);
+        const sectorsSnap = await getDocs(areaSectorsRef);
+        await Promise.all(
+          sectorsSnap.docs.map(sectorDoc => deleteDoc(doc(db, `provincias/${selectedProvinceId}/areas/${areaId}/sectores`, sectorDoc.id)))
+        );
+
+        // Delete parent Area document (Firestore)
+        await deleteDoc(doc(db, `provincias/${selectedProvinceId}/areas`, areaId));
+
+        // Delete all Firebase Storage files under `provincias/{provinceId}/{areaId}` recursively
+        const areaStorageRef = ref(storage, `provincias/${selectedProvinceId}/${areaId}`);
+        
+        const deleteStorageFolderRecursive = async (folderRef: any) => {
+          const listResult = await listAll(folderRef);
+          
+          // Delete files
+          const deleteFiles = listResult.items.map((itemRef) => deleteObject(itemRef));
+          
+          // Recursively delete subfolders
+          const deleteSubfolders = listResult.prefixes.map((prefixRef) => deleteStorageFolderRecursive(prefixRef));
+          
+          await Promise.all([...deleteFiles, ...deleteSubfolders]);
+        };
+
+        try {
+          await deleteStorageFolderRecursive(areaStorageRef);
+        } catch (storageErr) {
+          console.warn("Storage recursive deletion error (likely empty folder or permission issue):", storageErr);
+        }
+
+        setProvinces(updatedProvinces);
+        setSelectedAreaId('');
+        setSelectedSector(null);
+        setActionMessage({ text: "Zona, sectores y archivos eliminados de Firestore y Storage.", type: 'success' });
+      } catch (err: unknown) {
+        const e = err as { message?: string };
+        setActionMessage({ text: `Error al eliminar zona: ${e.message}`, type: 'error' });
       } finally {
         setSaving(false);
       }
@@ -887,7 +1198,7 @@ export default function ProvinciasEditor() {
                 key={prov.id}
                 onClick={() => {
                   setSelectedProvinceId(prov.id);
-                  setSelectedAreaId(prov.areas[0]?.id || '');
+                  setSelectedAreaId('');
                   setSelectedSector(null);
                 }}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition ${
@@ -952,7 +1263,16 @@ export default function ProvinciasEditor() {
           {/* Top Info Bar */}
           <div className="bg-zinc-900/30 border border-zinc-800 px-6 py-4 rounded-2xl flex items-center justify-between text-xs font-medium text-zinc-400">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-white font-bold">{activeProvince?.nombre || 'Provincias'}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedAreaId('');
+                  setSelectedSector(null);
+                }}
+                className="text-white font-bold hover:text-emerald-450 transition"
+              >
+                {activeProvince?.nombre || 'Provincias'}
+              </button>
               {activeArea && (
                 <>
                   <ChevronRight className="w-3 h-3 text-zinc-600" />
@@ -970,7 +1290,191 @@ export default function ProvinciasEditor() {
             )}
           </div>
 
-          {/* Grid of Sectors */}
+          {/* Detalles de la Provincia (Province Details Editor) */}
+          {activeProvince && !activeArea && !selectedSector && (
+            <div className="bg-zinc-900/40 border border-zinc-800/80 rounded-2xl p-6 shadow-xl backdrop-blur-md space-y-6">
+              
+              {/* Province Editor Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80">
+                <div className="flex items-center gap-2">
+                  <Sliders className="w-5 h-5 text-emerald-450" />
+                  <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                    {isEditingProvince ? `Editar Provincia: ${activeProvince.nombre}` : `Detalles de la Provincia: ${activeProvince.nombre}`}
+                  </h3>
+                </div>
+                {!isEditingProvince ? (
+                  <button
+                    type="button"
+                    key="edit-province-btn"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditingProvince(true);
+                    }}
+                    className="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-zinc-700/50"
+                  >
+                    <Edit3 className="w-3.5 h-3.5" /> Editar Provincia
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      form="province-edit-form"
+                      disabled={saving}
+                      className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-950 text-xs font-bold rounded-xl transition flex items-center gap-1"
+                    >
+                      <Save className="w-3.5 h-3.5" /> Guardar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProvinceEditName(activeProvince.nombre);
+                        setProvinceEditImage(activeProvince.imageUrl || '');
+                        setProvinceEditPdf(activeProvince.pdfUrl || '');
+                        setIsEditingProvince(false);
+                      }}
+                      className="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-750 text-zinc-400 hover:text-white text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-zinc-700/50"
+                    >
+                      <X className="w-3.5 h-3.5" /> Cancelar
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Province Editor Body */}
+              {!isEditingProvince ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Left: Metadata list */}
+                  <div className="space-y-4 md:col-span-1 border-r border-zinc-800/40 pr-6">
+                    <div>
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Nombre</span>
+                      <p className="text-sm text-zinc-200 font-bold">{activeProvince.nombre}</p>
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Guía PDF</span>
+                      {activeProvince.pdfUrl ? (
+                        <a 
+                          href={activeProvince.pdfUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-xs text-emerald-455 hover:text-emerald-350 hover:underline flex items-center gap-1 bg-zinc-950/40 border border-zinc-850 px-3 py-2 rounded-xl"
+                        >
+                          Descargar Guía PDF
+                        </a>
+                      ) : (
+                        <p className="text-xs text-zinc-500 bg-zinc-950/40 border border-zinc-850 px-3 py-2 rounded-xl italic">
+                          No disponible
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Right: Icon Preview */}
+                  <div className="md:col-span-2 space-y-4">
+                    <div>
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Icono / Escudo</span>
+                      <div className="w-24 h-24 bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 flex items-center justify-center p-4 relative">
+                        {activeProvince.imageUrl ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img src={activeProvince.imageUrl} alt="Icono" className="w-full h-full object-contain" />
+                        ) : (
+                          <MapPin className="w-8 h-8 text-zinc-700" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <form id="province-edit-form" onSubmit={handleSaveProvinceData} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    {/* Left inputs */}
+                    <div className="md:col-span-1 space-y-4">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Nombre</label>
+                        <input
+                          type="text"
+                          value={provinceEditName}
+                          onChange={(e) => setProvinceEditName(e.target.value)}
+                          required
+                          className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-4 py-2.5 text-xs text-zinc-200 outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Guía PDF URL / Archivo</label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={provinceEditPdf}
+                            onChange={(e) => setProvinceEditPdf(e.target.value)}
+                            placeholder="https://..."
+                            className="flex-1 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-4 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                          <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-650 cursor-pointer rounded-xl px-4 text-xs font-semibold text-zinc-200 gap-1.5 transition shrink-0">
+                            {isUploading['province-pdfUrl'] ? (
+                              <RefreshCw className="w-4 h-4 animate-spin text-emerald-450" />
+                            ) : (
+                              <ImageIcon className="w-4 h-4" />
+                            )}
+                            <span>Subir PDF</span>
+                            <input
+                              type="file"
+                              accept="application/pdf"
+                              onChange={(e) => handleImageUpload(e, 'province', 'pdfUrl')}
+                              className="hidden"
+                              disabled={isUploading['province-pdfUrl']}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right inputs (Icon Upload) */}
+                    <div className="md:col-span-2 space-y-4">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Icono de la Provincia (Imagen PNG/JPG)</label>
+                        <div className="flex items-start gap-4">
+                          <div className="w-24 h-24 bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 flex items-center justify-center p-4 relative shrink-0">
+                            {provinceEditImage ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img src={provinceEditImage} alt="Icono" className="w-full h-full object-contain" />
+                            ) : (
+                              <MapPin className="w-8 h-8 text-zinc-700" />
+                            )}
+                          </div>
+                          <div className="flex-1 space-y-2">
+                            <input
+                              type="text"
+                              value={provinceEditImage}
+                              onChange={(e) => setProvinceEditImage(e.target.value)}
+                              placeholder="URL del icono..."
+                              className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-4 py-2 text-xs text-zinc-200 outline-none"
+                            />
+                            <label className="inline-flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-650 cursor-pointer rounded-xl px-4 py-2 text-xs font-semibold text-zinc-200 gap-1.5 transition">
+                              {isUploading['province-imageUrl'] ? (
+                                <RefreshCw className="w-4 h-4 animate-spin text-emerald-450" />
+                              ) : (
+                                <ImageIcon className="w-4 h-4" />
+                              )}
+                              <span>Subir Imagen</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageUpload(e, 'province', 'imageUrl')}
+                                className="hidden"
+                                disabled={isUploading['province-imageUrl']}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              )}
+            </div>
+          )}
+
           {activeArea && !selectedSector && (
             <div className="space-y-6">
               
@@ -986,12 +1490,31 @@ export default function ProvinciasEditor() {
                     </h3>
                   </div>
                   {!isEditingArea ? (
-                    <button
-                      onClick={() => setIsEditingArea(true)}
-                      className="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-zinc-700/50"
-                    >
-                      <Edit3 className="w-3.5 h-3.5" /> Editar Zona
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        key="edit-zone-btn"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsEditingArea(true);
+                        }}
+                        className="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-zinc-700/50"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" /> Editar Zona
+                      </button>
+                      <button
+                        type="button"
+                        key="delete-zone-btn"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDeleteArea(activeArea.id);
+                        }}
+                        disabled={saving}
+                        className="px-3.5 py-1.5 bg-red-950/80 hover:bg-red-900 disabled:bg-red-950/40 text-red-200 text-xs font-semibold rounded-xl transition flex items-center gap-1 border border-red-800/40"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" /> Eliminar Zona
+                      </button>
+                    </div>
                   ) : (
                     <div className="flex gap-2">
                       <button
@@ -1032,6 +1555,12 @@ export default function ProvinciasEditor() {
                       <div>
                         <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Nombre</span>
                         <p className="text-sm text-zinc-200 font-bold">{activeArea.nombre}</p>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Sector / Grupo</span>
+                        <p className="text-xs text-zinc-200 bg-zinc-950/40 border border-zinc-850 px-3 py-2 rounded-xl">
+                          {activeArea.subRegion || 'General'}
+                        </p>
                       </div>
                       <div>
                         <span className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Tiempo aproximado caminata</span>
@@ -1149,6 +1678,16 @@ export default function ProvinciasEditor() {
                             className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
                           />
                         </div>
+                        <div>
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Sector / Grupo de la Provincia</label>
+                          <input
+                            type="text"
+                            value={areaEditSubRegion}
+                            onChange={(e) => setAreaEditSubRegion(e.target.value)}
+                            placeholder="e.g. Altas Cumbres, Copina, General"
+                            className="w-full bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                          />
+                        </div>
                       </div>
 
                       {/* Column 2 */}
@@ -1211,7 +1750,7 @@ export default function ProvinciasEditor() {
                                 <input
                                   type="file"
                                   accept="image/*"
-                                  onChange={(e) => handleImageUpload(e, true, 'imageUrl')}
+                                  onChange={(e) => handleImageUpload(e, 'area', 'imageUrl')}
                                   className="hidden"
                                   disabled={isUploading['area-imageUrl']}
                                 />
@@ -1244,7 +1783,7 @@ export default function ProvinciasEditor() {
                                 <input
                                   type="file"
                                   accept="image/*"
-                                  onChange={(e) => handleImageUpload(e, true, 'howToGetImageUrl')}
+                                  onChange={(e) => handleImageUpload(e, 'area', 'howToGetImageUrl')}
                                   className="hidden"
                                   disabled={isUploading['area-howToGetImageUrl']}
                                 />
@@ -1277,7 +1816,7 @@ export default function ProvinciasEditor() {
                                 <input
                                   type="file"
                                   accept="image/*"
-                                  onChange={(e) => handleImageUpload(e, true, 'overviewImageUrl')}
+                                  onChange={(e) => handleImageUpload(e, 'area', 'overviewImageUrl')}
                                   className="hidden"
                                   disabled={isUploading['area-overviewImageUrl']}
                                 />
@@ -1333,12 +1872,22 @@ export default function ProvinciasEditor() {
                           <span className="text-[11px] font-bold text-zinc-500 uppercase">
                             {sector.vias.length} Vías registradas
                           </span>
-                          <button
-                            onClick={() => setSelectedSector(sector)}
-                            className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-lg transition flex items-center gap-1 border border-zinc-700/50"
-                          >
-                            Editar Sector & Vías <ArrowRight className="w-3 h-3 text-emerald-450" />
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteSector(sector.id)}
+                              className="p-1.5 text-zinc-550 hover:text-red-450 hover:bg-zinc-850 rounded-lg transition border border-transparent hover:border-red-900/30"
+                              title="Eliminar Sector"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => setSelectedSector(sector)}
+                              className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold rounded-lg transition flex items-center gap-1 border border-zinc-700/50"
+                            >
+                              Editar Sector & Vías <ArrowRight className="w-3 h-3 text-emerald-450" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1463,7 +2012,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'imageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'imageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-imageUrl']}
                         />
@@ -1507,7 +2056,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'overviewImageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'overviewImageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-overviewImageUrl']}
                         />
@@ -1551,7 +2100,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'comoLlegarImageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'comoLlegarImageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-comoLlegarImageUrl']}
                         />
@@ -1595,7 +2144,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'generalImageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'generalImageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-generalImageUrl']}
                         />
@@ -1639,7 +2188,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'izquierdaImageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'izquierdaImageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-izquierdaImageUrl']}
                         />
@@ -1683,7 +2232,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'centroImageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'centroImageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-centroImageUrl']}
                         />
@@ -1727,7 +2276,7 @@ export default function ProvinciasEditor() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, false, 'derechaImageUrl')}
+                          onChange={(e) => handleImageUpload(e, 'sector', 'derechaImageUrl')}
                           className="hidden"
                           disabled={isUploading['sector-derechaImageUrl']}
                         />
@@ -1756,6 +2305,13 @@ export default function ProvinciasEditor() {
                   <div className="flex items-center gap-1.5">
                     <Sliders className="w-4 h-4 text-emerald-400" />
                     <span className="text-sm font-bold text-white">Lista de Vías por Sectores Sets</span>
+                    <button
+                      type="button"
+                      onClick={isBulkEditing ? () => setIsBulkEditing(false) : startBulkEdit}
+                      className="ml-3 px-2.5 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-300 hover:text-white text-[10px] font-bold rounded-lg border border-zinc-800 transition"
+                    >
+                      {isBulkEditing ? 'Ver Lista' : 'Edición en Lote'}
+                    </button>
                   </div>
                   
                   {/* Tabs */}
@@ -1787,171 +2343,255 @@ export default function ProvinciasEditor() {
                   </div>
                 </div>
 
-                {/* Vias table */}
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="border-b border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-                        <th className="py-2.5 px-3">Nombre Vía</th>
-                        <th className="py-2.5 px-3">Grado</th>
-                        <th className="py-2.5 px-3">Altura</th>
-                        <th className="py-2.5 px-3">Chapas</th>
-                        <th className="py-2.5 px-3 text-right">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-850/60 text-xs">
-                      {filteredRoutes.length === 0 ? (
-                        <tr>
-                          <td colSpan={5} className="py-6 text-center text-zinc-500 italic">
-                            No hay vías registradas en el sector set &quot;{activeGroupTab}&quot;.
-                          </td>
-                        </tr>
-                      ) : (
-                        filteredRoutes.map((route) => {
-                          const isEditing = editingRouteId === route.id;
-                          return (
-                            <tr key={route.id} className="hover:bg-zinc-850/30 transition group">
-                              <td className="py-2 px-3">
-                                {isEditing ? (
-                                  <input
-                                    type="text"
-                                    value={routeForm.nombre || ''}
-                                    onChange={(e) => setRouteForm({ ...routeForm, nombre: e.target.value })}
-                                    className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-full max-w-[160px]"
-                                  />
-                                ) : (
-                                  <span className="font-bold text-zinc-200">{route.nombre}</span>
-                                )}
-                              </td>
-                              <td className="py-2 px-3">
-                                {isEditing ? (
-                                  <input
-                                    type="text"
-                                    value={routeForm.grado || ''}
-                                    onChange={(e) => setRouteForm({ ...routeForm, grado: e.target.value })}
-                                    placeholder="e.g. 6a+"
-                                    className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
-                                  />
-                                ) : (
-                                  <span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 border border-zinc-700/40 rounded font-semibold text-[10px]">
-                                    {route.grado}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="py-2 px-3 text-zinc-400">
-                                {isEditing ? (
-                                  <input
-                                    type="text"
-                                    value={routeForm.altura || ''}
-                                    onChange={(e) => setRouteForm({ ...routeForm, altura: e.target.value })}
-                                    className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
-                                  />
-                                ) : (
-                                  route.altura || '-'
-                                )}
-                              </td>
-                              <td className="py-2 px-3 text-zinc-400">
-                                {isEditing ? (
-                                  <input
-                                    type="number"
-                                    value={routeForm.chapas || 0}
-                                    onChange={(e) => setRouteForm({ ...routeForm, chapas: Number(e.target.value) })}
-                                    className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-14"
-                                  />
-                                ) : (
-                                  route.chapas || '-'
-                                )}
-                              </td>
-                              <td className="py-2 px-3 text-right">
-                                {isEditing ? (
-                                  <div className="flex justify-end gap-1.5">
-                                    <button
-                                      onClick={handleSaveRouteEdit}
-                                      className="p-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded hover:bg-emerald-500 hover:text-zinc-950 transition"
-                                      title="Confirmar cambios"
-                                    >
-                                      <Check className="w-3.5 h-3.5" />
-                                    </button>
-                                    <button
-                                      onClick={() => setEditingRouteId(null)}
-                                      className="p-1 bg-zinc-800 text-zinc-400 border border-zinc-700 rounded hover:text-white transition"
-                                      title="Cancelar"
-                                    >
-                                      <X className="w-3.5 h-3.5" />
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <div className="flex justify-end gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
-                                    <button
-                                      onClick={() => startEditRoute(route)}
-                                      className="p-1 text-zinc-450 hover:text-emerald-450 hover:bg-zinc-800 rounded transition"
-                                      title="Editar vía"
-                                    >
-                                      <Edit3 className="w-3.5 h-3.5" />
-                                    </button>
-                                    <button
-                                      onClick={() => handleDeleteRoute(route.id)}
-                                      className="p-1 text-zinc-450 hover:text-red-400 hover:bg-zinc-800 rounded transition"
-                                      title="Eliminar vía"
-                                    >
-                                      <Trash2 className="w-3.5 h-3.5" />
-                                    </button>
-                                  </div>
-                                )}
+                {isBulkEditing ? (
+                  <div className="space-y-4">
+                    <div className="p-3 bg-zinc-950/40 border border-zinc-800/80 rounded-xl text-zinc-450 text-[10px] leading-relaxed">
+                      <strong>Instrucciones para edición en lote:</strong>
+                      <ul className="list-disc list-inside mt-1 space-y-0.5 font-mono text-zinc-500">
+                        <li>Formato por línea: <span className="text-zinc-350 font-semibold">Nombre | Grado | Altura | Chapas | Grupo</span></li>
+                        <li>Ejemplo: <span className="text-zinc-350">1- Buscale la primera | 6B+ | 10m | 6 | Izquierda</span></li>
+                        <li>Grupos permitidos: <span className="text-zinc-300">General</span>, <span className="text-zinc-300">Izquierda</span>, <span className="text-zinc-300">Centro</span>, <span className="text-zinc-300">Derecha</span>.</li>
+                        <li>Líneas vacías serán ignoradas. Las vías se guardarán en el orden listado.</li>
+                      </ul>
+                    </div>
+                    <textarea
+                      value={bulkText}
+                      onChange={(e) => setBulkText(e.target.value)}
+                      className="w-full h-80 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl p-4 text-xs font-mono text-zinc-200 outline-none resize-none leading-relaxed"
+                      placeholder="Nombre | Grado | Altura | Chapas | Grupo"
+                    />
+                    <div className="flex gap-2 justify-end">
+                      <button
+                        type="button"
+                        onClick={handleSaveBulk}
+                        disabled={saving}
+                        className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-955 text-xs font-bold rounded-xl transition flex items-center gap-1.5"
+                      >
+                        <Save className="w-3.5 h-3.5 text-zinc-950" /> Guardar Vías en Lote
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setIsBulkEditing(false)}
+                        className="px-4 py-2 bg-zinc-800 hover:bg-zinc-750 text-zinc-400 hover:text-white text-xs font-semibold rounded-xl transition border border-zinc-700/50"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {/* Vias table */}
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="border-b border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                            <th className="py-2.5 px-3 w-20">Orden</th>
+                            <th className="py-2.5 px-3">Nombre Vía</th>
+                            <th className="py-2.5 px-3">Grado</th>
+                            <th className="py-2.5 px-3">Altura</th>
+                            <th className="py-2.5 px-3">Chapas</th>
+                            <th className="py-2.5 px-3 text-right">Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-zinc-850/60 text-xs">
+                          {filteredRoutes.length === 0 ? (
+                            <tr>
+                              <td colSpan={6} className="py-6 text-center text-zinc-500 italic">
+                                No hay vías registradas en el sector set &quot;{activeGroupTab}&quot;.
                               </td>
                             </tr>
-                          );
-                        })
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                          ) : (
+                            filteredRoutes.map((route, index) => {
+                              const isEditing = editingRouteId === route.id;
+                              return (
+                                <tr 
+                                  key={route.id} 
+                                  draggable={!isEditing}
+                                  onDragStart={(e) => handleDragStart(e, index)}
+                                  onDragOver={(e) => handleDragOver(e, index)}
+                                  onDrop={(e) => handleDrop(e, index)}
+                                  onDragEnd={handleDragEnd}
+                                  className={`transition group border-b border-zinc-850/40 ${
+                                    dragOverIndex === index ? 'border-t-2 border-t-emerald-500 bg-zinc-800/20' : ''
+                                  } ${
+                                    draggedIndex === index ? 'opacity-40 bg-zinc-900' : 'hover:bg-zinc-850/30'
+                                  }`}
+                                >
+                                  <td className="py-2 px-3">
+                                    <div className="flex items-center gap-1.5">
+                                      <div 
+                                        className="cursor-grab active:cursor-grabbing text-zinc-650 hover:text-zinc-400 p-0.5 rounded transition shrink-0"
+                                        title="Arrastrar para reordenar"
+                                      >
+                                        <GripVertical className="w-3.5 h-3.5 text-zinc-500" />
+                                      </div>
+                                      <button
+                                        type="button"
+                                        onClick={() => moveRoute(index, 'up')}
+                                        disabled={index === 0}
+                                        className="p-0.5 text-zinc-500 hover:text-zinc-300 disabled:opacity-30 disabled:hover:text-zinc-500 transition shrink-0"
+                                        title="Mover arriba"
+                                      >
+                                        <ChevronUp className="w-3.5 h-3.5" />
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => moveRoute(index, 'down')}
+                                        disabled={index === filteredRoutes.length - 1}
+                                        className="p-0.5 text-zinc-500 hover:text-zinc-300 disabled:opacity-30 disabled:hover:text-zinc-500 transition shrink-0"
+                                        title="Mover abajo"
+                                      >
+                                        <ChevronDown className="w-3.5 h-3.5" />
+                                      </button>
+                                    </div>
+                                  </td>
+                                  <td className="py-2 px-3">
+                                    {isEditing ? (
+                                      <input
+                                        type="text"
+                                        value={routeForm.nombre || ''}
+                                        onChange={(e) => setRouteForm({ ...routeForm, nombre: e.target.value })}
+                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-full max-w-[160px]"
+                                      />
+                                    ) : (
+                                      <span className="font-bold text-zinc-200">{route.nombre}</span>
+                                    )}
+                                  </td>
+                                  <td className="py-2 px-3">
+                                    {isEditing ? (
+                                      <input
+                                        type="text"
+                                        value={routeForm.grado || ''}
+                                        onChange={(e) => setRouteForm({ ...routeForm, grado: e.target.value })}
+                                        placeholder="e.g. 6a+"
+                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
+                                      />
+                                    ) : (
+                                      <span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 border border-zinc-700/40 rounded font-semibold text-[10px]">
+                                        {route.grado}
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="py-2 px-3 text-zinc-400">
+                                    {isEditing ? (
+                                      <input
+                                        type="text"
+                                        value={routeForm.altura || ''}
+                                        onChange={(e) => setRouteForm({ ...routeForm, altura: e.target.value })}
+                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
+                                      />
+                                    ) : (
+                                      route.altura || '-'
+                                    )}
+                                  </td>
+                                  <td className="py-2 px-3 text-zinc-400">
+                                    {isEditing ? (
+                                      <input
+                                        type="number"
+                                        value={routeForm.chapas || 0}
+                                        onChange={(e) => setRouteForm({ ...routeForm, chapas: Number(e.target.value) })}
+                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-14"
+                                      />
+                                    ) : (
+                                      route.chapas || '-'
+                                    )}
+                                  </td>
+                                  <td className="py-2 px-3 text-right">
+                                    {isEditing ? (
+                                      <div className="flex justify-end gap-1.5">
+                                        <button
+                                          type="button"
+                                          onClick={handleSaveRouteEdit}
+                                          className="p-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded hover:bg-emerald-500 hover:text-zinc-950 transition"
+                                          title="Confirmar cambios"
+                                        >
+                                          <Check className="w-3.5 h-3.5" />
+                                        </button>
+                                        <button
+                                          type="button"
+                                          onClick={() => setEditingRouteId(null)}
+                                          className="p-1 bg-zinc-800 text-zinc-450 border border-zinc-700 rounded hover:text-white transition"
+                                          title="Cancelar"
+                                        >
+                                          <X className="w-3.5 h-3.5" />
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <div className="flex justify-end gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                          type="button"
+                                          onClick={() => startEditRoute(route)}
+                                          className="p-1 text-zinc-450 hover:text-emerald-450 hover:bg-zinc-800 rounded transition"
+                                          title="Editar vía"
+                                        >
+                                          <Edit3 className="w-3.5 h-3.5" />
+                                        </button>
+                                        <button
+                                          type="button"
+                                          onClick={() => handleDeleteRoute(route.id)}
+                                          className="p-1 text-zinc-450 hover:text-red-400 hover:bg-zinc-800 rounded transition"
+                                          title="Eliminar vía"
+                                        >
+                                          <Trash2 className="w-3.5 h-3.5" />
+                                        </button>
+                                      </div>
+                                    )}
+                                  </td>
+                                </tr>
+                              );
+                            })
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
 
-                {/* Form to add a new route */}
-                <form onSubmit={handleAddRoute} className="pt-4 border-t border-zinc-850 grid grid-cols-1 sm:grid-cols-4 gap-3">
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Nueva vía..."
-                      value={newRouteForm.nombre}
-                      onChange={(e) => setNewRouteForm({ ...newRouteForm, nombre: e.target.value })}
-                      required
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Grado (e.g. 7a)"
-                      value={newRouteForm.grado}
-                      onChange={(e) => setNewRouteForm({ ...newRouteForm, grado: e.target.value })}
-                      required
-                      className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="Altura"
-                      value={newRouteForm.altura}
-                      onChange={(e) => setNewRouteForm({ ...newRouteForm, altura: e.target.value })}
-                      className="w-1/2 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Chapas"
-                      value={newRouteForm.chapas || ''}
-                      onChange={(e) => setNewRouteForm({ ...newRouteForm, chapas: Number(e.target.value) })}
-                      className="w-1/2 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1 py-2"
-                  >
-                    <Plus className="w-4 h-4" /> Registrar Vía en {activeGroupTab}
-                  </button>
-                </form>
+                    {/* Form to add a new route */}
+                    <form onSubmit={handleAddRoute} className="pt-4 border-t border-zinc-850 grid grid-cols-1 sm:grid-cols-4 gap-3">
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Nueva vía..."
+                          value={newRouteForm.nombre}
+                          onChange={(e) => setNewRouteForm({ ...newRouteForm, nombre: e.target.value })}
+                          required
+                          className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Grado (e.g. 7a)"
+                          value={newRouteForm.grado}
+                          onChange={(e) => setNewRouteForm({ ...newRouteForm, grado: e.target.value })}
+                          required
+                          className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          placeholder="Altura"
+                          value={newRouteForm.altura}
+                          onChange={(e) => setNewRouteForm({ ...newRouteForm, altura: e.target.value })}
+                          className="w-1/2 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Chapas"
+                          value={newRouteForm.chapas || ''}
+                          onChange={(e) => setNewRouteForm({ ...newRouteForm, chapas: Number(e.target.value) })}
+                          className="w-1/2 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1 py-2"
+                      >
+                        <Plus className="w-4 h-4" /> Registrar Vía en {activeGroupTab}
+                      </button>
+                    </form>
+                  </>
+                )}
 
               </div>
             </div>
@@ -2017,6 +2657,35 @@ export default function ProvinciasEditor() {
                   className="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-sm text-zinc-100 placeholder-zinc-650 transition outline-none"
                 />
               </div>
+              <div>
+                <label className="block text-xs text-zinc-400 mb-1">Sector / Grupo de la Provincia</label>
+                <select
+                  value={newAreaSubRegion}
+                  onChange={(e) => setNewAreaSubRegion(e.target.value)}
+                  className="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3 py-2.5 text-xs text-zinc-100 transition outline-none"
+                >
+                  <option value="General">General / Alrededores</option>
+                  <option value="Altas Cumbres">Altas Cumbres</option>
+                  <option value="Capilla Del Monte">Capilla Del Monte</option>
+                  <option value="Copina">Copina</option>
+                  <option value="Los Gigantes">Los Gigantes</option>
+                  <option value="Otro">Otro (Especificar)</option>
+                </select>
+              </div>
+              
+              {newAreaSubRegion === 'Otro' && (
+                <div>
+                  <label className="block text-xs text-zinc-400 mb-1">Especificar Grupo / Sector</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Traslasierra, Ongamira, etc."
+                    value={newAreaCustomSubRegion}
+                    onChange={(e) => setNewAreaCustomSubRegion(e.target.value)}
+                    required
+                    className="w-full bg-zinc-950 border border-zinc-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-sm text-zinc-100 placeholder-zinc-650 transition outline-none"
+                  />
+                </div>
+              )}
               <button
                 type="submit"
                 disabled={saving}

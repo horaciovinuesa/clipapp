@@ -34,12 +34,15 @@ export interface Area {
   howToGetImageUrl?: string;
   overviewImageUrl?: string;
   sectores: Sector[];
+  subRegion?: string;
 }
 
 export interface Province {
   id: string;
   nombre: string;
   areas: Area[];
+  imageUrl?: string;
+  pdfUrl?: string;
 }
 
 export interface ClimberUser {
