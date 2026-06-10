@@ -1142,6 +1142,14 @@ export default function ProvinciasEditor() {
   // Filter routes based on selected tab group
   const filteredRoutes = selectedSector?.vias.filter(v => v.grupo === activeGroupTab) || [];
 
+  const getActiveCroquisUrl = () => {
+    if (activeGroupTab === 'General') return sectorEditGeneralImage;
+    if (activeGroupTab === 'Izquierda') return sectorEditIzquierdaImage;
+    if (activeGroupTab === 'Centro') return sectorEditCentroImage;
+    if (activeGroupTab === 'Derecha') return sectorEditDerechaImage;
+    return '';
+  };
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       
@@ -1724,106 +1732,106 @@ export default function ProvinciasEditor() {
                       </div>
 
                       {/* Column 3 */}
-                        <div className="space-y-3">
-                          <div>
-                            <div className="flex items-center justify-between mb-1">
-                              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Portada (URL)</label>
-                              <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/imageUrl.jpg`}>
-                                📂 {selectedProvinceId}/{selectedAreaId}/imageUrl.jpg
-                              </span>
-                            </div>
-                            <div className="flex gap-2">
-                              <input
-                                type="text"
-                                value={areaEditImage}
-                                onChange={(e) => setAreaEditImage(e.target.value)}
-                                placeholder="https://..."
-                                className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                              />
-                              <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
-                                {isUploading['area-imageUrl'] ? (
-                                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
-                                ) : (
-                                  <ImageIcon className="w-3.5 h-3.5" />
-                                )}
-                                <span className="hidden sm:inline">Subir</span>
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={(e) => handleImageUpload(e, 'area', 'imageUrl')}
-                                  className="hidden"
-                                  disabled={isUploading['area-imageUrl']}
-                                />
-                              </label>
-                            </div>
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Portada (URL)</label>
+                            <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/imageUrl.jpg`}>
+                              📂 {selectedProvinceId}/{selectedAreaId}/imageUrl.jpg
+                            </span>
                           </div>
-
-                          <div>
-                            <div className="flex items-center justify-between mb-1">
-                              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Acceso (URL)</label>
-                              <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/howToGetImageUrl.jpg`}>
-                                📂 {selectedProvinceId}/{selectedAreaId}/howToGetImageUrl.jpg
-                              </span>
-                            </div>
-                            <div className="flex gap-2">
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={areaEditImage}
+                              onChange={(e) => setAreaEditImage(e.target.value)}
+                              placeholder="https://..."
+                              className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                            />
+                            <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
+                              {isUploading['area-imageUrl'] ? (
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                              ) : (
+                                <ImageIcon className="w-3.5 h-3.5" />
+                              )}
+                              <span className="hidden sm:inline">Subir</span>
                               <input
-                                type="text"
-                                value={areaEditHowToGetImage}
-                                onChange={(e) => setAreaEditHowToGetImage(e.target.value)}
-                                placeholder="https://..."
-                                className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageUpload(e, 'area', 'imageUrl')}
+                                className="hidden"
+                                disabled={isUploading['area-imageUrl']}
                               />
-                              <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
-                                {isUploading['area-howToGetImageUrl'] ? (
-                                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
-                                ) : (
-                                  <ImageIcon className="w-3.5 h-3.5" />
-                                )}
-                                <span className="hidden sm:inline">Subir</span>
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={(e) => handleImageUpload(e, 'area', 'howToGetImageUrl')}
-                                  className="hidden"
-                                  disabled={isUploading['area-howToGetImageUrl']}
-                                />
-                              </label>
-                            </div>
-                          </div>
-
-                          <div>
-                            <div className="flex items-center justify-between mb-1">
-                              <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Overview/Mapa (URL)</label>
-                              <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/overviewImageUrl.jpg`}>
-                                📂 {selectedProvinceId}/{selectedAreaId}/overviewImageUrl.jpg
-                              </span>
-                            </div>
-                            <div className="flex gap-2">
-                              <input
-                                type="text"
-                                value={areaEditOverviewImage}
-                                onChange={(e) => setAreaEditOverviewImage(e.target.value)}
-                                placeholder="https://..."
-                                className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                              />
-                              <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
-                                {isUploading['area-overviewImageUrl'] ? (
-                                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
-                                ) : (
-                                  <ImageIcon className="w-3.5 h-3.5" />
-                                )}
-                                <span className="hidden sm:inline">Subir</span>
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={(e) => handleImageUpload(e, 'area', 'overviewImageUrl')}
-                                  className="hidden"
-                                  disabled={isUploading['area-overviewImageUrl']}
-                                />
-                              </label>
-                            </div>
+                            </label>
                           </div>
                         </div>
+
+                        <div>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Acceso (URL)</label>
+                            <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/howToGetImageUrl.jpg`}>
+                              📂 {selectedProvinceId}/{selectedAreaId}/howToGetImageUrl.jpg
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={areaEditHowToGetImage}
+                              onChange={(e) => setAreaEditHowToGetImage(e.target.value)}
+                              placeholder="https://..."
+                              className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                            />
+                            <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
+                              {isUploading['area-howToGetImageUrl'] ? (
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                              ) : (
+                                <ImageIcon className="w-3.5 h-3.5" />
+                              )}
+                              <span className="hidden sm:inline">Subir</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageUpload(e, 'area', 'howToGetImageUrl')}
+                                className="hidden"
+                                disabled={isUploading['area-howToGetImageUrl']}
+                              />
+                            </label>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Imagen Overview/Mapa (URL)</label>
+                            <span className="text-[9px] text-zinc-500 truncate font-mono max-w-[180px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/overviewImageUrl.jpg`}>
+                              📂 {selectedProvinceId}/{selectedAreaId}/overviewImageUrl.jpg
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={areaEditOverviewImage}
+                              onChange={(e) => setAreaEditOverviewImage(e.target.value)}
+                              placeholder="https://..."
+                              className="flex-1 bg-zinc-950/50 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
+                            />
+                            <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 text-xs text-zinc-200 gap-1.5 transition">
+                              {isUploading['area-overviewImageUrl'] ? (
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                              ) : (
+                                <ImageIcon className="w-3.5 h-3.5" />
+                              )}
+                              <span className="hidden sm:inline">Subir</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageUpload(e, 'area', 'overviewImageUrl')}
+                                className="hidden"
+                                disabled={isUploading['area-overviewImageUrl']}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 )}
@@ -1975,7 +1983,7 @@ export default function ProvinciasEditor() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {/* Card 1: Portada (Cover) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
@@ -2291,7 +2299,7 @@ export default function ProvinciasEditor() {
                     <button
                       onClick={handleUpdateSectorInfo}
                       disabled={saving}
-                      className="w-full py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[10px] font-bold rounded-lg border border-zinc-700 transition"
+                      className="w-full py-1.5 bg-zinc-800 hover:bg-zinc-750 text-zinc-200 text-[10px] font-bold rounded-lg border border-zinc-700 transition"
                     >
                       Sincronizar
                     </button>
@@ -2343,6 +2351,32 @@ export default function ProvinciasEditor() {
                   </div>
                 </div>
 
+                {/* Contextual Croquis Preview */}
+                {getActiveCroquisUrl() && (
+                  <div className="bg-zinc-950/60 border border-zinc-850 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center animate-fade-in mb-4">
+                    <div className="w-full md:w-64 aspect-video rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950 relative flex-shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={getActiveCroquisUrl()} 
+                        alt={`Croquis ${activeGroupTab}`} 
+                        className="w-full h-full object-contain" 
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
+                        Croquis Activo: {activeGroupTab}
+                      </span>
+                      <h4 className="text-xs font-bold text-white">Imagen de referencia para este grupo de vías</h4>
+                      <p className="text-[11px] text-zinc-400">
+                        Esta imagen de croquis se mostrará en la app móvil al visualizar las vías de la sección &quot;{activeGroupTab}&quot;.
+                      </p>
+                      <span className="block text-[10px] text-zinc-555 font-mono truncate max-w-md">
+                        {getActiveCroquisUrl()}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {isBulkEditing ? (
                   <div className="space-y-4">
                     <div className="p-3 bg-zinc-950/40 border border-zinc-800/80 rounded-xl text-zinc-450 text-[10px] leading-relaxed">
@@ -2367,7 +2401,7 @@ export default function ProvinciasEditor() {
                         disabled={saving}
                         className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-955 text-xs font-bold rounded-xl transition flex items-center gap-1.5"
                       >
-                        <Save className="w-3.5 h-3.5 text-zinc-950" /> Guardar Vías en Lote
+                        <Save className="w-3.5 h-3.5 text-zinc-955" /> Guardar Vías en Lote
                       </button>
                       <button
                         type="button"
