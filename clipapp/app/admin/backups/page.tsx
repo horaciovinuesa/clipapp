@@ -2,10 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAdmin } from '../layout';
-import { Province } from '@/lib/mockData';
+import { Province, Area } from '@/lib/mockData';
 import climbingDataJson from '@/lib/climbingData.json';
 import { 
-  Database, 
   Download, 
   Upload, 
   RefreshCw, 
@@ -84,6 +83,7 @@ export default function BackupsPage() {
   // Load backups list on mount
   useEffect(() => {
     loadBackups();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadBackups = () => {
@@ -162,7 +162,7 @@ export default function BackupsPage() {
             nombre: pData.nombre || pDoc.id,
             imageUrl: pData.imageUrl || '',
             pdfUrl: pData.pdfUrl || '',
-            areas: areasList as any
+            areas: areasList as unknown as Area[]
           });
         }
         currentProvinces = loaded.length > 0 ? loaded : (climbingDataJson as Province[]);
@@ -184,8 +184,9 @@ export default function BackupsPage() {
       const updatedList = [newBackup, ...backups];
       saveBackupsList(updatedList);
       setActionMessage({ text: `Backup "${filename}" (${stats.sizeFormatted}) creado exitosamente.`, type: 'success' });
-    } catch (err: any) {
-      setActionMessage({ text: `Error al crear backup: ${err.message}`, type: 'error' });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setActionMessage({ text: `Error al crear backup: ${msg}`, type: 'error' });
     } finally {
       setLoading(false);
     }
@@ -262,8 +263,9 @@ export default function BackupsPage() {
         }
         setActionMessage({ text: `Base de datos de Firestore sincronizada exitosamente con "${item.filename}".`, type: 'success' });
       }
-    } catch (err: any) {
-      setActionMessage({ text: `Error al restaurar backup: ${err.message}`, type: 'error' });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setActionMessage({ text: `Error al restaurar backup: ${msg}`, type: 'error' });
     } finally {
       setSyncingId(null);
     }
@@ -286,7 +288,7 @@ export default function BackupsPage() {
     try {
       localStorage.removeItem(`clipapp_backup_data_${id}`);
       sessionStorage.removeItem(`clipapp_backup_data_${id}`);
-    } catch (e) {}
+    } catch {}
 
     setActionMessage({ 
       text: `Hard Delete ejecutado: El backup "${filename}" fue eliminado por completo del almacenamiento.`, 
@@ -324,7 +326,7 @@ export default function BackupsPage() {
         const updatedList = [newBackup, ...backups];
         saveBackupsList(updatedList);
         setActionMessage({ text: `Backup "${filename}" (${stats.sizeFormatted}) importado al historial.`, type: 'success' });
-      } catch (err) {
+      } catch {
         alert("Error al parsear el archivo JSON. Verifica el formato.");
       }
     };

@@ -342,6 +342,7 @@ export default function ProvinciasEditor() {
     } else {
       setIsEditingArea(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAreaId, selectedProvinceId]);
 
   // Sync edited province data to state when selecting a different Province
@@ -447,21 +448,6 @@ export default function ProvinciasEditor() {
     } finally {
       setSeeding(false);
     }
-  };
-
-  // Export current live Firestore data as JSON backup
-  const handleExportBackupJson = () => {
-    if (provinces.length === 0) return;
-
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(provinces, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `firestore_backup_${new Date().toISOString().slice(0, 10)}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-
-    setActionMessage({ text: "Copia de respaldo JSON descargada exitosamente.", type: 'success' });
   };
 
   // CRUD -- ADD PROVINCE
