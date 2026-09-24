@@ -29,7 +29,10 @@ import {
   RefreshCw,
   ChevronUp,
   ChevronDown,
-  GripVertical
+  GripVertical,
+  ListOrdered,
+  Hash,
+  Tag
 } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL, listAll, deleteObject, StorageReference } from 'firebase/storage';
@@ -379,63 +382,86 @@ export default function ProvinciasEditor() {
   };
 
   // Seeding Firebase DB
+  // Seeding Firebase DB (Factory Reset)
   const seedFirebase = async () => {
-    if (window.confirm("¿Estás seguro de que quieres sincronizar Firestore con los datos reales de la app móvil? Esto sobrescribirá las provincias, sectores y vías.")) {
-      setSeeding(true);
-      setActionMessage({ text: "Iniciando subida de datos de la app a Firestore...", type: 'info' });
-      try {
-        for (const prov of climbingData) {
-          // Write Province
-          const provRef = doc(db, 'provincias', prov.id);
-          await setDoc(provRef, { 
-            nombre: prov.nombre,
-            imageUrl: prov.imageUrl || '',
-            pdfUrl: prov.pdfUrl || ''
+    const confirmMessage = 
+      "⚠️ ADVERTENCIA CRÍTICA DE SOBRESCRITURA ⚠️\n\n" +
+      "Esta función REEMPLAZARÁ TODOS LOS DATOS EN VIVO DE FIRESTORE por el archivo estático inicial 'climbingData.json'.\n\n" +
+      "Cualquier modificación manual que hayas realizado en el Admin Web (vías agregadas, borradas o editadas) SE PERDERÁ PERMANENTEMENTE.\n\n" +
+      "¿Estás seguro de que deseas restablecer la base de datos a los valores de fábrica?";
+
+    if (!window.confirm(confirmMessage)) return;
+    if (!window.confirm("CONFIRMACIÓN FINAL: ¿Deseas sobrescribir Firestore con la copia de fábrica estática?")) return;
+
+    setSeeding(true);
+    setActionMessage({ text: "Iniciando restablecimiento de base de datos...", type: 'info' });
+    try {
+      for (const prov of climbingData) {
+        // Write Province
+        const provRef = doc(db, 'provincias', prov.id);
+        await setDoc(provRef, { 
+          nombre: prov.nombre,
+          imageUrl: prov.imageUrl || '',
+          pdfUrl: prov.pdfUrl || ''
+        });
+
+        for (const area of prov.areas) {
+          // Write Area
+          const areaRef = doc(db, `provincias/${prov.id}/areas`, area.id);
+          await setDoc(areaRef, {
+            nombre: area.nombre,
+            descripcion: area.descripcion || '',
+            tiempoCaminata: area.tiempoCaminata || '',
+            googleMapsLink: area.googleMapsLink || '',
+            hospitalLink: area.hospitalLink || '',
+            windguruLink: area.windguruLink || '',
+            imageUrl: area.imageUrl || '',
+            howToGetImageUrl: area.howToGetImageUrl || '',
+            overviewImageUrl: area.overviewImageUrl || ''
           });
 
-          for (const area of prov.areas) {
-            // Write Area
-            const areaRef = doc(db, `provincias/${prov.id}/areas`, area.id);
-            await setDoc(areaRef, {
-              nombre: area.nombre,
-              descripcion: area.descripcion || '',
-              tiempoCaminata: area.tiempoCaminata || '',
-              googleMapsLink: area.googleMapsLink || '',
-              hospitalLink: area.hospitalLink || '',
-              windguruLink: area.windguruLink || '',
-              imageUrl: area.imageUrl || '',
-              howToGetImageUrl: area.howToGetImageUrl || '',
-              overviewImageUrl: area.overviewImageUrl || ''
+          for (const sector of area.sectores) {
+            // Write Sector
+            const secRef = doc(db, `provincias/${prov.id}/areas/${area.id}/sectores`, sector.id);
+            await setDoc(secRef, {
+              nombre: sector.nombre,
+              descripcion: sector.descripcion || '',
+              imageUrl: sector.imageUrl || '',
+              overviewImageUrl: sector.overviewImageUrl || '',
+              comoLlegarImageUrl: sector.comoLlegarImageUrl || '',
+              generalImageUrl: sector.generalImageUrl || '',
+              izquierdaImageUrl: sector.izquierdaImageUrl || '',
+              centroImageUrl: sector.centroImageUrl || '',
+              derechaImageUrl: sector.derechaImageUrl || '',
+              vias: sector.vias
             });
-
-            for (const sector of area.sectores) {
-              // Write Sector
-              const secRef = doc(db, `provincias/${prov.id}/areas/${area.id}/sectores`, sector.id);
-              await setDoc(secRef, {
-                nombre: sector.nombre,
-                descripcion: sector.descripcion || '',
-                imageUrl: sector.imageUrl || '',
-                overviewImageUrl: sector.overviewImageUrl || '',
-                comoLlegarImageUrl: sector.comoLlegarImageUrl || '',
-                generalImageUrl: sector.generalImageUrl || '',
-                izquierdaImageUrl: sector.izquierdaImageUrl || '',
-                centroImageUrl: sector.centroImageUrl || '',
-                derechaImageUrl: sector.derechaImageUrl || '',
-                vias: sector.vias
-              });
-            }
           }
         }
-        setActionMessage({ text: "Firestore inicializado con éxito.", type: 'success' });
-        loadProvinces();
-      } catch (err: unknown) {
-        const e = err as { message?: string };
-        console.error(e);
-        setActionMessage({ text: `Fallo al inicializar: ${e.message}`, type: 'error' });
-      } finally {
-        setSeeding(false);
       }
+      setActionMessage({ text: "Firestore inicializado con éxito.", type: 'success' });
+      loadProvinces();
+    } catch (err: unknown) {
+      const e = err as { message?: string };
+      console.error(e);
+      setActionMessage({ text: `Fallo al inicializar: ${e.message}`, type: 'error' });
+    } finally {
+      setSeeding(false);
     }
+  };
+
+  // Export current live Firestore data as JSON backup
+  const handleExportBackupJson = () => {
+    if (provinces.length === 0) return;
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(provinces, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `firestore_backup_${new Date().toISOString().slice(0, 10)}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+
+    setActionMessage({ text: "Copia de respaldo JSON descargada exitosamente.", type: 'success' });
   };
 
   // CRUD -- ADD PROVINCE
@@ -903,6 +929,8 @@ export default function ProvinciasEditor() {
 
   const handleSaveBulk = () => {
     if (!selectedSector) return;
+    if (!window.confirm("¿Estás seguro de que deseas guardar esta edición en lote? Esto actualizará permanentemente las vías en la base de datos de Firestore.")) return;
+
     const lines = bulkText.split('\n');
     const parsedVias: Route[] = [];
 
@@ -939,6 +967,81 @@ export default function ProvinciasEditor() {
 
     handleSaveSectorData(updatedSector);
     setIsBulkEditing(false);
+  };
+
+  // Automatic Sequential Numbering for Vías
+  const handleBulkNumberVias = (scope: 'group' | 'all') => {
+    if (!selectedSector) return;
+
+    const scopeLabel = scope === 'group' ? `las vías del grupo "${activeGroupTab}"` : 'TODAS las vías de este sector';
+    const confirmMessage = `¿Estás seguro de que deseas aplicar la numeración secuencial (1-, 2-...) a ${scopeLabel}?\n\nEsta acción modificará y actualizará permanentemente los nombres de las vías en la base de datos de Firestore.`;
+
+    if (!window.confirm(confirmMessage)) return;
+    
+    let counter = 1;
+    const updatedVias = selectedSector.vias.map((via) => {
+      if (scope === 'group' && via.grupo !== activeGroupTab) {
+        return via;
+      }
+      
+      const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
+      const numberedNombre = `${counter}- ${cleanNombre}`;
+      counter++;
+
+      return {
+        ...via,
+        nombre: numberedNombre
+      };
+    });
+
+    const updatedSector = {
+      ...selectedSector,
+      vias: updatedVias
+    };
+
+    handleSaveSectorData(updatedSector);
+    setActionMessage({ 
+      text: scope === 'group' 
+        ? `Se aplicó numeración (1-, 2-...) a las vías de ${activeGroupTab}.` 
+        : 'Se aplicó numeración (1-, 2-...) a todas las vías del sector.', 
+      type: 'success' 
+    });
+  };
+
+  // Remove Sequential Numbering from Vías
+  const handleBulkRemoveNumbering = (scope: 'group' | 'all') => {
+    if (!selectedSector) return;
+
+    const scopeLabel = scope === 'group' ? `las vías del grupo "${activeGroupTab}"` : 'TODAS las vías de este sector';
+    const confirmMessage = `¿Estás seguro de que deseas quitar la numeración de ${scopeLabel}?\n\nEsta acción modificará y actualizará permanentemente los nombres de las vías en la base de datos de Firestore.`;
+
+    if (!window.confirm(confirmMessage)) return;
+
+    const updatedVias = selectedSector.vias.map((via) => {
+      if (scope === 'group' && via.grupo !== activeGroupTab) {
+        return via;
+      }
+
+      const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
+
+      return {
+        ...via,
+        nombre: cleanNombre
+      };
+    });
+
+    const updatedSector = {
+      ...selectedSector,
+      vias: updatedVias
+    };
+
+    handleSaveSectorData(updatedSector);
+    setActionMessage({ 
+      text: scope === 'group' 
+        ? `Se quitó la numeración a las vías de ${activeGroupTab}.` 
+        : 'Se quitó la numeración a todas las vías del sector.', 
+      type: 'success' 
+    });
   };
 
   // Reordering Vías
@@ -1239,26 +1342,44 @@ export default function ProvinciasEditor() {
                 </button>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-3">
                 {activeProvince.areas.length === 0 ? (
                   <p className="text-xs text-zinc-500 italic p-2">Sin zonas creadas.</p>
                 ) : (
-                  activeProvince.areas.map((area) => (
-                    <button
-                      key={area.id}
-                      onClick={() => {
-                        setSelectedAreaId(area.id);
-                        setSelectedSector(null);
-                      }}
-                      className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold transition ${
-                        selectedAreaId === area.id 
-                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                          : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850/50'
-                      }`}
-                    >
-                      <Folder className="w-3.5 h-3.5" />
-                      <span className="truncate">{area.nombre}</span>
-                    </button>
+                  Object.entries(
+                    activeProvince.areas.reduce((acc, area) => {
+                      const group = area.subRegion?.trim() || 'General';
+                      if (!acc[group]) acc[group] = [];
+                      acc[group].push(area);
+                      return acc;
+                    }, {} as Record<string, Area[]>)
+                  ).map(([groupName, groupAreas]) => (
+                    <div key={groupName} className="space-y-1">
+                      <div className="flex items-center gap-1.5 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-400/90 bg-zinc-900/80 rounded-lg border border-zinc-800/60">
+                        <Tag className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                        <span className="truncate">{groupName}</span>
+                        <span className="ml-auto text-[9px] text-zinc-500 font-normal flex-shrink-0">({groupAreas.length})</span>
+                      </div>
+                      <div className="space-y-0.5 pl-1">
+                        {groupAreas.map((area) => (
+                          <button
+                            key={area.id}
+                            onClick={() => {
+                              setSelectedAreaId(area.id);
+                              setSelectedSector(null);
+                            }}
+                            className={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                              selectedAreaId === area.id 
+                                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold' 
+                                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850/50'
+                            }`}
+                          >
+                            <Folder className="w-3.5 h-3.5 text-zinc-500 flex-shrink-0" />
+                            <span className="truncate">{area.nombre}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   ))
                 )}
               </div>
@@ -2321,6 +2442,65 @@ export default function ProvinciasEditor() {
                     >
                       {isBulkEditing ? 'Ver Lista' : 'Edición en Lote'}
                     </button>
+
+                    {/* Herramientas de Numeración en Lote */}
+                    <div className="flex items-center gap-1.5 ml-2 border-l border-zinc-800/80 pl-2">
+                      <div className="relative group">
+                        <button
+                          type="button"
+                          className="flex items-center gap-1 px-2.5 py-1 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 text-[10px] font-bold rounded-lg border border-emerald-800/60 transition shadow-sm"
+                          title="Agregar prefijo numérico (1-, 2-, 3...)"
+                        >
+                          <ListOrdered className="w-3 h-3" />
+                          <span>Numerar (1,2,3...)</span>
+                          <ChevronDown className="w-2.5 h-2.5 ml-0.5 opacity-70" />
+                        </button>
+                        <div className="absolute left-0 mt-1 w-48 bg-zinc-900 border border-zinc-800 rounded-xl shadow-xl py-1 z-30 hidden group-hover:block hover:block">
+                          <button
+                            type="button"
+                            onClick={() => handleBulkNumberVias('group')}
+                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-emerald-400 transition font-medium"
+                          >
+                            Numerar Grupo ({activeGroupTab})
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleBulkNumberVias('all')}
+                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-emerald-400 transition font-medium"
+                          >
+                            Numerar Sector Completo
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="relative group">
+                        <button
+                          type="button"
+                          className="flex items-center gap-1 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-850 text-zinc-400 hover:text-zinc-200 text-[10px] font-bold rounded-lg border border-zinc-800 transition"
+                          title="Quitar prefijo numérico existente"
+                        >
+                          <Hash className="w-3 h-3" />
+                          <span>Quitar N°</span>
+                          <ChevronDown className="w-2.5 h-2.5 ml-0.5 opacity-70" />
+                        </button>
+                        <div className="absolute left-0 mt-1 w-48 bg-zinc-900 border border-zinc-800 rounded-xl shadow-xl py-1 z-30 hidden group-hover:block hover:block">
+                          <button
+                            type="button"
+                            onClick={() => handleBulkRemoveNumbering('group')}
+                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-rose-400 transition font-medium"
+                          >
+                            Quitar de Grupo ({activeGroupTab})
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleBulkRemoveNumbering('all')}
+                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-rose-400 transition font-medium"
+                          >
+                            Quitar de Sector Completo
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   {/* Tabs */}

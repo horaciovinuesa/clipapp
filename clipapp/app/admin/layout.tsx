@@ -229,6 +229,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
     { name: 'Provincias & Sectores', path: '/admin/provincias', icon: Map },
+    { name: 'Backups & Historial', path: '/admin/backups', icon: Database },
     { name: 'Usuarios', path: '/admin/usuarios', icon: Users },
     { name: 'Salidas (Cordada)', path: '/admin/salidas', icon: Compass },
     { name: 'Reportes', path: '/admin/reportes', icon: AlertTriangle },
