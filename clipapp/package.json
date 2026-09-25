@@ -16,8 +16,11 @@
     "react": "^18",
     "react-dom": "^18"
   },
+  "engines": {
+    "node": "24.x"
+  },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.20",
