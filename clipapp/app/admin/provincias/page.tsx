@@ -30,7 +30,6 @@ import {
   RefreshCw,
   ChevronUp,
   ChevronDown,
-  GripVertical,
   ListOrdered,
   Hash,
   Tag
@@ -46,13 +45,22 @@ import {
   updateDoc 
 } from 'firebase/firestore';
 
+interface SectorDataInput {
+  topos?: TopoBlock[];
+  vias?: Route[];
+  izquierdaImageUrl?: string;
+  centroImageUrl?: string;
+  derechaImageUrl?: string;
+  generalImageUrl?: string;
+}
+
 // Helper to ensure sector has a dynamic topos array and vias have topoId
-export function ensureSectorTopos(sData: any): { topos: TopoBlock[]; vias: Route[] } {
-  let topos: TopoBlock[] = Array.isArray(sData.topos)
-    ? sData.topos.map((t: any) => ({ ...t }))
+function ensureSectorTopos(sData: SectorDataInput): { topos: TopoBlock[]; vias: Route[] } {
+  const topos: TopoBlock[] = Array.isArray(sData.topos)
+    ? sData.topos.map((t: TopoBlock) => ({ ...t }))
     : [];
   let vias: Route[] = Array.isArray(sData.vias)
-    ? sData.vias.map((v: any) => ({ ...v }))
+    ? sData.vias.map((v: Route) => ({ ...v }))
     : [];
 
   if (topos.length === 0) {
@@ -92,7 +100,7 @@ export function ensureSectorTopos(sData: any): { topos: TopoBlock[]; vias: Route
   return { topos, vias };
 }
 
-export function normalizeProvincesData(provList: Province[]): Province[] {
+function normalizeProvincesData(provList: Province[]): Province[] {
   return provList.map(p => ({
     ...p,
     areas: p.areas.map(a => ({
@@ -147,20 +155,7 @@ export default function ProvinciasEditor() {
     chapas: 0,
     grupo: 'General'
   });
-  const [newRouteForm, setNewRouteForm] = useState<Partial<Route>>({
-    nombre: '',
-    grado: '',
-    altura: '',
-    chapas: 6,
-    grupo: 'General'
-  });
-  const [isBulkEditing, setIsBulkEditing] = useState(false);
-  const [bulkText, setBulkText] = useState('');
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
-  // Active route set tab inside Sector view
-  const [activeGroupTab, setActiveGroupTab] = useState<'General' | 'Izquierda' | 'Centro' | 'Derecha'>('General');
 
   // Province metadata edit states
   const [isEditingProvince, setIsEditingProvince] = useState(false);
@@ -437,10 +432,6 @@ export default function ProvinciasEditor() {
       setSectorEditIzquierdaImage(selectedSector.izquierdaImageUrl || '');
       setSectorEditCentroImage(selectedSector.centroImageUrl || '');
       setSectorEditDerechaImage(selectedSector.derechaImageUrl || '');
-      // Select appropriate tab based on routes.
-      // If there are left/center/right routes, default to Left. Otherwise General.
-      const hasGroups = selectedSector.vias.some(v => v.grupo !== 'General');
-      setActiveGroupTab(hasGroups ? 'Izquierda' : 'General');
     }
   }, [selectedSector]);
 
@@ -1048,34 +1039,7 @@ export default function ProvinciasEditor() {
     }
   };
 
-  // CRUD -- ADD ROUTE TO SECTOR
-  const handleAddRoute = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedSector || !newRouteForm.nombre || !newRouteForm.grado) return;
 
-    const newRoute: Route = {
-      id: `r-${Date.now()}`,
-      nombre: newRouteForm.nombre,
-      grado: newRouteForm.grado,
-      altura: newRouteForm.altura || '15m',
-      chapas: Number(newRouteForm.chapas) || 0,
-      grupo: activeGroupTab
-    };
-
-    const updatedSector = {
-      ...selectedSector,
-      vias: [...selectedSector.vias, newRoute]
-    };
-
-    handleSaveSectorData(updatedSector);
-    setNewRouteForm({
-      nombre: '',
-      grado: '',
-      altura: '',
-      chapas: 6,
-      grupo: activeGroupTab
-    });
-  };
 
   // CRUD -- DELETE ROUTE FROM SECTOR
   const handleDeleteRoute = (routeId: string) => {
@@ -1112,201 +1076,7 @@ export default function ProvinciasEditor() {
     setEditingRouteId(null);
   };
 
-  // Bulk Editor Vías
-  const startBulkEdit = () => {
-    if (!selectedSector) return;
-    const text = selectedSector.vias
-      .map(v => `${v.nombre} | ${v.grado} | ${v.altura || ''} | ${v.chapas || 0} | ${v.grupo || 'General'}`)
-      .join('\n');
-    setBulkText(text);
-    setIsBulkEditing(true);
-  };
 
-  const handleSaveBulk = () => {
-    if (!selectedSector) return;
-    if (!window.confirm("¿Estás seguro de que deseas guardar esta edición en lote? Esto actualizará permanentemente las vías en la base de datos de Firestore.")) return;
-
-    const lines = bulkText.split('\n');
-    const parsedVias: Route[] = [];
-
-    lines.forEach((line, index) => {
-      const trimmedLine = line.trim();
-      if (!trimmedLine) return;
-
-      const parts = trimmedLine.split('|');
-      const nombre = parts[0]?.trim() || '';
-      const grado = parts[1]?.trim() || '';
-      const altura = parts[2]?.trim() || '15m';
-      const chapas = Number(parts[3]?.trim()) || 0;
-      let grupo = parts[4]?.trim() || 'General';
-
-      const validGroups = ['General', 'Izquierda', 'Centro', 'Derecha'];
-      if (!validGroups.includes(grupo)) {
-        grupo = validGroups.includes(activeGroupTab) ? activeGroupTab : 'General';
-      }
-
-      parsedVias.push({
-        id: `r-${Date.now()}-${index}`,
-        nombre,
-        grado,
-        altura,
-        chapas,
-        grupo: grupo as 'General' | 'Izquierda' | 'Centro' | 'Derecha'
-      });
-    });
-
-    const updatedSector = {
-      ...selectedSector,
-      vias: parsedVias
-    };
-
-    handleSaveSectorData(updatedSector);
-    setIsBulkEditing(false);
-  };
-
-  // Automatic Sequential Numbering for Vías
-  const handleBulkNumberVias = (scope: 'group' | 'all') => {
-    if (!selectedSector) return;
-
-    const scopeLabel = scope === 'group' ? `las vías del grupo "${activeGroupTab}"` : 'TODAS las vías de este sector';
-    const confirmMessage = `¿Estás seguro de que deseas aplicar la numeración secuencial (1-, 2-...) a ${scopeLabel}?\n\nEsta acción modificará y actualizará permanentemente los nombres de las vías en la base de datos de Firestore.`;
-
-    if (!window.confirm(confirmMessage)) return;
-    
-    let counter = 1;
-    const updatedVias = selectedSector.vias.map((via) => {
-      if (scope === 'group' && via.grupo !== activeGroupTab) {
-        return via;
-      }
-      
-      const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
-      const numberedNombre = `${counter}- ${cleanNombre}`;
-      counter++;
-
-      return {
-        ...via,
-        nombre: numberedNombre
-      };
-    });
-
-    const updatedSector = {
-      ...selectedSector,
-      vias: updatedVias
-    };
-
-    handleSaveSectorData(updatedSector);
-    setActionMessage({ 
-      text: scope === 'group' 
-        ? `Se aplicó numeración (1-, 2-...) a las vías de ${activeGroupTab}.` 
-        : 'Se aplicó numeración (1-, 2-...) a todas las vías del sector.', 
-      type: 'success' 
-    });
-  };
-
-  // Remove Sequential Numbering from Vías
-  const handleBulkRemoveNumbering = (scope: 'group' | 'all') => {
-    if (!selectedSector) return;
-
-    const scopeLabel = scope === 'group' ? `las vías del grupo "${activeGroupTab}"` : 'TODAS las vías de este sector';
-    const confirmMessage = `¿Estás seguro de que deseas quitar la numeración de ${scopeLabel}?\n\nEsta acción modificará y actualizará permanentemente los nombres de las vías en la base de datos de Firestore.`;
-
-    if (!window.confirm(confirmMessage)) return;
-
-    const updatedVias = selectedSector.vias.map((via) => {
-      if (scope === 'group' && via.grupo !== activeGroupTab) {
-        return via;
-      }
-
-      const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
-
-      return {
-        ...via,
-        nombre: cleanNombre
-      };
-    });
-
-    const updatedSector = {
-      ...selectedSector,
-      vias: updatedVias
-    };
-
-    handleSaveSectorData(updatedSector);
-    setActionMessage({ 
-      text: scope === 'group' 
-        ? `Se quitó la numeración a las vías de ${activeGroupTab}.` 
-        : 'Se quitó la numeración a todas las vías del sector.', 
-      type: 'success' 
-    });
-  };
-
-  // Reordering Vías
-  const moveRoute = (index: number, direction: 'up' | 'down') => {
-    if (!selectedSector) return;
-    const routesToOrder = selectedSector.vias.filter(v => v.grupo === activeGroupTab) || [];
-    const targetIndex = direction === 'up' ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= routesToOrder.length) return;
-
-    const itemA = routesToOrder[index];
-    const itemB = routesToOrder[targetIndex];
-
-    const viasCopy = [...selectedSector.vias];
-    const indexA = viasCopy.findIndex(v => v.id === itemA.id);
-    const indexB = viasCopy.findIndex(v => v.id === itemB.id);
-
-    if (indexA !== -1 && indexB !== -1) {
-      const temp = viasCopy[indexA];
-      viasCopy[indexA] = viasCopy[indexB];
-      viasCopy[indexB] = temp;
-
-      handleSaveSectorData({
-        ...selectedSector,
-        vias: viasCopy
-      });
-    }
-  };
-
-  const handleDragStart = (e: React.DragEvent, index: number) => {
-    setDraggedIndex(index);
-    e.dataTransfer.effectAllowed = 'move';
-  };
-
-  const handleDragOver = (e: React.DragEvent, index: number) => {
-    e.preventDefault();
-    if (draggedIndex === null || draggedIndex === index) return;
-    setDragOverIndex(index);
-  };
-
-  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
-    e.preventDefault();
-    if (draggedIndex === null || draggedIndex === targetIndex || !selectedSector) return;
-
-    const routesToOrder = selectedSector.vias.filter(v => v.grupo === activeGroupTab) || [];
-    const itemA = routesToOrder[draggedIndex];
-    const itemB = routesToOrder[targetIndex];
-
-    const viasCopy = [...selectedSector.vias];
-    const indexA = viasCopy.findIndex(v => v.id === itemA.id);
-    const indexB = viasCopy.findIndex(v => v.id === itemB.id);
-
-    if (indexA !== -1 && indexB !== -1) {
-      const [removed] = viasCopy.splice(indexA, 1);
-      const newIndexB = viasCopy.findIndex(v => v.id === itemB.id);
-      viasCopy.splice(newIndexB, 0, removed);
-
-      handleSaveSectorData({
-        ...selectedSector,
-        vias: viasCopy
-      });
-    }
-
-    setDraggedIndex(null);
-    setDragOverIndex(null);
-  };
-
-  const handleDragEnd = () => {
-    setDraggedIndex(null);
-    setDragOverIndex(null);
-  };
 
   // CRUD -- DELETE SECTOR
   const handleDeleteSector = async (sectorId: string) => {
@@ -1438,16 +1208,7 @@ export default function ProvinciasEditor() {
     );
   }
 
-  // Filter routes based on selected tab group
-  const filteredRoutes = selectedSector?.vias.filter(v => v.grupo === activeGroupTab) || [];
 
-  const getActiveCroquisUrl = () => {
-    if (activeGroupTab === 'General') return sectorEditGeneralImage;
-    if (activeGroupTab === 'Izquierda') return sectorEditIzquierdaImage;
-    if (activeGroupTab === 'Centro') return sectorEditCentroImage;
-    if (activeGroupTab === 'Derecha') return sectorEditDerechaImage;
-    return '';
-  };
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
