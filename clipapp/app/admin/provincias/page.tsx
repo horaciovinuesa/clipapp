@@ -6,7 +6,8 @@ import {
   Province, 
   Area, 
   Sector, 
-  Route
+  Route,
+  TopoBlock
 } from '@/lib/mockData';
 import climbingDataJson from '@/lib/climbingData.json';
 
@@ -44,6 +45,69 @@ import {
   deleteDoc, 
   updateDoc 
 } from 'firebase/firestore';
+
+// Helper to ensure sector has a dynamic topos array and vias have topoId
+export function ensureSectorTopos(sData: any): { topos: TopoBlock[]; vias: Route[] } {
+  let topos: TopoBlock[] = Array.isArray(sData.topos)
+    ? sData.topos.map((t: any) => ({ ...t }))
+    : [];
+  let vias: Route[] = Array.isArray(sData.vias)
+    ? sData.vias.map((v: any) => ({ ...v }))
+    : [];
+
+  if (topos.length === 0) {
+    const legacyBlocks = [
+      { id: 'topo_izq', nombre: 'Pared Izquierda', imageUrl: sData.izquierdaImageUrl },
+      { id: 'topo_cen', nombre: 'Pared Central', imageUrl: sData.centroImageUrl },
+      { id: 'topo_der', nombre: 'Pared Derecha', imageUrl: sData.derechaImageUrl },
+      { id: 'topo_gen', nombre: 'Pared General', imageUrl: sData.generalImageUrl },
+    ];
+    for (const lb of legacyBlocks) {
+      if (lb.imageUrl && typeof lb.imageUrl === 'string' && lb.imageUrl.trim() !== '') {
+        topos.push({
+          id: lb.id,
+          nombre: lb.nombre,
+          imageUrl: lb.imageUrl,
+        });
+      }
+    }
+  }
+
+  // Ensure every via has a topoId
+  vias = vias.map(via => {
+    let topoId = via.topoId;
+    if (!topoId) {
+      const g = (via.grupo || '').toLowerCase();
+      if (g === 'izquierda') topoId = 'topo_izq';
+      else if (g === 'centro') topoId = 'topo_cen';
+      else if (g === 'derecha') topoId = 'topo_der';
+      else if (g === 'general') topoId = 'topo_gen';
+    }
+    return {
+      ...via,
+      topoId: topoId || (topos.length > 0 ? topos[0].id : undefined),
+    };
+  });
+
+  return { topos, vias };
+}
+
+export function normalizeProvincesData(provList: Province[]): Province[] {
+  return provList.map(p => ({
+    ...p,
+    areas: p.areas.map(a => ({
+      ...a,
+      sectores: a.sectores.map(s => {
+        const { topos, vias } = ensureSectorTopos(s);
+        return {
+          ...s,
+          topos,
+          vias
+        };
+      })
+    }))
+  }));
+}
 
 export default function ProvinciasEditor() {
   const { isDemoMode } = useAdmin();
@@ -215,25 +279,27 @@ export default function ProvinciasEditor() {
         const localData = localStorage.getItem('clipapp_provinces');
         if (localData) {
           const parsed = JSON.parse(localData);
-          setProvinces(parsed);
-          if (parsed.length > 0) {
+          const normalized = normalizeProvincesData(parsed);
+          setProvinces(normalized);
+          if (normalized.length > 0) {
             // Find "córdoba" (case-insensitive) or default to index 0
-            const cordobaIndex = parsed.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
+            const cordobaIndex = normalized.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
             const defaultIndex = cordobaIndex !== -1 ? cordobaIndex : 0;
-            setSelectedProvinceId(parsed[defaultIndex].id);
-            if (parsed[defaultIndex].areas.length > 0) {
-              setSelectedAreaId(parsed[defaultIndex].areas[0].id);
+            setSelectedProvinceId(normalized[defaultIndex].id);
+            if (normalized[defaultIndex].areas.length > 0) {
+              setSelectedAreaId(normalized[defaultIndex].areas[0].id);
             }
           }
         } else {
-          setProvinces(climbingData);
-          localStorage.setItem('clipapp_provinces', JSON.stringify(climbingData));
-          if (climbingData.length > 0) {
-            const cordobaIndex = climbingData.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
+          const normalized = normalizeProvincesData(climbingData);
+          setProvinces(normalized);
+          localStorage.setItem('clipapp_provinces', JSON.stringify(normalized));
+          if (normalized.length > 0) {
+            const cordobaIndex = normalized.findIndex((p: Province) => p.nombre.toLowerCase().includes('cordoba') || p.id === 'cordoba');
             const defaultIndex = cordobaIndex !== -1 ? cordobaIndex : 0;
-            setSelectedProvinceId(climbingData[defaultIndex].id);
-            if (climbingData[defaultIndex].areas.length > 0) {
-              setSelectedAreaId(climbingData[defaultIndex].areas[0].id);
+            setSelectedProvinceId(normalized[defaultIndex].id);
+            if (normalized[defaultIndex].areas.length > 0) {
+              setSelectedAreaId(normalized[defaultIndex].areas[0].id);
             }
           }
         }
@@ -258,6 +324,7 @@ export default function ProvinciasEditor() {
             const sectoresSnap = await getDocs(collection(db, `provincias/${provId}/areas/${areaId}/sectores`));
             sectoresSnap.docs.forEach(secDoc => {
               const sData = secDoc.data();
+              const { topos, vias } = ensureSectorTopos(sData);
               sectores.push({
                 id: secDoc.id,
                 nombre: sData.nombre || '',
@@ -269,7 +336,8 @@ export default function ProvinciasEditor() {
                 izquierdaImageUrl: sData.izquierdaImageUrl || '',
                 centroImageUrl: sData.centroImageUrl || '',
                 derechaImageUrl: sData.derechaImageUrl || '',
-                vias: sData.vias || []
+                topos,
+                vias
               });
             });
             
@@ -804,6 +872,7 @@ export default function ProvinciasEditor() {
           imageUrl: updatedSector.imageUrl || '',
           overviewImageUrl: updatedSector.overviewImageUrl || '',
           comoLlegarImageUrl: updatedSector.comoLlegarImageUrl || '',
+          topos: updatedSector.topos || [],
           generalImageUrl: updatedSector.generalImageUrl || '',
           izquierdaImageUrl: updatedSector.izquierdaImageUrl || '',
           centroImageUrl: updatedSector.centroImageUrl || '',
@@ -837,6 +906,146 @@ export default function ProvinciasEditor() {
       derechaImageUrl: sectorEditDerechaImage
     };
     handleSaveSectorData(updated);
+  };
+
+  // Topo Block management
+  const handleAddTopoBlock = () => {
+    if (!selectedSector) return;
+    const currentTopos = selectedSector.topos || [];
+    const newTopo: TopoBlock = {
+      id: `topo_${Date.now()}`,
+      nombre: `Bloque ${currentTopos.length + 1}`,
+      imageUrl: ''
+    };
+    const updatedSector: Sector = {
+      ...selectedSector,
+      topos: [...currentTopos, newTopo]
+    };
+    handleSaveSectorData(updatedSector);
+    setActionMessage({ text: "Nuevo bloque de croquis añadido.", type: 'success' });
+  };
+
+  const handleDeleteTopoBlock = (topoId: string) => {
+    if (!selectedSector) return;
+    if (!window.confirm("¿Seguro que deseas eliminar este bloque de croquis? Las vías asociadas pasarán a estar Sin Asignar.")) return;
+    const currentTopos = (selectedSector.topos || []).filter(t => t.id !== topoId);
+    const updatedVias = selectedSector.vias.map(v => v.topoId === topoId ? { ...v, topoId: undefined } : v);
+    handleSaveSectorData({
+      ...selectedSector,
+      topos: currentTopos,
+      vias: updatedVias
+    });
+  };
+
+  const handleMoveTopoBlock = (index: number, direction: 'up' | 'down') => {
+    if (!selectedSector || !selectedSector.topos) return;
+    const currentTopos = [...selectedSector.topos];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= currentTopos.length) return;
+    const temp = currentTopos[index];
+    currentTopos[index] = currentTopos[targetIndex];
+    currentTopos[targetIndex] = temp;
+    handleSaveSectorData({
+      ...selectedSector,
+      topos: currentTopos
+    });
+  };
+
+  const handleUpdateTopoBlockInfo = (topoId: string, updates: Partial<TopoBlock>) => {
+    if (!selectedSector || !selectedSector.topos) return;
+    const currentTopos = selectedSector.topos.map(t => t.id === topoId ? { ...t, ...updates } : t);
+    handleSaveSectorData({
+      ...selectedSector,
+      topos: currentTopos
+    });
+  };
+
+  const handleTopoImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, topoId: string) => {
+    const file = e.target.files?.[0];
+    if (!file || !selectedProvinceId || !selectedAreaId || !selectedSector) return;
+
+    const key = `topo-${topoId}`;
+    setIsUploading(prev => ({ ...prev, [key]: true }));
+    setActionMessage({ text: `Subiendo imagen de croquis...`, type: 'info' });
+
+    try {
+      const ext = file.name.split('.').pop() || 'jpg';
+      const path = `provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector.id}/topos/${topoId}.${ext}`;
+      const storageRef = ref(storage, path);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+
+      handleUpdateTopoBlockInfo(topoId, { imageUrl: downloadURL });
+      setActionMessage({ text: 'Imagen de croquis actualizada.', type: 'success' });
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      console.error(err);
+      setActionMessage({ text: `Error al subir imagen: ${errorMsg}`, type: 'error' });
+    } finally {
+      setIsUploading(prev => ({ ...prev, [key]: false }));
+    }
+  };
+
+  const handleAddRouteToTopo = (topoId?: string) => {
+    if (!selectedSector) return;
+    const newRoute: Route = {
+      id: `r-${Date.now()}`,
+      nombre: 'Nueva Vía',
+      grado: '6a',
+      altura: '15m',
+      chapas: 6,
+      topoId: topoId
+    };
+    handleSaveSectorData({
+      ...selectedSector,
+      vias: [...selectedSector.vias, newRoute]
+    });
+    setEditingRouteId(newRoute.id);
+    setRouteForm(newRoute);
+  };
+
+  const handleBulkNumberViasForTopo = (topoId?: string) => {
+    if (!selectedSector) return;
+    let counter = 1;
+    const updatedVias = selectedSector.vias.map((via) => {
+      if (topoId !== undefined && via.topoId !== topoId) return via;
+      const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
+      const numberedNombre = `${counter}- ${cleanNombre}`;
+      counter++;
+      return { ...via, nombre: numberedNombre };
+    });
+    handleSaveSectorData({ ...selectedSector, vias: updatedVias });
+  };
+
+  const handleBulkRemoveNumberingForTopo = (topoId?: string) => {
+    if (!selectedSector) return;
+    const updatedVias = selectedSector.vias.map((via) => {
+      if (topoId !== undefined && via.topoId !== topoId) return via;
+      const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
+      return { ...via, nombre: cleanNombre };
+    });
+    handleSaveSectorData({ ...selectedSector, vias: updatedVias });
+  };
+
+  const moveRouteInTopo = (topoId: string | undefined, index: number, direction: 'up' | 'down') => {
+    if (!selectedSector) return;
+    const topoVias = selectedSector.vias.filter(v => v.topoId === topoId);
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= topoVias.length) return;
+
+    const itemA = topoVias[index];
+    const itemB = topoVias[targetIndex];
+
+    const viasCopy = [...selectedSector.vias];
+    const indexA = viasCopy.findIndex(v => v.id === itemA.id);
+    const indexB = viasCopy.findIndex(v => v.id === itemB.id);
+
+    if (indexA !== -1 && indexB !== -1) {
+      const temp = viasCopy[indexA];
+      viasCopy[indexA] = viasCopy[indexB];
+      viasCopy[indexB] = temp;
+      handleSaveSectorData({ ...selectedSector, vias: viasCopy });
+    }
   };
 
   // CRUD -- ADD ROUTE TO SECTOR
@@ -2075,32 +2284,27 @@ export default function ProvinciasEditor() {
                 </div>
               </div>
 
-              {/* Imágenes y Croquis del Sector */}
+              {/* Header Images (Cover, Overview, Como Llegar) */}
               <div className="px-6 space-y-4 pb-4 border-b border-zinc-850">
                 <div className="flex items-center justify-between pb-2 border-b border-zinc-800/80">
                   <div className="flex items-center gap-1.5">
                     <ImageIcon className="w-4 h-4 text-emerald-450" />
-                    <span className="text-xs font-bold text-white uppercase tracking-wider">Imágenes y Croquis del Sector</span>
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">Imágenes Principales del Sector</span>
                   </div>
                   <button
                     onClick={handleUpdateSectorInfo}
                     disabled={saving}
                     className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-955 text-xs font-bold rounded-xl transition flex items-center gap-1.5"
                   >
-                    <Save className="w-3.5 h-3.5 text-zinc-950" /> Guardar Imágenes
+                    <Save className="w-3.5 h-3.5 text-zinc-950" /> Guardar Datos
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Card 1: Portada (Cover) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Portada (Cover)</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/imageUrl`}>
-                          📂 .../{selectedSector!.id}/imageUrl
-                        </span>
-                      </div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Portada (Cover)</span>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -2139,12 +2343,7 @@ export default function ProvinciasEditor() {
                   {/* Card 2: Overview (Vista General) */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Overview (Vista)</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/overviewImageUrl`}>
-                          📂 .../{selectedSector!.id}/overviewImageUrl
-                        </span>
-                      </div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Overview (Vista General)</span>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditOverviewImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -2183,12 +2382,7 @@ export default function ProvinciasEditor() {
                   {/* Card 3: Cómo Llegar */}
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Cómo Llegar</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/comoLlegarImageUrl`}>
-                          📂 .../{selectedSector!.id}/comoLlegarImageUrl
-                        </span>
-                      </div>
+                      <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Cómo Llegar (Mapa/Sendero)</span>
                       <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
                         {sectorEditComoLlegarImage ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
@@ -2223,577 +2417,381 @@ export default function ProvinciasEditor() {
                       </label>
                     </div>
                   </div>
-
-                  {/* Card 4: Croquis Set General */}
-                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis General</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/generalImageUrl`}>
-                          📂 .../{selectedSector!.id}/generalImageUrl
-                        </span>
-                      </div>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
-                        {sectorEditGeneralImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditGeneralImage} alt="Croquis General" className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-1.5 mt-1">
-                      <input
-                        type="text"
-                        value={sectorEditGeneralImage}
-                        onChange={(e) => setSectorEditGeneralImage(e.target.value)}
-                        placeholder="URL..."
-                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                      />
-                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
-                        {isUploading['sector-generalImageUrl'] ? (
-                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
-                        ) : (
-                          <ImageIcon className="w-3 h-3" />
-                        )}
-                        <span>Subir</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'sector', 'generalImageUrl')}
-                          className="hidden"
-                          disabled={isUploading['sector-generalImageUrl']}
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Card 5: Croquis Set Izquierda (Vías 1) */}
-                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis Izquierda</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/izquierdaImageUrl`}>
-                          📂 .../{selectedSector!.id}/izquierdaImageUrl
-                        </span>
-                      </div>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
-                        {sectorEditIzquierdaImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditIzquierdaImage} alt="Croquis Izquierda" className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-1.5 mt-1">
-                      <input
-                        type="text"
-                        value={sectorEditIzquierdaImage}
-                        onChange={(e) => setSectorEditIzquierdaImage(e.target.value)}
-                        placeholder="URL..."
-                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                      />
-                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
-                        {isUploading['sector-izquierdaImageUrl'] ? (
-                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
-                        ) : (
-                          <ImageIcon className="w-3 h-3" />
-                        )}
-                        <span>Subir</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'sector', 'izquierdaImageUrl')}
-                          className="hidden"
-                          disabled={isUploading['sector-izquierdaImageUrl']}
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Card 6: Croquis Set Centro (Vías 2) */}
-                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis Centro</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/centroImageUrl`}>
-                          📂 .../{selectedSector!.id}/centroImageUrl
-                        </span>
-                      </div>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
-                        {sectorEditCentroImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditCentroImage} alt="Croquis Centro" className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-1.5 mt-1">
-                      <input
-                        type="text"
-                        value={sectorEditCentroImage}
-                        onChange={(e) => setSectorEditCentroImage(e.target.value)}
-                        placeholder="URL..."
-                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                      />
-                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
-                        {isUploading['sector-centroImageUrl'] ? (
-                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
-                        ) : (
-                          <ImageIcon className="w-3 h-3" />
-                        )}
-                        <span>Subir</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'sector', 'centroImageUrl')}
-                          className="hidden"
-                          disabled={isUploading['sector-centroImageUrl']}
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Card 7: Croquis Set Derecha (Vías 3) */}
-                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 truncate">Croquis Derecha</span>
-                        <span className="text-[8px] text-zinc-500 truncate font-mono max-w-[80px]" title={`provincias/${selectedProvinceId}/${selectedAreaId}/${selectedSector!.id}/derechaImageUrl`}>
-                          📂 .../{selectedSector!.id}/derechaImageUrl
-                        </span>
-                      </div>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
-                        {sectorEditDerechaImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditDerechaImage} alt="Croquis Derecha" className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-1.5 mt-1">
-                      <input
-                        type="text"
-                        value={sectorEditDerechaImage}
-                        onChange={(e) => setSectorEditDerechaImage(e.target.value)}
-                        placeholder="URL..."
-                        className="flex-1 min-w-0 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-[10px] text-zinc-200 outline-none"
-                      />
-                      <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-lg px-2 py-1 text-[10px] text-zinc-200 gap-1 transition shrink-0">
-                        {isUploading['sector-derechaImageUrl'] ? (
-                          <RefreshCw className="w-3 h-3 animate-spin text-emerald-450" />
-                        ) : (
-                          <ImageIcon className="w-3 h-3" />
-                        )}
-                        <span>Subir</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'sector', 'derechaImageUrl')}
-                          className="hidden"
-                          disabled={isUploading['sector-derechaImageUrl']}
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Card 8: Save Action Button */}
-                  <div className="bg-zinc-950/10 border border-dashed border-zinc-800 p-3 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-zinc-700/60 transition group">
-                    <Sliders className="w-5 h-5 text-zinc-555 group-hover:text-emerald-400 transition" />
-                    <span className="text-[10px] text-zinc-500 text-center font-bold">Guardar cambios en Firestore</span>
-                    <button
-                      onClick={handleUpdateSectorInfo}
-                      disabled={saving}
-                      className="w-full py-1.5 bg-zinc-800 hover:bg-zinc-750 text-zinc-200 text-[10px] font-bold rounded-lg border border-zinc-700 transition"
-                    >
-                      Sincronizar
-                    </button>
-                  </div>
                 </div>
               </div>
 
-              {/* Vias Set Multi-Group Tabs */}
-              <div className="px-6 space-y-4">
+              {/* BLOQUES DINÁMICOS DE CROQUIS Y VÍAS */}
+              <div className="px-6 space-y-6">
                 <div className="flex items-center justify-between pb-2 border-b border-zinc-800/80">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <Sliders className="w-4 h-4 text-emerald-400" />
-                    <span className="text-sm font-bold text-white">Lista de Vías por Sectores Sets</span>
-                    <button
-                      type="button"
-                      onClick={isBulkEditing ? () => setIsBulkEditing(false) : startBulkEdit}
-                      className="ml-3 px-2.5 py-1 bg-zinc-850 hover:bg-zinc-800 text-zinc-300 hover:text-white text-[10px] font-bold rounded-lg border border-zinc-800 transition"
-                    >
-                      {isBulkEditing ? 'Ver Lista' : 'Edición en Lote'}
-                    </button>
-
-                    {/* Herramientas de Numeración en Lote */}
-                    <div className="flex items-center gap-1.5 ml-2 border-l border-zinc-800/80 pl-2">
-                      <div className="relative group">
-                        <button
-                          type="button"
-                          className="flex items-center gap-1 px-2.5 py-1 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 text-[10px] font-bold rounded-lg border border-emerald-800/60 transition shadow-sm"
-                          title="Agregar prefijo numérico (1-, 2-, 3...)"
-                        >
-                          <ListOrdered className="w-3 h-3" />
-                          <span>Numerar (1,2,3...)</span>
-                          <ChevronDown className="w-2.5 h-2.5 ml-0.5 opacity-70" />
-                        </button>
-                        <div className="absolute left-0 mt-1 w-48 bg-zinc-900 border border-zinc-800 rounded-xl shadow-xl py-1 z-30 hidden group-hover:block hover:block">
-                          <button
-                            type="button"
-                            onClick={() => handleBulkNumberVias('group')}
-                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-emerald-400 transition font-medium"
-                          >
-                            Numerar Grupo ({activeGroupTab})
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleBulkNumberVias('all')}
-                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-emerald-400 transition font-medium"
-                          >
-                            Numerar Sector Completo
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="relative group">
-                        <button
-                          type="button"
-                          className="flex items-center gap-1 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-850 text-zinc-400 hover:text-zinc-200 text-[10px] font-bold rounded-lg border border-zinc-800 transition"
-                          title="Quitar prefijo numérico existente"
-                        >
-                          <Hash className="w-3 h-3" />
-                          <span>Quitar N°</span>
-                          <ChevronDown className="w-2.5 h-2.5 ml-0.5 opacity-70" />
-                        </button>
-                        <div className="absolute left-0 mt-1 w-48 bg-zinc-900 border border-zinc-800 rounded-xl shadow-xl py-1 z-30 hidden group-hover:block hover:block">
-                          <button
-                            type="button"
-                            onClick={() => handleBulkRemoveNumbering('group')}
-                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-rose-400 transition font-medium"
-                          >
-                            Quitar de Grupo ({activeGroupTab})
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleBulkRemoveNumbering('all')}
-                            className="w-full text-left px-3 py-1.5 text-[11px] text-zinc-300 hover:bg-zinc-800 hover:text-rose-400 transition font-medium"
-                          >
-                            Quitar de Sector Completo
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+                    <span className="text-sm font-bold text-white uppercase tracking-wider">Bloques de Croquis y Vías del Sector</span>
                   </div>
-                  
-                  {/* Tabs */}
-                  <div className="flex bg-zinc-950/60 p-1 rounded-xl border border-zinc-850">
-                    {(['General', 'Izquierda', 'Centro', 'Derecha'] as const).map((tab) => {
-                      const count = selectedSector.vias.filter(v => v.grupo === tab).length;
-                      return (
-                        <button
-                          key={tab}
-                          onClick={() => {
-                            setActiveGroupTab(tab);
-                            setEditingRouteId(null);
-                          }}
-                          className={`px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
-                            activeGroupTab === tab 
-                              ? 'bg-zinc-800 text-emerald-400 shadow-inner' 
-                              : 'text-zinc-500 hover:text-zinc-300'
-                          }`}
-                        >
-                          <span>{tab}</span>
-                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                            activeGroupTab === tab ? 'bg-emerald-500/20 text-emerald-400' : 'bg-zinc-900 text-zinc-600'
-                          }`}>
-                            {count}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddTopoBlock}
+                    className="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-md"
+                  >
+                    <Plus className="w-4 h-4" /> Agregar Imagen de Croquis
+                  </button>
                 </div>
 
-                {/* Contextual Croquis Preview */}
-                {getActiveCroquisUrl() && (
-                  <div className="bg-zinc-950/60 border border-zinc-850 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center animate-fade-in mb-4">
-                    <div className="w-full md:w-64 aspect-video rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950 relative flex-shrink-0">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img 
-                        src={getActiveCroquisUrl()} 
-                        alt={`Croquis ${activeGroupTab}`} 
-                        className="w-full h-full object-contain" 
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
-                        Croquis Activo: {activeGroupTab}
-                      </span>
-                      <h4 className="text-xs font-bold text-white">Imagen de referencia para este grupo de vías</h4>
-                      <p className="text-[11px] text-zinc-400">
-                        Esta imagen de croquis se mostrará en la app móvil al visualizar las vías de la sección &quot;{activeGroupTab}&quot;.
-                      </p>
-                      <span className="block text-[10px] text-zinc-555 font-mono truncate max-w-md">
-                        {getActiveCroquisUrl()}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                {/* Render list of Topo Blocks */}
+                {((selectedSector.topos && selectedSector.topos.length > 0) ? selectedSector.topos : []).map((topo, topoIdx) => {
+                  const topoVias = selectedSector.vias.filter(v => v.topoId === topo.id);
 
-                {isBulkEditing ? (
-                  <div className="space-y-4">
-                    <div className="p-3 bg-zinc-950/40 border border-zinc-800/80 rounded-xl text-zinc-450 text-[10px] leading-relaxed">
-                      <strong>Instrucciones para edición en lote:</strong>
-                      <ul className="list-disc list-inside mt-1 space-y-0.5 font-mono text-zinc-500">
-                        <li>Formato por línea: <span className="text-zinc-350 font-semibold">Nombre | Grado | Altura | Chapas | Grupo</span></li>
-                        <li>Ejemplo: <span className="text-zinc-350">1- Buscale la primera | 6B+ | 10m | 6 | Izquierda</span></li>
-                        <li>Grupos permitidos: <span className="text-zinc-300">General</span>, <span className="text-zinc-300">Izquierda</span>, <span className="text-zinc-300">Centro</span>, <span className="text-zinc-300">Derecha</span>.</li>
-                        <li>Líneas vacías serán ignoradas. Las vías se guardarán en el orden listado.</li>
-                      </ul>
-                    </div>
-                    <textarea
-                      value={bulkText}
-                      onChange={(e) => setBulkText(e.target.value)}
-                      className="w-full h-80 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl p-4 text-xs font-mono text-zinc-200 outline-none resize-none leading-relaxed"
-                      placeholder="Nombre | Grado | Altura | Chapas | Grupo"
-                    />
-                    <div className="flex gap-2 justify-end">
-                      <button
-                        type="button"
-                        onClick={handleSaveBulk}
-                        disabled={saving}
-                        className="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 text-zinc-955 text-xs font-bold rounded-xl transition flex items-center gap-1.5"
-                      >
-                        <Save className="w-3.5 h-3.5 text-zinc-955" /> Guardar Vías en Lote
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setIsBulkEditing(false)}
-                        className="px-4 py-2 bg-zinc-800 hover:bg-zinc-750 text-zinc-400 hover:text-white text-xs font-semibold rounded-xl transition border border-zinc-700/50"
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {/* Vias table */}
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left border-collapse">
-                        <thead>
-                          <tr className="border-b border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-                            <th className="py-2.5 px-3 w-20">Orden</th>
-                            <th className="py-2.5 px-3">Nombre Vía</th>
-                            <th className="py-2.5 px-3">Grado</th>
-                            <th className="py-2.5 px-3">Altura</th>
-                            <th className="py-2.5 px-3">Chapas</th>
-                            <th className="py-2.5 px-3 text-right">Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-zinc-850/60 text-xs">
-                          {filteredRoutes.length === 0 ? (
-                            <tr>
-                              <td colSpan={6} className="py-6 text-center text-zinc-500 italic">
-                                No hay vías registradas en el sector set &quot;{activeGroupTab}&quot;.
-                              </td>
-                            </tr>
+                  return (
+                    <div key={topo.id} className="bg-zinc-950/60 border border-zinc-800 rounded-2xl p-4 space-y-4 shadow-lg">
+                      {/* Top Bar of Topo Block */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-850">
+                        <div className="flex items-center gap-2 flex-1">
+                          <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">
+                            Bloque #{topoIdx + 1}
+                          </span>
+                          <input
+                            type="text"
+                            value={topo.nombre || ''}
+                            onChange={(e) => handleUpdateTopoBlockInfo(topo.id, { nombre: e.target.value })}
+                            placeholder="Nombre del bloque (ej. Pared Izquierda)..."
+                            className="bg-zinc-900 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-1.5 text-xs text-white outline-none flex-1 max-w-sm font-semibold"
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => handleBulkNumberViasForTopo(topo.id)}
+                            className="px-2.5 py-1 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 text-[10px] font-bold rounded-lg border border-emerald-800/60 transition flex items-center gap-1"
+                            title="Numerar 1-, 2-... las vías de este bloque"
+                          >
+                            <ListOrdered className="w-3 h-3" /> Numerar
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleBulkRemoveNumberingForTopo(topo.id)}
+                            className="px-2.5 py-1 bg-zinc-900 hover:bg-zinc-850 text-zinc-400 text-[10px] font-bold rounded-lg border border-zinc-800 transition flex items-center gap-1"
+                            title="Quitar números de vía"
+                          >
+                            <Hash className="w-3 h-3" /> Quitar N°
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleMoveTopoBlock(topoIdx, 'up')}
+                            disabled={topoIdx === 0}
+                            className="p-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 disabled:opacity-30 rounded-lg border border-zinc-800 transition"
+                            title="Mover Bloque Arriba"
+                          >
+                            <ChevronUp className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleMoveTopoBlock(topoIdx, 'down')}
+                            disabled={topoIdx === (selectedSector.topos?.length || 0) - 1}
+                            className="p-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 disabled:opacity-30 rounded-lg border border-zinc-800 transition"
+                            title="Mover Bloque Abajo"
+                          >
+                            <ChevronDown className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteTopoBlock(topo.id)}
+                            className="p-1 bg-red-950/60 hover:bg-red-900 text-red-300 rounded-lg border border-red-800/40 transition ml-1"
+                            title="Eliminar este Bloque de Croquis"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Image Preview & Upload Controls */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-zinc-900/60 p-3 rounded-xl border border-zinc-850">
+                        <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800 relative flex items-center justify-center">
+                          {topo.imageUrl ? (
+                            /* eslint-disable-next-line @next/next/no-img-element */
+                            <img src={topo.imageUrl} alt={topo.nombre || 'Croquis'} className="w-full h-full object-contain" />
                           ) : (
-                            filteredRoutes.map((route, index) => {
-                              const isEditing = editingRouteId === route.id;
-                              return (
-                                <tr 
-                                  key={route.id} 
-                                  draggable={!isEditing}
-                                  onDragStart={(e) => handleDragStart(e, index)}
-                                  onDragOver={(e) => handleDragOver(e, index)}
-                                  onDrop={(e) => handleDrop(e, index)}
-                                  onDragEnd={handleDragEnd}
-                                  className={`transition group border-b border-zinc-850/40 ${
-                                    dragOverIndex === index ? 'border-t-2 border-t-emerald-500 bg-zinc-800/20' : ''
-                                  } ${
-                                    draggedIndex === index ? 'opacity-40 bg-zinc-900' : 'hover:bg-zinc-850/30'
-                                  }`}
-                                >
-                                  <td className="py-2 px-3">
-                                    <div className="flex items-center gap-1.5">
-                                      <div 
-                                        className="cursor-grab active:cursor-grabbing text-zinc-650 hover:text-zinc-400 p-0.5 rounded transition shrink-0"
-                                        title="Arrastrar para reordenar"
-                                      >
-                                        <GripVertical className="w-3.5 h-3.5 text-zinc-500" />
-                                      </div>
-                                      <button
-                                        type="button"
-                                        onClick={() => moveRoute(index, 'up')}
-                                        disabled={index === 0}
-                                        className="p-0.5 text-zinc-500 hover:text-zinc-300 disabled:opacity-30 disabled:hover:text-zinc-500 transition shrink-0"
-                                        title="Mover arriba"
-                                      >
-                                        <ChevronUp className="w-3.5 h-3.5" />
-                                      </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => moveRoute(index, 'down')}
-                                        disabled={index === filteredRoutes.length - 1}
-                                        className="p-0.5 text-zinc-500 hover:text-zinc-300 disabled:opacity-30 disabled:hover:text-zinc-500 transition shrink-0"
-                                        title="Mover abajo"
-                                      >
-                                        <ChevronDown className="w-3.5 h-3.5" />
-                                      </button>
-                                    </div>
-                                  </td>
-                                  <td className="py-2 px-3">
-                                    {isEditing ? (
-                                      <input
-                                        type="text"
-                                        value={routeForm.nombre || ''}
-                                        onChange={(e) => setRouteForm({ ...routeForm, nombre: e.target.value })}
-                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-full max-w-[160px]"
-                                      />
-                                    ) : (
-                                      <span className="font-bold text-zinc-200">{route.nombre}</span>
-                                    )}
-                                  </td>
-                                  <td className="py-2 px-3">
-                                    {isEditing ? (
-                                      <input
-                                        type="text"
-                                        value={routeForm.grado || ''}
-                                        onChange={(e) => setRouteForm({ ...routeForm, grado: e.target.value })}
-                                        placeholder="e.g. 6a+"
-                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
-                                      />
-                                    ) : (
-                                      <span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 border border-zinc-700/40 rounded font-semibold text-[10px]">
-                                        {route.grado}
-                                      </span>
-                                    )}
-                                  </td>
-                                  <td className="py-2 px-3 text-zinc-400">
-                                    {isEditing ? (
-                                      <input
-                                        type="text"
-                                        value={routeForm.altura || ''}
-                                        onChange={(e) => setRouteForm({ ...routeForm, altura: e.target.value })}
-                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
-                                      />
-                                    ) : (
-                                      route.altura || '-'
-                                    )}
-                                  </td>
-                                  <td className="py-2 px-3 text-zinc-400">
-                                    {isEditing ? (
-                                      <input
-                                        type="number"
-                                        value={routeForm.chapas || 0}
-                                        onChange={(e) => setRouteForm({ ...routeForm, chapas: Number(e.target.value) })}
-                                        className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-14"
-                                      />
-                                    ) : (
-                                      route.chapas || '-'
-                                    )}
-                                  </td>
-                                  <td className="py-2 px-3 text-right">
-                                    {isEditing ? (
-                                      <div className="flex justify-end gap-1.5">
-                                        <button
-                                          type="button"
-                                          onClick={handleSaveRouteEdit}
-                                          className="p-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded hover:bg-emerald-500 hover:text-zinc-950 transition"
-                                          title="Confirmar cambios"
-                                        >
-                                          <Check className="w-3.5 h-3.5" />
-                                        </button>
-                                        <button
-                                          type="button"
-                                          onClick={() => setEditingRouteId(null)}
-                                          className="p-1 bg-zinc-800 text-zinc-450 border border-zinc-700 rounded hover:text-white transition"
-                                          title="Cancelar"
-                                        >
-                                          <X className="w-3.5 h-3.5" />
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div className="flex justify-end gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
-                                        <button
-                                          type="button"
-                                          onClick={() => startEditRoute(route)}
-                                          className="p-1 text-zinc-450 hover:text-emerald-450 hover:bg-zinc-800 rounded transition"
-                                          title="Editar vía"
-                                        >
-                                          <Edit3 className="w-3.5 h-3.5" />
-                                        </button>
-                                        <button
-                                          type="button"
-                                          onClick={() => handleDeleteRoute(route.id)}
-                                          className="p-1 text-zinc-450 hover:text-red-400 hover:bg-zinc-800 rounded transition"
-                                          title="Eliminar vía"
-                                        >
-                                          <Trash2 className="w-3.5 h-3.5" />
-                                        </button>
-                                      </div>
-                                    )}
+                            <div className="text-center p-3 text-zinc-600 flex flex-col items-center gap-1">
+                              <ImageIcon className="w-6 h-6" />
+                              <span className="text-[10px]">Sin imagen cargada</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="md:col-span-2 space-y-2">
+                          <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-400">URL / Archivo de Imagen del Croquis</label>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={topo.imageUrl || ''}
+                              onChange={(e) => handleUpdateTopoBlockInfo(topo.id, { imageUrl: e.target.value })}
+                              placeholder="URL de la imagen de croquis..."
+                              className="flex-1 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-1.5 text-xs text-zinc-200 outline-none"
+                            />
+                            <label className="flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 cursor-pointer rounded-xl px-3 py-1.5 text-xs text-zinc-200 gap-1.5 transition shrink-0 font-bold">
+                              {isUploading[`topo-${topo.id}`] ? (
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-450" />
+                              ) : (
+                                <ImageIcon className="w-3.5 h-3.5" />
+                              )}
+                              <span>Subir Imagen</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleTopoImageUpload(e, topo.id)}
+                                className="hidden"
+                                disabled={isUploading[`topo-${topo.id}`]}
+                              />
+                            </label>
+                          </div>
+                          <span className="text-[10px] text-zinc-555 block font-mono truncate">
+                            📂 Storage Path: provincias/{selectedProvinceId}/{selectedAreaId}/{selectedSector.id}/topos/{topo.id}.jpg
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Routes Table for this Topo Block */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between pt-2">
+                          <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                            Vías en este croquis ({topoVias.length})
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleAddRouteToTopo(topo.id)}
+                            className="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-emerald-400 text-xs font-bold rounded-lg border border-zinc-700 transition flex items-center gap-1"
+                          >
+                            <Plus className="w-3.5 h-3.5" /> Registrar Vía
+                          </button>
+                        </div>
+
+                        <div className="overflow-x-auto rounded-xl border border-zinc-850">
+                          <table className="w-full text-left border-collapse">
+                            <thead>
+                              <tr className="border-b border-zinc-800 bg-zinc-950/80 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                                <th className="py-2 px-3 w-16">Orden</th>
+                                <th className="py-2 px-3">Nombre Vía</th>
+                                <th className="py-2 px-3">Grado</th>
+                                <th className="py-2 px-3">Altura</th>
+                                <th className="py-2 px-3">Chapas</th>
+                                <th className="py-2 px-3 text-right">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-zinc-850/60 text-xs bg-zinc-900/30">
+                              {topoVias.length === 0 ? (
+                                <tr>
+                                  <td colSpan={6} className="py-4 text-center text-zinc-500 italic text-[11px]">
+                                    No hay vías asignadas a este croquis todavía.
                                   </td>
                                 </tr>
-                              );
-                            })
-                          )}
-                        </tbody>
-                      </table>
+                              ) : (
+                                topoVias.map((route, vIdx) => {
+                                  const isEditing = editingRouteId === route.id;
+                                  return (
+                                    <tr key={route.id} className="hover:bg-zinc-850/40 transition">
+                                      <td className="py-1.5 px-3">
+                                        <div className="flex items-center gap-1">
+                                          <button
+                                            type="button"
+                                            onClick={() => moveRouteInTopo(topo.id, vIdx, 'up')}
+                                            disabled={vIdx === 0}
+                                            className="p-0.5 text-zinc-500 hover:text-zinc-300 disabled:opacity-20 transition"
+                                            title="Subir"
+                                          >
+                                            <ChevronUp className="w-3.5 h-3.5" />
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => moveRouteInTopo(topo.id, vIdx, 'down')}
+                                            disabled={vIdx === topoVias.length - 1}
+                                            className="p-0.5 text-zinc-500 hover:text-zinc-300 disabled:opacity-20 transition"
+                                            title="Bajar"
+                                          >
+                                            <ChevronDown className="w-3.5 h-3.5" />
+                                          </button>
+                                        </div>
+                                      </td>
+                                      <td className="py-1.5 px-3">
+                                        {isEditing ? (
+                                          <input
+                                            type="text"
+                                            value={routeForm.nombre || ''}
+                                            onChange={(e) => setRouteForm({ ...routeForm, nombre: e.target.value })}
+                                            className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-full max-w-[180px]"
+                                          />
+                                        ) : (
+                                          <span className="font-bold text-zinc-200">{route.nombre}</span>
+                                        )}
+                                      </td>
+                                      <td className="py-1.5 px-3">
+                                        {isEditing ? (
+                                          <input
+                                            type="text"
+                                            value={routeForm.grado || ''}
+                                            onChange={(e) => setRouteForm({ ...routeForm, grado: e.target.value })}
+                                            className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
+                                          />
+                                        ) : (
+                                          <span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 border border-zinc-700/40 rounded font-semibold text-[10px]">
+                                            {route.grado}
+                                          </span>
+                                        )}
+                                      </td>
+                                      <td className="py-1.5 px-3 text-zinc-400">
+                                        {isEditing ? (
+                                          <input
+                                            type="text"
+                                            value={routeForm.altura || ''}
+                                            onChange={(e) => setRouteForm({ ...routeForm, altura: e.target.value })}
+                                            className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-16"
+                                          />
+                                        ) : (
+                                          route.altura || '-'
+                                        )}
+                                      </td>
+                                      <td className="py-1.5 px-3 text-zinc-400">
+                                        {isEditing ? (
+                                          <input
+                                            type="number"
+                                            value={routeForm.chapas || 0}
+                                            onChange={(e) => setRouteForm({ ...routeForm, chapas: Number(e.target.value) })}
+                                            className="bg-zinc-950 border border-zinc-700 rounded px-2 py-1 text-xs text-white outline-none w-14"
+                                          />
+                                        ) : (
+                                          route.chapas || '-'
+                                        )}
+                                      </td>
+                                      <td className="py-1.5 px-3 text-right">
+                                        {isEditing ? (
+                                          <div className="flex justify-end gap-1">
+                                            <button
+                                              type="button"
+                                              onClick={handleSaveRouteEdit}
+                                              className="p-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded hover:bg-emerald-500 hover:text-zinc-950 transition"
+                                            >
+                                              <Check className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button
+                                              type="button"
+                                              onClick={() => setEditingRouteId(null)}
+                                              className="p-1 bg-zinc-800 text-zinc-450 border border-zinc-700 rounded hover:text-white transition"
+                                            >
+                                              <X className="w-3.5 h-3.5" />
+                                            </button>
+                                          </div>
+                                        ) : (
+                                          <div className="flex justify-end gap-1 opacity-60 hover:opacity-100 transition">
+                                            <button
+                                              type="button"
+                                              onClick={() => startEditRoute(route)}
+                                              className="p-1 text-zinc-400 hover:text-emerald-450 hover:bg-zinc-800 rounded transition"
+                                              title="Editar vía"
+                                            >
+                                              <Edit3 className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button
+                                              type="button"
+                                              onClick={() => handleDeleteRoute(route.id)}
+                                              className="p-1 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded transition"
+                                              title="Eliminar vía"
+                                            >
+                                              <Trash2 className="w-3.5 h-3.5" />
+                                            </button>
+                                          </div>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  );
+                                })
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
+                  );
+                })}
 
-                    {/* Form to add a new route */}
-                    <form onSubmit={handleAddRoute} className="pt-4 border-t border-zinc-850 grid grid-cols-1 sm:grid-cols-4 gap-3">
-                      <div>
-                        <input
-                          type="text"
-                          placeholder="Nueva vía..."
-                          value={newRouteForm.nombre}
-                          onChange={(e) => setNewRouteForm({ ...newRouteForm, nombre: e.target.value })}
-                          required
-                          className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                        />
+                {/* Section for Unassigned Vías (if any) */}
+                {(() => {
+                  const unassignedVias = selectedSector.vias.filter(v => !v.topoId || !selectedSector.topos?.some(t => t.id === v.topoId));
+                  if (unassignedVias.length === 0) return null;
+                  return (
+                    <div className="bg-zinc-950/40 border border-amber-900/40 rounded-2xl p-4 space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
+                        <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                          <AlertTriangle className="w-4 h-4 text-amber-400" />
+                          Vías Sin Asignar a Imagen ({unassignedVias.length})
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleAddRouteToTopo(undefined)}
+                          className="px-2.5 py-1 bg-zinc-800 text-amber-300 text-xs font-bold rounded-lg border border-zinc-700 hover:bg-zinc-700 transition"
+                        >
+                          <Plus className="w-3.5 h-3.5 inline" /> Registrar Vía Sin Asignar
+                        </button>
                       </div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder="Grado (e.g. 7a)"
-                          value={newRouteForm.grado}
-                          onChange={(e) => setNewRouteForm({ ...newRouteForm, grado: e.target.value })}
-                          required
-                          className="w-full bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                        />
-                      </div>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          placeholder="Altura"
-                          value={newRouteForm.altura}
-                          onChange={(e) => setNewRouteForm({ ...newRouteForm, altura: e.target.value })}
-                          className="w-1/2 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Chapas"
-                          value={newRouteForm.chapas || ''}
-                          onChange={(e) => setNewRouteForm({ ...newRouteForm, chapas: Number(e.target.value) })}
-                          className="w-1/2 bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-xl px-3 py-2 text-xs text-zinc-200 outline-none"
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        className="w-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1 py-2"
-                      >
-                        <Plus className="w-4 h-4" /> Registrar Vía en {activeGroupTab}
-                      </button>
-                    </form>
-                  </>
-                )}
 
+                      <div className="overflow-x-auto rounded-xl border border-zinc-850">
+                        <table className="w-full text-left border-collapse">
+                          <thead>
+                            <tr className="border-b border-zinc-800 bg-zinc-950/80 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                              <th className="py-2 px-3">Nombre Vía</th>
+                              <th className="py-2 px-3">Grado</th>
+                              <th className="py-2 px-3">Asignar a Croquis</th>
+                              <th className="py-2 px-3 text-right">Acciones</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-zinc-850/60 text-xs">
+                            {unassignedVias.map(route => (
+                              <tr key={route.id} className="hover:bg-zinc-850/40 transition">
+                                <td className="py-2 px-3 font-bold text-zinc-200">{route.nombre}</td>
+                                <td className="py-2 px-3"><span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded font-semibold text-[10px]">{route.grado}</span></td>
+                                <td className="py-2 px-3">
+                                  <select
+                                    value={route.topoId || ''}
+                                    onChange={(e) => {
+                                      const updatedSector = {
+                                        ...selectedSector,
+                                        vias: selectedSector.vias.map(v => v.id === route.id ? { ...v, topoId: e.target.value } : v)
+                                      };
+                                      handleSaveSectorData(updatedSector);
+                                    }}
+                                    className="bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none"
+                                  >
+                                    <option value="">-- Seleccionar Bloque --</option>
+                                    {(selectedSector.topos || []).map(t => (
+                                      <option key={t.id} value={t.id}>{t.nombre || t.id}</option>
+                                    ))}
+                                  </select>
+                                </td>
+                                <td className="py-2 px-3 text-right">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteRoute(route.id)}
+                                    className="p-1 text-zinc-400 hover:text-red-400 transition"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* Bottom Add Topo Block Button */}
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={handleAddTopoBlock}
+                    className="w-full py-3 bg-zinc-950/80 hover:bg-zinc-900 border border-dashed border-emerald-500/40 hover:border-emerald-500 text-emerald-400 text-xs font-bold rounded-2xl transition flex items-center justify-center gap-2"
+                  >
+                    <Plus className="w-4 h-4" /> Agregar Nuevo Bloque de Croquis / Imagen
+                  </button>
+                </div>
               </div>
             </div>
           )}

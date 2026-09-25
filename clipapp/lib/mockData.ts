@@ -1,10 +1,17 @@
+export interface TopoBlock {
+  id: string;
+  nombre?: string;
+  imageUrl: string;
+}
+
 export interface Route {
   id: string;
   nombre: string;
   grado: string;
   altura?: string;
   chapas?: number;
-  grupo: 'General' | 'Izquierda' | 'Centro' | 'Derecha';
+  topoId?: string;
+  grupo?: string;
   climbType?: string;
 }
 
@@ -15,10 +22,11 @@ export interface Sector {
   imageUrl?: string;          // Main background/cover
   overviewImageUrl?: string;  // overview.jpg
   comoLlegarImageUrl?: string; // how_to_get_there.jpg
-  generalImageUrl?: string;   // Image for "General" group
-  izquierdaImageUrl?: string; // Image for "Izquierda" group (vias1)
-  centroImageUrl?: string;    // Image for "Centro" group (vias2)
-  derechaImageUrl?: string;   // Image for "Derecha" group (vias3)
+  topos?: TopoBlock[];        // Dynamic croquis image blocks
+  generalImageUrl?: string;   // Legacy Image for "General" group
+  izquierdaImageUrl?: string; // Legacy Image for "Izquierda" group
+  centroImageUrl?: string;    // Legacy Image for "Centro" group
+  derechaImageUrl?: string;   // Legacy Image for "Derecha" group
   vias: Route[];
 }
 
