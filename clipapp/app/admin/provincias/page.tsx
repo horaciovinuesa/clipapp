@@ -32,7 +32,10 @@ import {
   ChevronDown,
   ListOrdered,
   Hash,
-  Tag
+  Tag,
+  ZoomIn,
+  ExternalLink,
+  Unlink
 } from 'lucide-react';
 import { db, storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL, listAll, deleteObject, StorageReference } from 'firebase/storage';
@@ -155,6 +158,14 @@ export default function ProvinciasEditor() {
     chapas: 0,
     grupo: 'General'
   });
+
+  // Image Zoom Modal states
+  const [zoomModal, setZoomModal] = useState<{ url: string; title: string } | null>(null);
+  const [zoomScale, setZoomScale] = useState<number>(1);
+
+  // Bulk unassigned vias selection states
+  const [selectedUnassignedViaIds, setSelectedUnassignedViaIds] = useState<string[]>([]);
+  const [bulkTargetTopoId, setBulkTargetTopoId] = useState<string>('');
 
 
   // Province metadata edit states
@@ -995,9 +1006,18 @@ export default function ProvinciasEditor() {
     setRouteForm(newRoute);
   };
 
-  const handleBulkNumberViasForTopo = (topoId?: string) => {
+  const handleBulkNumberViasForTopo = (topoId?: string, defaultStartNum: number = 1) => {
     if (!selectedSector) return;
-    let counter = 1;
+    const input = window.prompt(
+      '¿Desde qué número deseas iniciar la numeración de las vías para este bloque?',
+      defaultStartNum.toString()
+    );
+    if (input === null) return;
+
+    const parsedStart = parseInt(input.trim(), 10);
+    const startNum = isNaN(parsedStart) || parsedStart < 1 ? defaultStartNum : parsedStart;
+
+    let counter = startNum;
     const updatedVias = selectedSector.vias.map((via) => {
       if (topoId !== undefined && via.topoId !== topoId) return via;
       const cleanNombre = via.nombre.replace(/^\d+\s*[\-\.]\s*/, '').trim();
@@ -1016,6 +1036,26 @@ export default function ProvinciasEditor() {
       return { ...via, nombre: cleanNombre };
     });
     handleSaveSectorData({ ...selectedSector, vias: updatedVias });
+  };
+
+  const handleBulkAssignUnassignedVias = (targetTopoId: string) => {
+    if (!selectedSector || !targetTopoId || selectedUnassignedViaIds.length === 0) return;
+
+    const selectedSet = new Set(selectedUnassignedViaIds);
+    const updatedVias = selectedSector.vias.map((via) => {
+      if (selectedSet.has(via.id)) {
+        return { ...via, topoId: targetTopoId };
+      }
+      return via;
+    });
+
+    handleSaveSectorData({
+      ...selectedSector,
+      vias: updatedVias,
+    });
+
+    setSelectedUnassignedViaIds([]);
+    setBulkTargetTopoId('');
   };
 
   const moveRouteInTopo = (topoId: string | undefined, index: number, direction: 'up' | 'down') => {
@@ -2066,10 +2106,44 @@ export default function ProvinciasEditor() {
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
                       <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Portada (Cover)</span>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative group flex items-center justify-center">
                         {sectorEditImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditImage} alt="Portada" className="w-full h-full object-cover" />
+                          <>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={sectorEditImage}
+                              alt="Portada"
+                              className="w-full h-full object-cover cursor-pointer transition transform group-hover:scale-105"
+                              onClick={() => {
+                                setZoomModal({ url: sectorEditImage, title: `${selectedSector?.nombre || 'Sector'} - Portada` });
+                                setZoomScale(1);
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 pointer-events-none">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setZoomModal({ url: sectorEditImage, title: `${selectedSector?.nombre || 'Sector'} - Portada` });
+                                  setZoomScale(1);
+                                }}
+                                className="pointer-events-auto p-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-lg flex items-center gap-1 text-[10px] font-bold transition"
+                                title="Ver con Zoom"
+                              >
+                                <ZoomIn className="w-3 h-3" /> Ampliar
+                              </button>
+                              <a
+                                href={sectorEditImage}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="pointer-events-auto p-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg shadow-lg flex items-center gap-1 text-[10px] font-bold transition"
+                                title="Abrir en pestaña nueva"
+                              >
+                                <ExternalLink className="w-3 h-3" /> Pestaña
+                              </a>
+                            </div>
+                          </>
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
                         )}
@@ -2105,10 +2179,44 @@ export default function ProvinciasEditor() {
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
                       <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Overview (Vista General)</span>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative group flex items-center justify-center">
                         {sectorEditOverviewImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditOverviewImage} alt="Vista General" className="w-full h-full object-cover" />
+                          <>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={sectorEditOverviewImage}
+                              alt="Vista General"
+                              className="w-full h-full object-cover cursor-pointer transition transform group-hover:scale-105"
+                              onClick={() => {
+                                setZoomModal({ url: sectorEditOverviewImage, title: `${selectedSector?.nombre || 'Sector'} - Vista General` });
+                                setZoomScale(1);
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 pointer-events-none">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setZoomModal({ url: sectorEditOverviewImage, title: `${selectedSector?.nombre || 'Sector'} - Vista General` });
+                                  setZoomScale(1);
+                                }}
+                                className="pointer-events-auto p-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-lg flex items-center gap-1 text-[10px] font-bold transition"
+                                title="Ver con Zoom"
+                              >
+                                <ZoomIn className="w-3 h-3" /> Ampliar
+                              </button>
+                              <a
+                                href={sectorEditOverviewImage}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="pointer-events-auto p-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg shadow-lg flex items-center gap-1 text-[10px] font-bold transition"
+                                title="Abrir en pestaña nueva"
+                              >
+                                <ExternalLink className="w-3 h-3" /> Pestaña
+                              </a>
+                            </div>
+                          </>
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
                         )}
@@ -2144,10 +2252,44 @@ export default function ProvinciasEditor() {
                   <div className="bg-zinc-950/40 border border-zinc-800/80 p-3 rounded-xl space-y-2 flex flex-col justify-between">
                     <div>
                       <span className="block text-[9px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Cómo Llegar (Mapa/Sendero)</span>
-                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative">
+                      <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800/60 relative group flex items-center justify-center">
                         {sectorEditComoLlegarImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={sectorEditComoLlegarImage} alt="Cómo Llegar" className="w-full h-full object-cover" />
+                          <>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={sectorEditComoLlegarImage}
+                              alt="Cómo Llegar"
+                              className="w-full h-full object-cover cursor-pointer transition transform group-hover:scale-105"
+                              onClick={() => {
+                                setZoomModal({ url: sectorEditComoLlegarImage, title: `${selectedSector?.nombre || 'Sector'} - Cómo Llegar` });
+                                setZoomScale(1);
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 pointer-events-none">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setZoomModal({ url: sectorEditComoLlegarImage, title: `${selectedSector?.nombre || 'Sector'} - Cómo Llegar` });
+                                  setZoomScale(1);
+                                }}
+                                className="pointer-events-auto p-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-lg flex items-center gap-1 text-[10px] font-bold transition"
+                                title="Ver con Zoom"
+                              >
+                                <ZoomIn className="w-3 h-3" /> Ampliar
+                              </button>
+                              <a
+                                href={sectorEditComoLlegarImage}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="pointer-events-auto p-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg shadow-lg flex items-center gap-1 text-[10px] font-bold transition"
+                                title="Abrir en pestaña nueva"
+                              >
+                                <ExternalLink className="w-3 h-3" /> Pestaña
+                              </a>
+                            </div>
+                          </>
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-zinc-700"><ImageIcon className="w-4 h-4" /></div>
                         )}
@@ -2201,6 +2343,15 @@ export default function ProvinciasEditor() {
                 {((selectedSector.topos && selectedSector.topos.length > 0) ? selectedSector.topos : []).map((topo, topoIdx) => {
                   const topoVias = selectedSector.vias.filter(v => v.topoId === topo.id);
 
+                  // Calculate default start number based on total vias in preceding blocks
+                  const allTopos = selectedSector.topos || [];
+                  let previousViasCount = 0;
+                  for (let i = 0; i < topoIdx; i++) {
+                    const prevTopo = allTopos[i];
+                    previousViasCount += selectedSector.vias.filter(v => v.topoId === prevTopo.id).length;
+                  }
+                  const defaultStartNum = previousViasCount + 1;
+
                   return (
                     <div key={topo.id} className="bg-zinc-950/60 border border-zinc-800 rounded-2xl p-4 space-y-4 shadow-lg">
                       {/* Top Bar of Topo Block */}
@@ -2221,9 +2372,9 @@ export default function ProvinciasEditor() {
                         <div className="flex items-center gap-1.5 shrink-0">
                           <button
                             type="button"
-                            onClick={() => handleBulkNumberViasForTopo(topo.id)}
+                            onClick={() => handleBulkNumberViasForTopo(topo.id, defaultStartNum)}
                             className="px-2.5 py-1 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-400 text-[10px] font-bold rounded-lg border border-emerald-800/60 transition flex items-center gap-1"
-                            title="Numerar 1-, 2-... las vías de este bloque"
+                            title={`Numerar las vías de este bloque (Sugerido arrancar en ${defaultStartNum})`}
                           >
                             <ListOrdered className="w-3 h-3" /> Numerar
                           </button>
@@ -2266,10 +2417,44 @@ export default function ProvinciasEditor() {
 
                       {/* Image Preview & Upload Controls */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center bg-zinc-900/60 p-3 rounded-xl border border-zinc-850">
-                        <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800 relative flex items-center justify-center">
+                        <div className="aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800 relative group flex items-center justify-center">
                           {topo.imageUrl ? (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img src={topo.imageUrl} alt={topo.nombre || 'Croquis'} className="w-full h-full object-contain" />
+                            <>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={topo.imageUrl}
+                                alt={topo.nombre || 'Croquis'}
+                                className="w-full h-full object-contain cursor-pointer transition transform group-hover:scale-105"
+                                onClick={() => {
+                                  setZoomModal({ url: topo.imageUrl, title: topo.nombre || `Croquis Bloque #${topoIdx + 1}` });
+                                  setZoomScale(1);
+                                }}
+                              />
+                              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 pointer-events-none">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setZoomModal({ url: topo.imageUrl, title: topo.nombre || `Croquis Bloque #${topoIdx + 1}` });
+                                    setZoomScale(1);
+                                  }}
+                                  className="pointer-events-auto p-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-lg flex items-center gap-1 text-[11px] font-bold transition"
+                                  title="Ampliar Imagen con Zoom"
+                                >
+                                  <ZoomIn className="w-3.5 h-3.5" /> Ampliar
+                                </button>
+                                <a
+                                  href={topo.imageUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="pointer-events-auto p-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg shadow-lg flex items-center gap-1 text-[11px] font-bold transition"
+                                  title="Abrir en pestaña nueva"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" /> Pestaña nueva
+                                </a>
+                              </div>
+                            </>
                           ) : (
                             <div className="text-center p-3 text-zinc-600 flex flex-col items-center gap-1">
                               <ImageIcon className="w-6 h-6" />
@@ -2334,13 +2519,14 @@ export default function ProvinciasEditor() {
                                 <th className="py-2 px-3">Grado</th>
                                 <th className="py-2 px-3">Altura</th>
                                 <th className="py-2 px-3">Chapas</th>
+                                <th className="py-2 px-3">Bloque / Asignación</th>
                                 <th className="py-2 px-3 text-right">Acciones</th>
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-zinc-850/60 text-xs bg-zinc-900/30">
                               {topoVias.length === 0 ? (
                                 <tr>
-                                  <td colSpan={6} className="py-4 text-center text-zinc-500 italic text-[11px]">
+                                  <td colSpan={7} className="py-4 text-center text-zinc-500 italic text-[11px]">
                                     No hay vías asignadas a este croquis todavía.
                                   </td>
                                 </tr>
@@ -2421,6 +2607,26 @@ export default function ProvinciasEditor() {
                                           route.chapas || '-'
                                         )}
                                       </td>
+                                      <td className="py-1.5 px-3">
+                                        <select
+                                          value={route.topoId || ''}
+                                          onChange={(e) => {
+                                            const updatedSector = {
+                                              ...selectedSector,
+                                              vias: selectedSector.vias.map(v => v.id === route.id ? { ...v, topoId: e.target.value || undefined } : v)
+                                            };
+                                            handleSaveSectorData(updatedSector);
+                                          }}
+                                          className="bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none w-full max-w-[160px]"
+                                        >
+                                          <option value="">-- Sin Asignar --</option>
+                                          {(selectedSector.topos || []).map((t, idx) => (
+                                            <option key={t.id} value={t.id}>
+                                              {t.nombre ? `Bloque #${idx + 1}: ${t.nombre}` : `Bloque #${idx + 1}`}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </td>
                                       <td className="py-1.5 px-3 text-right">
                                         {isEditing ? (
                                           <div className="flex justify-end gap-1">
@@ -2451,6 +2657,20 @@ export default function ProvinciasEditor() {
                                             </button>
                                             <button
                                               type="button"
+                                              onClick={() => {
+                                                const updatedSector = {
+                                                  ...selectedSector,
+                                                  vias: selectedSector.vias.map(v => v.id === route.id ? { ...v, topoId: undefined } : v)
+                                                };
+                                                handleSaveSectorData(updatedSector);
+                                              }}
+                                              className="p-1 text-zinc-400 hover:text-amber-400 hover:bg-zinc-800 rounded transition"
+                                              title="Desvincular (dejar sin asignar)"
+                                            >
+                                              <Unlink className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button
+                                              type="button"
                                               onClick={() => handleDeleteRoute(route.id)}
                                               className="p-1 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded transition"
                                               title="Eliminar vía"
@@ -2476,66 +2696,158 @@ export default function ProvinciasEditor() {
                 {(() => {
                   const unassignedVias = selectedSector.vias.filter(v => !v.topoId || !selectedSector.topos?.some(t => t.id === v.topoId));
                   if (unassignedVias.length === 0) return null;
+
+                  const allUnassignedSelected = unassignedVias.length > 0 && unassignedVias.every(v => selectedUnassignedViaIds.includes(v.id));
+
+                  const toggleSelectAllUnassigned = () => {
+                    if (allUnassignedSelected) {
+                      setSelectedUnassignedViaIds([]);
+                    } else {
+                      setSelectedUnassignedViaIds(unassignedVias.map(v => v.id));
+                    }
+                  };
+
+                  const toggleSelectVia = (viaId: string) => {
+                    if (selectedUnassignedViaIds.includes(viaId)) {
+                      setSelectedUnassignedViaIds(selectedUnassignedViaIds.filter(id => id !== viaId));
+                    } else {
+                      setSelectedUnassignedViaIds([...selectedUnassignedViaIds, viaId]);
+                    }
+                  };
+
                   return (
                     <div className="bg-zinc-950/40 border border-amber-900/40 rounded-2xl p-4 space-y-3">
-                      <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
                         <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                           <AlertTriangle className="w-4 h-4 text-amber-400" />
                           Vías Sin Asignar a Imagen ({unassignedVias.length})
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => handleAddRouteToTopo(undefined)}
-                          className="px-2.5 py-1 bg-zinc-800 text-amber-300 text-xs font-bold rounded-lg border border-zinc-700 hover:bg-zinc-700 transition"
-                        >
-                          <Plus className="w-3.5 h-3.5 inline" /> Registrar Vía Sin Asignar
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleAddRouteToTopo(undefined)}
+                            className="px-2.5 py-1 bg-zinc-800 text-amber-300 text-xs font-bold rounded-lg border border-zinc-700 hover:bg-zinc-700 transition"
+                          >
+                            <Plus className="w-3.5 h-3.5 inline" /> Registrar Vía Sin Asignar
+                          </button>
+                        </div>
                       </div>
 
+                      {/* Bulk Assignment Control Bar */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 bg-zinc-900/90 border border-zinc-800 p-2.5 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <label className="flex items-center gap-2 text-xs font-bold text-zinc-300 cursor-pointer select-none">
+                            <input
+                              type="checkbox"
+                              checked={allUnassignedSelected}
+                              onChange={toggleSelectAllUnassigned}
+                              className="w-4 h-4 accent-amber-500 rounded cursor-pointer"
+                            />
+                            <span>Seleccionar Todos ({unassignedVias.length})</span>
+                          </label>
+                          {selectedUnassignedViaIds.length > 0 && (
+                            <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                              {selectedUnassignedViaIds.length} seleccionada(s)
+                            </span>
+                          )}
+                        </div>
+
+                        {selectedUnassignedViaIds.length > 0 && (
+                          <div className="flex items-center gap-2">
+                            <select
+                              value={bulkTargetTopoId}
+                              onChange={(e) => setBulkTargetTopoId(e.target.value)}
+                              className="bg-zinc-950 border border-zinc-700 focus:border-emerald-500 rounded-lg px-2.5 py-1 text-xs text-zinc-200 outline-none"
+                            >
+                              <option value="">-- Asignar Selección a Bloque --</option>
+                              {(selectedSector.topos || []).map(t => (
+                                <option key={t.id} value={t.id}>{t.nombre || t.id}</option>
+                              ))}
+                            </select>
+                            <button
+                              type="button"
+                              disabled={!bulkTargetTopoId}
+                              onClick={() => handleBulkAssignUnassignedVias(bulkTargetTopoId)}
+                              className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white text-xs font-bold rounded-lg transition"
+                            >
+                              Asignar ({selectedUnassignedViaIds.length})
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedUnassignedViaIds([])}
+                              className="px-2 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 text-xs font-semibold rounded-lg transition"
+                            >
+                              Deseleccionar
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Table of Unassigned Vias */}
                       <div className="overflow-x-auto rounded-xl border border-zinc-850">
                         <table className="w-full text-left border-collapse">
                           <thead>
                             <tr className="border-b border-zinc-800 bg-zinc-950/80 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                              <th className="py-2 px-3 w-10 text-center">
+                                <input
+                                  type="checkbox"
+                                  checked={allUnassignedSelected}
+                                  onChange={toggleSelectAllUnassigned}
+                                  className="w-3.5 h-3.5 accent-amber-500 rounded cursor-pointer"
+                                  title="Seleccionar todas las vías sin asignar"
+                                />
+                              </th>
                               <th className="py-2 px-3">Nombre Vía</th>
                               <th className="py-2 px-3">Grado</th>
-                              <th className="py-2 px-3">Asignar a Croquis</th>
+                              <th className="py-2 px-3">Asignar Individualmente</th>
                               <th className="py-2 px-3 text-right">Acciones</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-zinc-850/60 text-xs">
-                            {unassignedVias.map(route => (
-                              <tr key={route.id} className="hover:bg-zinc-850/40 transition">
-                                <td className="py-2 px-3 font-bold text-zinc-200">{route.nombre}</td>
-                                <td className="py-2 px-3"><span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded font-semibold text-[10px]">{route.grado}</span></td>
-                                <td className="py-2 px-3">
-                                  <select
-                                    value={route.topoId || ''}
-                                    onChange={(e) => {
-                                      const updatedSector = {
-                                        ...selectedSector,
-                                        vias: selectedSector.vias.map(v => v.id === route.id ? { ...v, topoId: e.target.value } : v)
-                                      };
-                                      handleSaveSectorData(updatedSector);
-                                    }}
-                                    className="bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none"
-                                  >
-                                    <option value="">-- Seleccionar Bloque --</option>
-                                    {(selectedSector.topos || []).map(t => (
-                                      <option key={t.id} value={t.id}>{t.nombre || t.id}</option>
-                                    ))}
-                                  </select>
-                                </td>
-                                <td className="py-2 px-3 text-right">
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDeleteRoute(route.id)}
-                                    className="p-1 text-zinc-400 hover:text-red-400 transition"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
+                            {unassignedVias.map(route => {
+                              const isSelected = selectedUnassignedViaIds.includes(route.id);
+                              return (
+                                <tr key={route.id} className={`transition ${isSelected ? 'bg-amber-500/10' : 'hover:bg-zinc-850/40'}`}>
+                                  <td className="py-2 px-3 text-center">
+                                    <input
+                                      type="checkbox"
+                                      checked={isSelected}
+                                      onChange={() => toggleSelectVia(route.id)}
+                                      className="w-3.5 h-3.5 accent-amber-500 rounded cursor-pointer"
+                                    />
+                                  </td>
+                                  <td className="py-2 px-3 font-bold text-zinc-200">{route.nombre}</td>
+                                  <td className="py-2 px-3"><span className="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded font-semibold text-[10px]">{route.grado}</span></td>
+                                  <td className="py-2 px-3">
+                                    <select
+                                      value={route.topoId || ''}
+                                      onChange={(e) => {
+                                        const updatedSector = {
+                                          ...selectedSector,
+                                          vias: selectedSector.vias.map(v => v.id === route.id ? { ...v, topoId: e.target.value } : v)
+                                        };
+                                        handleSaveSectorData(updatedSector);
+                                      }}
+                                      className="bg-zinc-950 border border-zinc-800 focus:border-zinc-700 rounded-lg px-2 py-1 text-xs text-zinc-200 outline-none"
+                                    >
+                                      <option value="">-- Seleccionar Bloque --</option>
+                                      {(selectedSector.topos || []).map(t => (
+                                        <option key={t.id} value={t.id}>{t.nombre || t.id}</option>
+                                      ))}
+                                    </select>
+                                  </td>
+                                  <td className="py-2 px-3 text-right">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleDeleteRoute(route.id)}
+                                      className="p-1 text-zinc-400 hover:text-red-400 transition"
+                                    >
+                                      <Trash2 className="w-3.5 h-3.5" />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -2708,6 +3020,86 @@ export default function ProvinciasEditor() {
               </button>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* Interactive Image Zoom Modal */}
+      {zoomModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6"
+          onClick={() => { setZoomModal(null); setZoomScale(1); }}
+        >
+          {/* Top Control Bar */}
+          <div
+            className="w-full max-w-5xl flex items-center justify-between gap-4 bg-zinc-900/90 border border-zinc-800 px-4 py-3 rounded-2xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-2 overflow-hidden">
+              <ImageIcon className="w-5 h-5 text-emerald-400 shrink-0" />
+              <h3 className="text-sm font-bold text-white truncate">{zoomModal.title}</h3>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setZoomScale(prev => Math.max(0.5, prev - 0.25))}
+                className="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-bold rounded-xl border border-zinc-700 transition"
+                title="Alejar (-)"
+              >
+                -
+              </button>
+              <span className="text-xs font-mono text-zinc-400 w-12 text-center">{Math.round(zoomScale * 100)}%</span>
+              <button
+                type="button"
+                onClick={() => setZoomScale(prev => Math.min(4, prev + 0.25))}
+                className="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-bold rounded-xl border border-zinc-700 transition"
+                title="Acercar (+)"
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={() => setZoomScale(1)}
+                className="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 text-xs font-bold rounded-xl border border-zinc-700 transition"
+                title="Restablecer a 100%"
+              >
+                100%
+              </button>
+              <a
+                href={zoomModal.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5"
+                title="Abrir imagen en nueva pestaña"
+              >
+                <ExternalLink className="w-3.5 h-3.5" /> Abrir en pestaña nueva
+              </a>
+              <button
+                type="button"
+                onClick={() => { setZoomModal(null); setZoomScale(1); }}
+                className="p-1.5 bg-zinc-800 hover:bg-red-950 hover:text-red-400 text-zinc-400 rounded-xl transition ml-2"
+                title="Cerrar modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Scalable Image Canvas */}
+          <div
+            className="flex-1 w-full max-w-6xl flex items-center justify-center overflow-auto my-4 p-4 select-none cursor-grab"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={zoomModal.url}
+              alt={zoomModal.title}
+              style={{ transform: `scale(${zoomScale})`, transition: 'transform 0.15s ease-out' }}
+              className="max-h-[78vh] max-w-full object-contain rounded-xl shadow-2xl origin-center"
+            />
+          </div>
+
+          <span className="text-xs text-zinc-500">Haz clic fuera o presiona la X para cerrar</span>
         </div>
       )}
 
