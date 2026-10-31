@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,7 +8,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-green-600 p-4">
+    <nav className="bg-green-600 p-4 sticky top-0 z-50 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         {/* Site Title and Icon */}
         <Link href="/" className="flex items-center text-white text-2xl font-bold">
@@ -21,12 +23,15 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-4">
-          <Link href="/" className="text-white hover:text-gray-300">Inicio</Link>
-          <Link href="/quienes-somos" className="text-white hover:text-gray-300">Quienes Somos</Link>
-          <Link href="/nuestra-app" className="text-white hover:text-gray-300">Que hace nuestra App?</Link>
-          <Link href="/subi-tus-vias" className="text-white hover:text-gray-300">Subí tus Vías</Link>
-          <Link href="/ayuda" className="text-white hover:text-gray-300">Ayuda</Link>
+        <div className="hidden md:flex items-center space-x-5">
+          <Link href="/" className="text-white hover:text-gray-200 transition-colors">Inicio</Link>
+          <Link href="/clima" className="text-white hover:text-green-100 bg-green-700/80 hover:bg-green-700 px-3 py-1.5 rounded-lg border border-green-400/40 font-semibold transition-all shadow-sm flex items-center gap-1.5">
+            <span>🌦️</span> Clima
+          </Link>
+          <Link href="/quienes-somos" className="text-white hover:text-gray-200 transition-colors">Quienes Somos</Link>
+          <Link href="/nuestra-app" className="text-white hover:text-gray-200 transition-colors">Que hace nuestra App?</Link>
+          <Link href="/subi-tus-vias" className="text-white hover:text-gray-200 transition-colors">Subí tus Vías</Link>
+          <Link href="/ayuda" className="text-white hover:text-gray-200 transition-colors">Ayuda</Link>
         </div>
 
         {/* Hamburger Icon for Mobile */}
@@ -42,12 +47,15 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden flex flex-col items-center space-y-2 bg-green-600 p-4">
-          <Link href="/" className="text-white hover:text-gray-300">Inicio</Link>
-          <Link href="/quienes-somos" className="text-white hover:text-gray-300">Quienes Somos</Link>
-          <Link href="/nuestra-app" className="text-white hover:text-gray-300">Que hace nuestra App?</Link>
-          <Link href="/subi-tus-vias" className="text-white hover:text-gray-300">Subí tus Vías</Link>
-          <Link href="/ayuda" className="text-white hover:text-gray-300">Ayuda</Link>
+        <div className="md:hidden flex flex-col items-center space-y-3 bg-green-600 p-4 border-t border-green-500/50">
+          <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-gray-200">Inicio</Link>
+          <Link href="/clima" onClick={() => setIsMenuOpen(false)} className="text-white bg-green-700 px-4 py-1.5 rounded-lg border border-green-400/50 font-bold">
+            🌦️ Clima en Sectores
+          </Link>
+          <Link href="/quienes-somos" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-gray-200">Quienes Somos</Link>
+          <Link href="/nuestra-app" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-gray-200">Que hace nuestra App?</Link>
+          <Link href="/subi-tus-vias" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-gray-200">Subí tus Vías</Link>
+          <Link href="/ayuda" onClick={() => setIsMenuOpen(false)} className="text-white hover:text-gray-200">Ayuda</Link>
         </div>
       )}
     </nav>
